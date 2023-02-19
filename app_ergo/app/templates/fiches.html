@@ -1,0 +1,9 @@
+{% extends 'layout.html' %}
+
+{% block content %}
+
+<form method="POST" action="{{ url_for('handle_button_click') }}">
+    <button type="submit">Ajouter une fiche</button>
+</form>
+
+{% endblock %}

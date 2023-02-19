@@ -3,7 +3,7 @@ import json
 
 from app.models.dataDAO import DataDAO
 
-class DataServices():
+class GetDataServices():
 
     def __init__(self):
         self.pdao = DataDAO()
@@ -19,11 +19,11 @@ class DataServices():
             title.append(i['title'])
 
     def room_by_alternative(self, url):
-        id_room = {'1': 'Salle de bain', '3': 'Cuisine'}
+        id_room = {'c4244334-7f14-4c34-991b-a4292e7e0033': 'Salle de bain', 'b98230d9-c106-4bd1-9765-cf7e0308113c': 'Cuisine'}
         data = self.pdao.get_data(url)['data']
         room = {}
         for i in data:
-            room[i['title']] = id_room[str(i['room'][0])]
+            room[i['title']] = id_room[str(i['room'])]
         list_room = []
         for i in room:
             list_room.append((i, room.get(i)))
