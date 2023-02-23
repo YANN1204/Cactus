@@ -10,5 +10,5 @@ data = ds.room_by_alternative(url)
 
 @app.route(basepath, methods = ['GET'])
 def index():
-    return render_template('index.html', data = data)
+    return render_template('index.html', title="Index", pagename="index", data = data)
 
