@@ -28,3 +28,10 @@ class GetDataServices():
         for i in room:
             list_room.append((i, room.get(i)))
         return list_room
+
+    def alternative_by_title(self, url, title):
+        data = self.pdao.get_data(url)['data']
+        for i in data:
+            if i['title'] == title:
+                return i
+        return 'Aucun élément ne présente ce titre dans la base de donnée'
