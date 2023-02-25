@@ -3,10 +3,12 @@ from app import app
 from app.services.servicesGetData import GetDataServices
 from app.services.servicesPostData import PostDataServices
 from app.services.servicesDELETEData import DeleteDataServices
+from app.services.servicesSETData import SetDataServices
 
 gds = GetDataServices()
 pds = PostDataServices()
 dds = DeleteDataServices()
+sds = SetDataServices()
 
 basepath = '/'
 
@@ -28,5 +30,16 @@ def button_click_delete():
     card = gds.alternative_by_title(basepath + "fiche", "Test")
     id = card['id']
     message = dds.delete_cards(id)
+    metadata = {"title":"Fiches", "pagename": "fiches"}
+    return render_template('fiches.html', metadata=metadata)
+
+@app.route('/monbouton_3', methods=['GET', 'SET'])
+def button_click_set():
+    # Appel de votre fonction set python
+    card = gds.alternative_by_title(basepath + "fiche", "Test")
+    id = card['id']
+    print(id)
+    message = sds.update_card(id)
+    print (message)
     metadata = {"title":"Fiches", "pagename": "fiches"}
     return render_template('fiches.html', metadata=metadata)
