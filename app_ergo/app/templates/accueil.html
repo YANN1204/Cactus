@@ -1,0 +1,13 @@
+{% extends 'layout.html' %}
+
+{% block content %}
+
+{% for i in data %}
+<div class="container">
+    <p class="element">{{i[0]}}</p>
+    <div class="arrow-right"></div>
+    <p class="element">{{i[1]}}</p>
+</div>
+{% endfor %}
+
+{% endblock %}
