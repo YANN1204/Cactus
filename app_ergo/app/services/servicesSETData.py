@@ -10,7 +10,7 @@ class SetDataServices():
 
 
     def update_card(self, id):
-        #chemi avec l'ID de l'objet à modifier à modifier
+        #chemin avec l'ID de l'objet à modifier à modifier
         path = self.pdao.path+"fiche/"+id
         print(path)
         auth = ('dylan.canete5@etu.univ-lorraine.fr', 'dylan')
