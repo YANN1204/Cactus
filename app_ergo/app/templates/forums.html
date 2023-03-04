@@ -2,6 +2,34 @@
 
 {% block content %}
 
+<div class="container">
+    <h1>Forums</h1>
+</div>
+
+<div>
+    <p>
+        C’est dans cet espace que toute la communauté de Cactus s’entraide et s’échange 
+        ses conseils pour aller plus loin dans la vie en vert !
+    </p>
+</div>
+
+<div>
+    <form>
+        <div class="mb-3">
+          <label for="inputKeyWord" class="form-label">Rechercher un sujet de forum</label>
+          <input type="text" class="form-control" id="inputKeyWord">
+        </div>
+        <button type="submit" class="btn btn-primary">Rechercher</button>
+    </form>
+</div>
+
+<div>
+    <p>Tu ne trouves pas de sujet correspondant à ta réflexion ? </p>
+    <form method="POST" action="{{ url_for('handle_button_click') }}">
+        <button type="submit">Poster un sujet de forum</button>
+    </form>
+</div>
+
 <li>{{ data }}</li>
 
 {% endblock %}
