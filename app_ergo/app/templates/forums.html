@@ -2,10 +2,11 @@
 
 {% block content %}
 
-<div class="container">
+<div class="section-h1">
     <h1>Forums</h1>
 </div>
 
+<div class="container">
 <div>
     <p>
         C’est dans cet espace que toute la communauté de Cactus s’entraide et s’échange 
@@ -23,7 +24,7 @@
     </form>
 </div>
 
-<div>
+<div class="cta-post">
     <p>Tu ne trouves pas de sujet correspondant à ta réflexion ? </p>
     <form method="POST" action="{{ url_for('handle_button_click') }}">
         <button type="submit">Poster un sujet de forum</button>
@@ -31,5 +32,6 @@
 </div>
 
 <li>{{ data }}</li>
+</div>
 
 {% endblock %}
