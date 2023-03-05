@@ -6,7 +6,7 @@ from app.services.servicesGetData import GetDataServices
 gds = GetDataServices()
 
 basepath = '/'
-url = "fiche"
+url = "alternative_cards"
 
 @app.route(basepath + 'forums', methods = ['GET'])
 def forums():

@@ -5,11 +5,12 @@ from app.services.servicesGetData import GetDataServices
 ds = GetDataServices()
 basepath = '/'
 
-url = "fiche"
-data = ds.room_by_alternative(url)
+url = "alternative_cards"
+#data = ds.room_by_alternative(url)
 
 @app.route(basepath, methods = ['GET'])
 def accueil():
     metadata = {"title": "Accueil", "pagename": "accueil"}
-    return render_template('accueil.html', metadata=metadata, data = data)
+    #return render_template('accueil.html', metadata=metadata, data = data)
+    return render_template('accueil.html', metadata=metadata)
 
