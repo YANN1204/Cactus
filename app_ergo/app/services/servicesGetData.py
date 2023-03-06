@@ -19,11 +19,11 @@ class GetDataServices():
             title.append(i['title'])
 
     def room_by_alternative(self, url):
-        id_room = {'c4244334-7f14-4c34-991b-a4292e7e0033': 'Salle de bain', 'b98230d9-c106-4bd1-9765-cf7e0308113c': 'Cuisine'}
+        id_room = {'032160c4-caa2-451f-b3c8-72c53360345f': 'Salle de bain', '8a855849-86a0-47e0-b4ff-c240f6e6bf4f': 'Cuisine'}
         data = self.pdao.get_data(url)['data']
         room = {}
         for i in data:
-            room[i['title']] = id_room[str(i['room'])]
+            room[i['title']] = id_room[str(i['room_id'])]
         list_room = []
         for i in room:
             list_room.append((i, room.get(i)))

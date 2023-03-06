@@ -5,7 +5,7 @@ from app.services.servicesGetData import GetDataServices
 ds = GetDataServices()
 basepath = '/'
 
-url = "fiche"
+url = "alternative_cards"
 data = ds.room_by_alternative(url)
 
 @app.route(basepath, methods = ['GET'])

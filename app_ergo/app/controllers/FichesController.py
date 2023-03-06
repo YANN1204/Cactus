@@ -27,7 +27,7 @@ def handle_button_click():
 @app.route('/monbouton_2', methods=['GET', 'DELETE'])
 def button_click_delete():
     # Appel de votre fonction delete python
-    card = gds.alternative_by_title(basepath + "fiche", "Test")
+    card = gds.alternative_by_title(basepath + "alternative_cards", "Test2")
     id = card['id']
     message = dds.delete_cards(id)
     metadata = {"title":"Fiches", "pagename": "fiches"}
@@ -36,9 +36,8 @@ def button_click_delete():
 @app.route('/monbouton_3', methods=['GET', 'SET'])
 def button_click_set():
     # Appel de votre fonction set python
-    card = gds.alternative_by_title(basepath + "fiche", "Test")
+    card = gds.alternative_by_title(basepath + "alternative_cards", "Test")
     id = card['id']
-    print(id)
     message = sds.update_card(id)
     print (message)
     metadata = {"title":"Fiches", "pagename": "fiches"}
