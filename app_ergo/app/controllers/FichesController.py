@@ -1,7 +1,7 @@
 from flask import render_template, redirect, url_for
 from app import app
-from app.services.servicesGetData import GetDataServices
-from app.services.servicesPostData import PostDataServices
+from app.services.servicesGETData import GetDataServices
+from app.services.servicesPOSTData import PostDataServices
 from app.services.servicesDELETEData import DeleteDataServices
 from app.services.servicesSETData import SetDataServices
 

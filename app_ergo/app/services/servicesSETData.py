@@ -8,8 +8,16 @@ class SetDataServices():
         self.pdao = DataDAO()
 
 
-    def update_card(self, id):
-        #chemi avec l'ID de l'objet à modifier à modifier
+    def update_card(self, id: str):
+        """Modifie un élément d'une 'alternative_cards' spécifique
+
+        ***Cette fonction doit être généralisé à n'importe quelle
+        collection et à n'importe quelle modification.
+
+        Args:
+            id (str): str permettant de sélectionner l' 'alternative_cards'
+            en question.
+        """
         path = self.pdao.path+"alternative_cards/"+id
         print(path)
         auth = ('yann.riopro@gmail.com', 'ACmerlu12')

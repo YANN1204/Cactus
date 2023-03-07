@@ -1,7 +1,7 @@
-from flask import render_template, redirect, url_for
+from flask import render_template
 from app import app
 
-from app.services.servicesGetData import GetDataServices
+from app.services.servicesGETData import GetDataServices
 
 gds = GetDataServices()
 
