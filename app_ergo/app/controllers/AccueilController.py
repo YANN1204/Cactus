@@ -6,7 +6,7 @@ ds = GetDataServices()
 basepath = '/'
 
 url = "alternative_cards"
-data = ds.room_by_alternative(url)
+data = ds.room_by_alternative(url) 
 
 
 @app.route(basepath, methods = ['GET'])

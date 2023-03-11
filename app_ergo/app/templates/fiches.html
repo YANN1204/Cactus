@@ -2,16 +2,96 @@
 
 {% block content %}
 
-<form method="POST" action="{{ url_for('handle_button_click') }}">
-    <button type="submit">Ajouter une fiche</button>
-</form>
+<div class="section-h1">
+    <h1>Fiches</h1>
+</div>
 
-<form method="DELETE" action="{{ url_for('button_click_delete') }}">
-    <button type="submit">Supprimer une fiche</button>
-</form>
+<div class="container">
 
-<form method="SET" action="{{ url_for('button_click_set') }}">
-    <button type="submit">Modifier une fiche</button>
-</form>
+    <div>
+        <p>
+            Dans l'espace Fiches, retrouve conseils, DIY et témoignages
+            partagés par tous les utilisateur·ices de Cactus.
+        </p>
+    </div>
+
+    <div>
+        <form>
+            <div class="mb-3">
+                <label for="inputKeyWord" class="form-label">Mots clés</label>
+                <input type="text" class="form-control" id="inputKeyWord">
+            </div>
+            <div class="mb-3">
+                <select class="form-select" aria-label="Type de contenu à afficher">
+                    <option selected>Tous</option>
+                    <option value="1">Fiche témoignage</option>
+                    <option value="2">Fiche pratique</option>
+                    <option value="3">Fiche conseil</option>
+                </select>
+            </div>
+            <div class="mb-3">
+                <div class="form-check">
+                    <input class="form-check-input" type="checkbox" value="" id="checkKitchen">
+                    <label class="form-check-label" for="checkKitchen">
+                        Cuisine
+                    </label>
+                </div>
+                <div class="form-check">
+                    <input class="form-check-input" type="checkbox" value="" id="checkBathroom">
+                    <label class="form-check-label" for="checkBathroom">
+                        Salle de bain
+                    </label>
+                </div>
+                <div class="form-check">
+                    <input class="form-check-input" type="checkbox" value="" id="checkGarage">
+                    <label class="form-check-label" for="checkGarage">
+                        Garage
+                    </label>
+                </div>
+                <div class="form-check">
+                    <input class="form-check-input" type="checkbox" value="" id="checkLivingRoom">
+                    <label class="form-check-label" for="checkLivingRoom">
+                        Salon
+                    </label>
+                </div>
+                <div class="form-check">
+                    <input class="form-check-input" type="checkbox" value="" id="checkBedroom">
+                    <label class="form-check-label" for="checkBedroom">
+                        Chambre
+                    </label>
+                </div>
+                <div class="form-check">
+                    <input class="form-check-input" type="checkbox" value="" id="checkGarden">
+                    <label class="form-check-label" for="checkGarden">
+                        Jardin
+                    </label>
+                </div>
+                <div class="form-check">
+                    <input class="form-check-input" type="checkbox" value="" id="checkAllRooms">
+                    <label class="form-check-label" for="checkAllRooms">
+                        Maison entière
+                    </label>
+                </div>
+            </div>
+            <button type="submit" class="btn btn-primary">Rechercher</button>
+        </form>
+    </div>
+
+    <div class="cta-post">
+        <p>Tu veux partager une astuce, une alternative, ou témoigner ?</p>
+        <form method="POST" action="{{ url_for('handle_button_click') }}">
+            <button type="submit">Poster une fiche</button>
+        </form>
+    </div>
+
+    <form method="DELETE" action="{{ url_for('button_click_delete') }}">
+        <button type="submit">Supprimer une fiche</button>
+    </form>
+
+    <form method="SET" action="{{ url_for('button_click_set') }}">
+        <button type="submit">Modifier une fiche</button>
+    </form>
+
+</div>
 
 {% endblock %}

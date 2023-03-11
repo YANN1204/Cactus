@@ -1,7 +1,24 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+
+
+body {
+  --darker-green : #2F422F;
+  --dark-green : #004D00;
+  --clear-green : #6A994E;
+  --clearer-green : #A7C957;
+  --beige : #F3DEAA;
+  --orange : #F2781F;
+  --burgundy : #BC4749;
+  --dark-burgundy : #70292A;
+  --dark-grey : #333333;
+  font-family : "Montserrat" !important;
+}
+
+
 .center-content {
   text-align: center;
   margin: auto;
-  width: 10%;
+  width: 100%;
 }
 
 .arrow-right {
@@ -15,9 +32,33 @@
 }
 
 .container {
-  display: flex;
+  display: block;
 }
 
 .element {
   margin: 10px;
+}
+
+.section-h1 {
+  background: repeat url("Images/background-cacti.png");
+  width: 100%;
+  color: var(--darker-green);
+  padding: 1.5em 3em !important;
+}
+
+.section-h1 h1 {
+  font-size: 64px;
+  font-weight: 800;
+  padding-left: 1em;
+}
+
+.cta-post {
+  background: var(--dark-green);
+  padding: 1.5em 2em 1em 6em;
+  color: white;
+  font: 24px 500;
+  display: flex;
+  column-gap: 2em;
+  width: fit-content;
+  border-radius: 0 20px 20px 0;
 }
