@@ -31,7 +31,22 @@
         </form>
     </div>
 
-    <li>{{ data }}</li>
+    <div>
+        {% for forum in data.values() %}
+            <div> 
+                {% for f in forum %}
+                    <div class="div-forum-list">
+                        <h3>{{ f['title'] }}</h3>
+                        <p>Publié par {{ f['user_id'] }} le {{ f['date_created'] }}</p>
+                        {% for tag in f['tag'] %}
+                            <span class="tag-forum"> {{ tag }} </span>
+                        {% endfor %}
+                        <button>Voir plus</button>
+                    </div>
+                {% endfor %} 
+            </div>
+        {% endfor %}
+    </div>
 </div>
 
 {% endblock %}

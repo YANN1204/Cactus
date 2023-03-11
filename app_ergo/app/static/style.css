@@ -62,3 +62,17 @@ body {
   width: fit-content;
   border-radius: 0 20px 20px 0;
 }
+
+.div-forum-list {
+  border: solid 1px var(--burgundy);
+  border-radius: 20px;
+  margin-bottom: 1.3em;
+  padding : 0.7em;
+}
+
+.tag-forum {
+  border-radius: 50px;
+  background-color: rgba(188, 71, 73, 0.6);
+  padding: 0.2em 0.7em;
+  margin-right: 0.7em;
+}
