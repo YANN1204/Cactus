@@ -27,13 +27,16 @@ class GetDataServices():
         return data
     
 
-    def display_forums(self, urlf: str, urlu: str, urlft: str, urlt: str, urlr: str):
+    def display_forums_fiches(self, url: str, urlu: str, urlft: str, urlt: str, urlr: str):
         """Affiche les données sous la forme d'un dictionnaire python
+           # impact à rajouter
+           # doit certainement pouvoir être optimisé car chargement assez long... 
+           # + ajouter vérif éventuellement
 
         Args:
-            urlf (str): url servant à afficher les forums
+            url (str): url servant à afficher les forums ou fiches
             urlu (str) : url servant à faire la correspondance entre user_id et pseudo de l'user
-            urlft (str) : url servant à faire la correspondance entre id du tag et forum et id du tag
+            urlft (str) : url servant à faire la correspondance entre id du tag et forum/fiche et id du tag
             urlt (str) : url servant à faire la correspondance entre tag_id et tag_name
             urlr (str) : url servant à faire la correspondance entre room_id et room_name
 
@@ -41,29 +44,29 @@ class GetDataServices():
             dict: les données sous forme de dictionnaire avec des entrées supplémentaires permettant
             de récupérer les noms à la place des id du modèle de données
         """
-        data = self.pdao.get_data(urlf)
+        data = self.pdao.get_data(url)
         # parcourt le dict avec une seule key 'data'
         for d in data.values() :
             # parcourt la liste d'items qui forme la valeur de la key 'data'
-            for forum in d :
-                # récupère les infos du user avec l'id correspondant au champ user_id du forum
-                user = self.item_by_id(urlu, forum['user_id'])
-                # crée une nouvelle key pseudo au dict du forum ave comme valeur le pseudo correspondant à l'user
-                forum['pseudo'] = user['pseudo']
+            for item in d :
+                # récupère les infos du user avec l'id correspondant au champ user_id du forum/fiche
+                user = self.item_by_id(urlu, item['user_id'])
+                # crée une nouvelle key pseudo au dict du forum/fiche avec comme valeur le pseudo correspondant à l'user
+                item['pseudo'] = user['pseudo']
                 tags = []
-                # parcourt la liste d'id contenu dans le champ tag du forum
-                # ces id correspondent aux id des croisements de forums et tags (table forums_tags)
-                for t in forum['tag']:
-                    # récupère l'id du tag du lien tag-forum
+                # parcourt la liste d'id contenu dans le champ tag du forum/fiche
+                # ces id correspondent aux id des croisements de forum/fiche et tags (table forums_tags/ alternative_cards_tags)
+                for t in item['tag']:
+                    # récupère l'id du tag du lien tag-forum / tag-fiche
                     tag_id = self.item_by_id(urlft, t)
                     # récupère le nom du tag avec l'id récupéré avant
                     tag = self.item_by_id(urlt, tag_id["tags_id"])
                     tags.append(tag['tag_name'])
-                # on ajoute la liste de nom de tag à une nouvelle entrée du dict forum
-                forum['tags_name'] = tags
+                # on ajoute la liste de nom de tag à une nouvelle entrée du dict forum/fiche
+                item['tags_name'] = tags
                 # même chose pour avoir le room_name
-                room = self.item_by_id(urlr, forum['room_id'])
-                forum['room_name'] = room['room_name']
+                room = self.item_by_id(urlr, item['room_id'])
+                item['room_name'] = room['room_name']
         return data
     
 

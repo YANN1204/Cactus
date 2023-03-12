@@ -37,14 +37,20 @@
             <div> 
                 <!-- on parcourt la liste d qui contient autant de dict que de forums dans directus -->
                 {% for forum in d %}
-                    <div class="div-forum-list">
-                        <h3>{{ forum['title'] }}</h3>
-                        <p>Publié par {{ forum['pseudo'] }} le {{ forum['date_created'] }}</p>
-                        <span class="tag-forum"> {{ forum['room_name'] }} </span>
-                        {% for tag in forum['tags_name'] %}
-                            <span class="tag-forum"> {{ tag }} </span>
-                        {% endfor %}
-                        <button>Voir plus</button>
+                    <div class="div-list forum">
+                        <h3 class="title-list-item">{{ forum['title'] }}</h3>
+                        <!-- Pour la date créer notre propre filtre sera plus efficace -->
+                        <p>Publié par {{ forum['pseudo'] }} le {{ forum['date_created']|string|truncate(10,True,'')|replace("-","/") }}</p>
+                        
+                        <div class="div-tags-button">
+                            <div class="div-tags forum">
+                                <span> {{ forum['room_name'] }} </span>
+                                {% for tag in forum['tags_name'] %}
+                                    <span> {{ tag }} </span>
+                                {% endfor %}
+                            </div>
+                            <button class="icon icon-solid icon-chevron-right button-secondary">Voir plus</button>
+                        </div>
                     </div>
                 {% endfor %} 
             </div>
