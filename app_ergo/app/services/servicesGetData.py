@@ -20,11 +20,52 @@ class GetDataServices():
             que l'on veut afficher
 
         Returns:
-            dict: les données sous forme de dictionnaire 
+            dict: les données sous forme d'un dictionnaire qui contient une liste de dictionnaires,
+                un dictionnaire par item
         """
         data = self.pdao.get_data(url)
         return data
+    
 
+    def display_forums(self, urlf: str, urlu: str, urlft: str, urlt: str, urlr: str):
+        """Affiche les données sous la forme d'un dictionnaire python
+
+        Args:
+            urlf (str): url servant à afficher les forums
+            urlu (str) : url servant à faire la correspondance entre user_id et pseudo de l'user
+            urlft (str) : url servant à faire la correspondance entre id du tag et forum et id du tag
+            urlt (str) : url servant à faire la correspondance entre tag_id et tag_name
+            urlr (str) : url servant à faire la correspondance entre room_id et room_name
+
+        Returns:
+            dict: les données sous forme de dictionnaire avec des entrées supplémentaires permettant
+            de récupérer les noms à la place des id du modèle de données
+        """
+        data = self.pdao.get_data(urlf)
+        # parcourt le dict avec une seule key 'data'
+        for d in data.values() :
+            # parcourt la liste d'items qui forme la valeur de la key 'data'
+            for forum in d :
+                # récupère les infos du user avec l'id correspondant au champ user_id du forum
+                user = self.item_by_id(urlu, forum['user_id'])
+                # crée une nouvelle key pseudo au dict du forum ave comme valeur le pseudo correspondant à l'user
+                forum['pseudo'] = user['pseudo']
+                tags = []
+                # parcourt la liste d'id contenu dans le champ tag du forum
+                # ces id correspondent aux id des croisements de forums et tags (table forums_tags)
+                for t in forum['tag']:
+                    # récupère l'id du tag du lien tag-forum
+                    tag_id = self.item_by_id(urlft, t)
+                    # récupère le nom du tag avec l'id récupéré avant
+                    tag = self.item_by_id(urlt, tag_id["tags_id"])
+                    tags.append(tag['tag_name'])
+                # on ajoute la liste de nom de tag à une nouvelle entrée du dict forum
+                forum['tags_name'] = tags
+                # même chose pour avoir le room_name
+                room = self.item_by_id(urlr, forum['room_id'])
+                forum['room_name'] = room['room_name']
+        return data
+    
 
     def display_title(self, url: str):
         """Retourne tout les titre des éléments
@@ -69,7 +110,7 @@ class GetDataServices():
         return list_room
 
 
-    def alternative_by_title(self, url: str, title: str):
+    def item_by_title(self, url: str, title: str):
         """Retourne l'ensemble des informations d'une
         collection données à partir de son titre
 
@@ -88,3 +129,24 @@ class GetDataServices():
             if i['title'] == title:
                 return i
         return 'Aucun élément ne présente ce titre dans la base de donnée'
+    
+
+    def item_by_id(self, url: str, id: str):
+        """Retourne l'ensemble des informations d'une
+        collection données à partir de son id
+
+        Args:
+            url (str): nom de la collection recherché
+            id (str): id de l'élément dont l'on veut
+            récupérer les informations
+
+        Returns:
+            dict: un dictionnaire avec toutes les informations de
+            l'élément de la collection, si l'id n'a pas été
+            trouvé, la fonction renvoie un message d'erreur.
+        """
+        data = self.pdao.get_data(url)['data']
+        for i in data:
+            if i['id'] == id:
+                return i
+        return 'Aucun élément ne présente cet id dans la base de donnée'
