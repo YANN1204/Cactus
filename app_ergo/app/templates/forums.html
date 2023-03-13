@@ -49,7 +49,10 @@
                                     <span> {{ tag }} </span>
                                 {% endfor %}
                             </div>
-                            <button class="icon icon-solid icon-chevron-right button-secondary">Voir plus</button>
+
+                            {% set idForum = forum['id']|string %}
+                            <a href="{{ url_for('forum', idForum=forum['id']|string) }}" class="icon icon-solid icon-chevron-right button-secondary">Voir plus</a>
+                        
                         </div>
                     </div>
                 {% endfor %} 
