@@ -70,28 +70,28 @@
     </div>
 
     <div>
-        <!-- on parcourt le dictionnaire data avec une seule key -->
-        {% for d in data.values() %}
-            <div> 
-                <!-- on parcourt la liste d qui contient autant de dict que de forums dans directus -->
-                {% for forum in d %}
-                    <div class="div-list forum">
-                        <h3 class="title-list-item">{{ forum['title'] }}</h3>
-                        <!-- Pour la date créer notre propre filtre sera plus efficace -->
-                        <p>Publié par {{ forum['pseudo'] }} le {{ forum['date_created']|string|truncate(10,True,'')|replace("-","/") }}</p>
-                        
-                        <div class="div-tags-button">
-                            <div class="div-tags forum">
-                                <span> {{ forum['room_name'] }} </span>
-                                {% for tag in forum['tags_name'] %}
-                                    <span> {{ tag }} </span>
-                                {% endfor %}
-                            </div>
-                            <button class="icon icon-solid icon-chevron-right button-secondary">Voir plus</button>
-                        </div>
-                    </div>
-                {% endfor %} 
+        <!-- on parcourt la liste d qui contient autant de dict que de forums dans directus -->
+        {% for forum in data %}
+        <div class="div-list forum">
+            <h3 class="title-list-item">{{ forum['title'] }}</h3>
+            <!-- Pour la date créer notre propre filtre sera plus efficace -->
+            <p>Publié par {{ forum['pseudo'] }} le {{ forum['date_created']|string|truncate(10,True,'')|replace("-","/")
+                }}</p>
+
+            <div class="div-tags-button">
+                <div class="div-tags forum">
+                    <span> {{ forum['room_name'] }} </span>
+                    {% for tag in forum['tags_name'] %}
+                    <span> {{ tag }} </span>
+                    {% endfor %}
+                </div>
+
+                {% set idForum = forum['id']|string %}
+                <a href="{{ url_for('forum', idForum=forum['id']|string) }}"
+                    class="icon icon-solid icon-chevron-right button-secondary">Voir plus</a>
+
             </div>
+        </div>
         {% endfor %}
     </div>
 </div>
