@@ -117,11 +117,7 @@ class GetDataServices():
         """Retourne l'ensemble des informations d'une
         collection données à partir de son titre
 
-        Args:
-            url (str): nom de la collection recherché
-            title (str): titre de l'élément dont l'on veut
             récupérer les informations
-
         Returns:
             dict: un dictionnaire avec toutes les informations de
             l'élément de la collection, si le titre n'a pas été
