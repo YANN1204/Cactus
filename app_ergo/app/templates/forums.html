@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 {% extends 'layout.html' %}
 
 {% block content %}
@@ -34,4 +35,66 @@
     <li>{{ data }}</li>
 </div>
 
+=======
+{% extends 'layout.html' %}
+
+{% block content %}
+
+<div class="section-h1">
+    <h1>Forums</h1>
+</div>
+
+<div class="container">
+    <div>
+        <p>
+            C'est dans cet espace que toute la communauté de Cactus s'entraide et s'échange
+            ses conseils pour aller plus loin dans la vie en vert !
+        </p>
+    </div>
+
+    <div>
+        <form>
+            <div class="mb-3">
+                <label for="inputKeyWord" class="form-label">Rechercher un sujet de forum</label>
+                <input type="text" class="form-control" id="inputKeyWord">
+            </div>
+            <button type="submit" class="btn btn-primary">Rechercher</button>
+        </form>
+    </div>
+
+    <div class="cta-post">
+        <p>Tu ne trouves pas de sujet correspondant à ta réflexion ? </p>
+        <form method="POST" action="{{ url_for('handle_button_click') }}">
+            <button type="submit">Poster un sujet de forum</button>
+        </form>
+    </div>
+
+    <div>
+        <!-- on parcourt le dictionnaire data avec une seule key -->
+        {% for d in data.values() %}
+            <div> 
+                <!-- on parcourt la liste d qui contient autant de dict que de forums dans directus -->
+                {% for forum in d %}
+                    <div class="div-list forum">
+                        <h3 class="title-list-item">{{ forum['title'] }}</h3>
+                        <!-- Pour la date créer notre propre filtre sera plus efficace -->
+                        <p>Publié par {{ forum['pseudo'] }} le {{ forum['date_created']|string|truncate(10,True,'')|replace("-","/") }}</p>
+                        
+                        <div class="div-tags-button">
+                            <div class="div-tags forum">
+                                <span> {{ forum['room_name'] }} </span>
+                                {% for tag in forum['tags_name'] %}
+                                    <span> {{ tag }} </span>
+                                {% endfor %}
+                            </div>
+                            <button class="icon icon-solid icon-chevron-right button-secondary">Voir plus</button>
+                        </div>
+                    </div>
+                {% endfor %} 
+            </div>
+        {% endfor %}
+    </div>
+</div>
+
+>>>>>>> yann
 {% endblock %}

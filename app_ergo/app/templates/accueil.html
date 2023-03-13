@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 {% extends 'layout.html' %}
 
 {% block content %}
@@ -67,4 +68,75 @@
 </div>
 
 
+=======
+{% extends 'layout.html' %}
+
+{% block content %}
+
+
+<h1>Cactus</h1>
+<p>Rejoins une communauté active et engagée à créer un monde plus vert en commençant par son foyer !</p>
+
+<div>
+    <h2>Sur Cactus, recherche tuto, forum, article et bien plus autour de l'écologie !</h2>
+    <form>
+        <div class="mb-3">
+            <label for="inputKeyWord" class="form-label">Mots clés</label>
+            <input type="text" class="form-control" id="inputKeyWord">
+        </div>
+        <div class="mb-3">
+            <select class="form-select" aria-label="Type de contenu à afficher">
+                <option selected>Tous</option>
+                <option value="1">Fiche témoignage</option>
+                <option value="2">Fiche pratique</option>
+                <option value="3">Fiche conseil</option>
+                <option value="4">Forum</option>
+                <option value="5">Article scientifique</option>
+            </select>
+        </div>
+        <div class="mb-3">
+            <select class="form-select" aria-label="Pièce de la maison">
+                <option selected>Toutes</option>
+                <option value="1">Cuisine</option>
+                <option value="2">Salle de bain</option>
+                <option value="3">Chambre</option>
+                <option value="4">Salon</option>
+                <option value="5">Garage</option>
+                <option value="6">Jardin</option>
+            </select>
+        </div>
+        <button class="btn btn-primary">Voir les articles</button>
+    </form>
+</div>
+
+<div>
+    <p>Aujourd'hui c'est plus de ##impact## tonnes de CO2 émises en moins grâce à la communauté Cactus !</p>
+    <p>Dont ##impact## depuis le ##date impact##</p>
+</div>
+
+<div class="row">
+    <div class="col">
+        <h2>Forums</h2>
+        <p>C'est dans cet espace que toute la communauté de Cactus s'entraide et s'échange ses
+            conseils pour aller plus loin dans la vie en vert !
+        </p>
+        <button class="btn btn-primary">Voir les forums</button>
+    </div>
+    <div class="col">
+        <h2>Articles scientifiques</h2>
+        <p>Place aux faits ! Tu trouveras dans cet espace toutes les sources scientifiques utilisées
+            pour justifier les indicateurs d'impact et enrichir tes connaissances.
+        </p>
+        <button class="btn btn-primary">Rechercher</button>
+    </div>
+</div>
+
+<div>
+    <h2>Les mini-jeux de Pousspousse</h2>
+</div>
+
+</div>
+
+
+>>>>>>> yann
 {% endblock %}

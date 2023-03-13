@@ -12,5 +12,6 @@ data = ds.room_by_alternative(url)
 @app.route(basepath, methods = ['GET'])
 def accueil():
     metadata = {"title": "Accueil", "pagename": "accueil"}
-    return render_template('accueil.html', metadata=metadata, data = data)
+    #return render_template('accueil.html', metadata=metadata, data = data)
+    return render_template('accueil.html', metadata=metadata)
 
