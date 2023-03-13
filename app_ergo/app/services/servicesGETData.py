@@ -53,22 +53,70 @@ class GetDataServices():
                 user = self.item_by_id(urlu, item['user_id'])
                 # crée une nouvelle key pseudo au dict du forum/fiche avec comme valeur le pseudo correspondant à l'user
                 item['pseudo'] = user['pseudo']
-                tags = []
-                # parcourt la liste d'id contenu dans le champ tag du forum/fiche
-                # ces id correspondent aux id des croisements de forum/fiche et tags (table forums_tags/ alternative_cards_tags)
-                for t in item['tag']:
-                    # récupère l'id du tag du lien tag-forum / tag-fiche
-                    tag_id = self.item_by_id(urlft, t)
-                    # récupère le nom du tag avec l'id récupéré avant
-                    tag = self.item_by_id(urlt, tag_id["tags_id"])
-                    tags.append(tag['tag_name'])
-                # on ajoute la liste de nom de tag à une nouvelle entrée du dict forum/fiche
-                item['tags_name'] = tags
+                # on récupère la liste de noms de tags
+                tags_name = self.find_tag(urlft, urlt, item["tag"])
+                # on ajoute la liste de noms de tags à une nouvelle entrée du dict forum/fiche
+                item['tags_name'] = tags_name
                 # même chose pour avoir le room_name
                 room = self.item_by_id(urlr, item['room_id'])
                 item['room_name'] = room['room_name']
         return data
     
+
+    def find_tag(self, urlft: str, urlt: str, list_tag: list):
+        """Affiche les données sous la forme d'un dictionnaire python
+
+        Args:
+            urlft (str) : url servant à faire la correspondance entre id du tag et forum/fiche et id du tag
+            urlt (str) : url servant à faire la correspondance entre tag_id et tag_name
+            list_tag (list) : liste d'id de relation tags-forums ou tags-fiches
+
+        Returns:
+            list : liste des tag_name pour un forum/fiche
+        """
+        # parcourt la liste d'id contenu dans le champ tag du forum/fiche
+        # ces id correspondent aux id des croisements de forum/fiche et tags (table forums_tags/ alternative_cards_tags)
+        tags_name = []
+        for t in list_tag:
+            # récupère l'id du tag du lien tag-forum / tag-fiche
+            tag_id = self.item_by_id(urlft, t)
+            # récupère le nom du tag avec l'id récupéré avant
+            tag = self.item_by_id(urlt, tag_id["tags_id"])
+            tags_name.append(tag['tag_name'])
+        return tags_name
+
+
+    def display_forum(self, idForum: str, urlf: str, urlu: str, urlt: str, urlft: str, urlr: str, urlc: str):
+        # pas fini
+        data = self.item_by_id(urlf, idForum)
+        # récupère les infos du user avec l'id correspondant au champ user_id du forum/fiche
+        user = self.item_by_id(urlu, data['user_id'])
+        # crée une nouvelle key pseudo au dict du forum/fiche avec comme valeur le pseudo correspondant à l'user
+        data['pseudo'] = user['pseudo']
+        data['avatar'] = user['avatar']
+        # on récupère la liste de noms de tags
+        tags_name = self.find_tag(urlft, urlt, data["tag"])
+        # on ajoute la liste de noms de tags à une nouvelle entrée du dict forum/fiche
+        data['tags_name'] = tags_name
+        # même chose pour avoir le room_name
+        room = self.item_by_id(urlr, data['room_id'])
+        data['room_name'] = room['room_name']
+        data['comments'] = self.find_comments(idForum, urlc, urlu)
+        return data
+    
+
+    def find_comments(self, idForum: str, urlc: str, urlu: str):
+        # pas fini
+        data = self.pdao.get_data(urlc)['data']
+        comments = []
+        for c in data:
+            if c['forum_id'] == idForum:
+                comments.append(c)
+                user = self.item_by_id(urlu, c['user_id'])
+                c['pseudo'] = user['pseudo']
+                c['avatar'] = user['avatar']
+        return comments
+
 
     def display_title(self, url: str):
         """Retourne tout les titre des éléments

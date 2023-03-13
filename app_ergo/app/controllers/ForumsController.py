@@ -11,6 +11,7 @@ urlu = "users"
 urlt = "tags"
 urlft = "forums_tags"
 urlr = "rooms"
+urlc = "comments"
 
 
 @app.route(basepath + 'forums', methods = ['GET'])
@@ -23,6 +24,6 @@ def forums():
 @app.route('/forum')
 def forum():
     idForum = request.args.get('idForum', None)
-    data = gds.item_by_id(urlf, idForum)
+    data = gds.display_forum(idForum, urlf, urlu, urlt, urlft, urlr, urlc)
     metadata = {"title":"Forum", "pagename": "forum"}
     return render_template('forum.html', data = data, metadata=metadata)
