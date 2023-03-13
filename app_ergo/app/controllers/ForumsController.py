@@ -14,7 +14,7 @@ urlr = "rooms"
 
 @app.route(basepath + 'forums', methods = ['GET'])
 def forums():
-    data = gds.display_forums(urlf, urlu, urlft, urlt, urlr)
+    data = gds.display_forums_fiches(urlf, urlu, urlft, urlt, urlr)
     metadata = {"title":"Forums", "pagename": "forums"}
     return render_template('forums.html', data=data, metadata=metadata)
 

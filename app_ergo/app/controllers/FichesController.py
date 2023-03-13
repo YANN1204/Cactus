@@ -11,11 +11,17 @@ dds = DeleteDataServices()
 sds = SetDataServices()
 
 basepath = '/'
+urlf = "alternative_cards"
+urlu = "users"
+urlt = "tags"
+urlft = "alternative_cards_tags"
+urlr = "rooms"
 
 @app.route(basepath + 'fiches', methods = ['GET'])
 def fiches():
+    data = gds.display_forums_fiches(urlf, urlu, urlft, urlt, urlr)
     metadata = {"title":"Fiches", "pagename": "fiches"}
-    return render_template('fiches.html', metadata=metadata)
+    return render_template('fiches.html', metadata=metadata, data=data)
 
 @app.route('/fiches', methods=['GET', 'POST'])
 def handle_button_click():
