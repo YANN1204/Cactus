@@ -1,5 +1,5 @@
 @import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
-
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500;1,600;1,700&display=swap');
 
 body {
   --darker-green : #2F422F;
@@ -14,6 +14,28 @@ body {
   font-family : "Montserrat" !important;
 }
 
+
+.icon::after {
+  display: none;
+}
+.icon-chevron-right::after {
+  content: '\f054';
+}
+.icon-lightbulb::after {
+  content: '\f0eb';
+}
+.icon-micro::after {
+  content: '\f8cb';
+}
+.icon-wrench::after {
+  content: '\f0ad';
+}
+.icon-solid::after {
+  font: var(--fa-font-solid);
+}
+.icon-regular::after {
+  font: var(--fa-font-regular);
+}
 
 .center-content {
   text-align: center;
@@ -62,3 +84,103 @@ body {
   width: fit-content;
   border-radius: 0 20px 20px 0;
 }
+
+.div-list {
+  margin-bottom: 1.3em;
+  padding : 1em 1.5em;
+  display: flex;
+  flex-direction: column;
+}
+.div-list.forum {
+  border-radius: 20px;
+  row-gap: 0.5em;
+  border: solid 1px var(--burgundy);
+}
+.div-list.card {
+  border-radius: 20px;
+  row-gap: 1em;
+  border: solid 1px var(--clear-green);
+}
+
+.div-list.forum p {
+  font-style: italic;
+  font-size: 16px;
+}
+
+
+.div-tags {
+  display: flex;
+  column-gap: 0.3em;
+}
+.div-tags span {
+  border-radius: 50px;
+  padding: 0.2em 0.7em;
+  width: fit-content;
+}
+.div-tags.conseil span {
+  background-color: rgba(145, 215, 103, 0.6);
+}
+.div-tags.temoignage span {
+  background-color: rgba(99, 184, 49, 0.6);
+}
+.div-tags.pratique span {
+  background-color: rgba(106, 153, 78, 0.6);
+}
+.div-tags.forum span{
+  background-color: rgba(188, 71, 73, 0.6);
+}
+
+
+.type-card {
+  border-radius: 50px;
+  padding: 0.2em 0.7em;
+  margin-right: 0.7em;
+  font-family: 'Open Sans';
+  font-size: 18px;
+  color: #000000;
+  display: flex;
+  flex-direction: row-reverse;
+  column-gap: 0.5em;
+  align-items: center;
+}
+.type-card.conseil {
+  background-color: #91D767;
+}
+.type-card.temoignage {
+  background-color: #6A994E;
+}
+.type-card.pratique {
+  background-color: #63B831;
+}
+
+.title-list-item {
+  font-weight: 700;
+  font-size: 20px;
+  color: var(--darker-green);
+}
+
+.div-head-list-cards {
+  display: flex;
+  column-gap: 2em;
+}
+
+.button-secondary {
+  padding: 0.3em 0.6em;
+  width: fit-content;
+  border: 1px solid var(--dark-green);
+  border-radius: 50px;
+  background-color: white;
+  color: var(--dark-green);
+  font-weight: 500;
+  font-size: 22px;
+  display: flex;
+  column-gap: 0.5em;
+  align-items: center;
+}
+
+.div-tags-button {
+  display: flex;
+  justify-content: space-between;
+  align-items: end;
+}
+
