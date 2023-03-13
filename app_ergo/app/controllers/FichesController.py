@@ -1,4 +1,4 @@
-from flask import render_template, redirect, url_for
+from flask import render_template, request
 from app import app
 from app.services.servicesGETData import GetDataServices
 from app.services.servicesPOSTData import PostDataServices
@@ -11,17 +11,27 @@ dds = DeleteDataServices()
 sds = SetDataServices()
 
 basepath = '/'
-urlf = "alternative_cards"
+# les noms des différentes collection associées à l'item qui nous
+# intéresse ici (fiche)
+url_item = "alternative_cards"
 urlu = "users"
 urlt = "tags"
 urlft = "alternative_cards_tags"
 urlr = "rooms"
+urlc = "comments"
 
 @app.route(basepath + 'fiches', methods = ['GET'])
 def fiches():
-    data = gds.display_forums_fiches(urlf, urlu, urlft, urlt, urlr)
+    data = gds.display_places(url_item, urlu, urlft, urlt, urlr)
     metadata = {"title":"Fiches", "pagename": "fiches"}
     return render_template('fiches.html', metadata=metadata, data=data)
+
+@app.route('/fiche')
+def fiche():
+    idFiche = request.args.get('idFiche', None)
+    data = gds.display_instance(idFiche, url_item, urlu, urlt, urlft, urlr, urlc)
+    metadata = {"title":"Fiche", "pagename": "fiche"}
+    return render_template('fiche.html', data = data, metadata=metadata)
 
 @app.route('/fiches', methods=['GET', 'POST'])
 def handle_button_click():

@@ -1,5 +1,4 @@
-import requests
-import json
+import time
 
 from app.models.dataDAO import DataDAO
 
@@ -27,7 +26,7 @@ class GetDataServices():
         return data
     
 
-    def display_forums_fiches(self, url: str, urlu: str, urlft: str, urlt: str, urlr: str):
+    def display_places(self, url_item: str, urlu: str, urlft: str, urlt: str, urlr: str):
         """Affiche les données sous la forme d'un dictionnaire python
            # impact à rajouter
            # doit certainement pouvoir être optimisé car chargement assez long... 
@@ -44,27 +43,29 @@ class GetDataServices():
             dict: les données sous forme de dictionnaire avec des entrées supplémentaires permettant
             de récupérer les noms à la place des id du modèle de données
         """
-        data = self.pdao.get_data(url)
-        # parcourt le dict avec une seule key 'data'
-        for d in data.values() :
-            # parcourt la liste d'items qui forme la valeur de la key 'data'
-            for item in d :
-                # récupère les infos du user avec l'id correspondant au champ user_id du forum/fiche
-                user = self.item_by_id(urlu, item['user_id'])
-                # crée une nouvelle key pseudo au dict du forum/fiche avec comme valeur le pseudo correspondant à l'user
-                item['pseudo'] = user['pseudo']
-                # on récupère la liste de noms de tags
-                tags_name = self.find_tag(urlft, urlt, item["tag"])
-                # on ajoute la liste de noms de tags à une nouvelle entrée du dict forum/fiche
-                item['tags_name'] = tags_name
-                # même chose pour avoir le room_name
-                room = self.item_by_id(urlr, item['room_id'])
-                item['room_name'] = room['room_name']
+        data = self.pdao.get_data(url_item)['data']
+        # parcourt la liste d'items du dictionnaire data
+        for item in data :
+            # récupère les infos du user avec l'id correspondant au champ user_id du forum/fiche
+            user = self.item_by_id(urlu, item['user_id'])
+           
+            # crée une nouvelle key pseudo au dict du forum/fiche avec comme valeur le pseudo correspondant à l'user
+            item['pseudo'] = user['pseudo']
+            
+            # on récupère la liste de noms de tags
+            tags_name = self.find_tag(urlft, urlt, item["tag"])
+
+            # on ajoute la liste de noms de tags à une nouvelle entrée du dict forum/fiche
+            item['tags_name'] = tags_name
+            # même chose pour avoir le room_name
+            room = self.item_by_id(urlr, item['room_id'])
+            item['room_name'] = room['room_name']
+
         return data
     
 
     def find_tag(self, urlft: str, urlt: str, list_tag: list):
-        """Affiche les données sous la forme d'un dictionnaire python
+        """Affiche les données sous la forme d'une liste
 
         Args:
             urlft (str) : url servant à faire la correspondance entre id du tag et forum/fiche et id du tag
@@ -79,16 +80,19 @@ class GetDataServices():
         tags_name = []
         for t in list_tag:
             # récupère l'id du tag du lien tag-forum / tag-fiche
-            tag_id = self.item_by_id(urlft, t)
+            tag_id = self.item_by_id(urlft, str(t))
+            
             # récupère le nom du tag avec l'id récupéré avant
             tag = self.item_by_id(urlt, tag_id["tags_id"])
+            
             tags_name.append(tag['tag_name'])
+            
         return tags_name
 
 
-    def display_forum(self, idForum: str, urlf: str, urlu: str, urlt: str, urlft: str, urlr: str, urlc: str):
+    def display_instance(self, idForum: str, url_item: str, urlu: str, urlt: str, urlft: str, urlr: str, urlc: str):
         # pas fini
-        data = self.item_by_id(urlf, idForum)
+        data = self.item_by_id(url_item, idForum)
         # récupère les infos du user avec l'id correspondant au champ user_id du forum/fiche
         user = self.item_by_id(urlu, data['user_id'])
         # crée une nouvelle key pseudo au dict du forum/fiche avec comme valeur le pseudo correspondant à l'user
@@ -192,8 +196,8 @@ class GetDataServices():
             l'élément de la collection, si l'id n'a pas été
             trouvé, la fonction renvoie un message d'erreur.
         """
-        data = self.pdao.get_data(url)['data']
-        for i in data:
-            if i['id'] == id:
-                return i
-        return 'Aucun élément ne présente cet id dans la base de donnée'
+        data = self.pdao.get_instance(url, id)['data']
+        if isinstance(data, dict):
+            return data
+        else:
+            return 'Aucun élément ne présente cet id dans la base de donnée'
