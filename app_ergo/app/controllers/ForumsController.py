@@ -6,15 +6,10 @@ from app.services.servicesGETData import GetDataServices
 gds = GetDataServices()
 
 basepath = '/'
-urlf = "forums"
-urlu = "users"
-urlt = "tags"
-urlft = "forums_tags"
-urlr = "rooms"
+url = "alternative_cards"
 
 @app.route(basepath + 'forums', methods = ['GET'])
 def forums():
-    data = gds.display_forums(urlf, urlu, urlft, urlt, urlr)
+    data = gds.alternative_by_title(url, "Boire l'eau du robinet grâce à une carafe filtrante")
     metadata = {"title":"Forums", "pagename": "forums"}
     return render_template('forums.html', data=data, metadata=metadata)
-
