@@ -63,14 +63,3 @@ def button_click_set():
     print (message)
     metadata = {"title":"Fiches", "pagename": "fiches"}
     return render_template('fiches.html', metadata=metadata)
-
-@app.route('/monbouton_3', methods=['GET', 'SET'])
-def button_click_set():
-    # Appel de votre fonction set python
-    card = gds.alternative_by_title(basepath + "fiche", "Test")
-    id = card['id']
-    print(id)
-    message = sds.update_card(id)
-    print (message)
-    metadata = {"title":"Fiches", "pagename": "fiches"}
-    return render_template('fiches.html', metadata=metadata)
