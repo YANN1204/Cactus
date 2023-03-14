@@ -1,9 +1,3 @@
-<<<<<<< HEAD
-import time
-import json
-
-=======
->>>>>>> origin/dylan
 from app.models.dataDAO import DataDAO
 import datetime
 from datetime import datetime
@@ -245,10 +239,7 @@ class GetDataServices():
 
         return data_item_filter
 
-        
 
-
-            return 'Aucun élément ne présente cet id dans la base de donnée'
 
     def display_impact(self, url: str,impacttype : str):
         """Renvoi la somme des impacts selon un type 
@@ -264,7 +255,7 @@ class GetDataServices():
             int : sommes des impacts
         """
         
-        data = self.pdao.get_data(url)['data']
+        data = self.pdao.get_data(url)
         qty=0
         for i in data:
             if i['impact_type'] == impacttype:
