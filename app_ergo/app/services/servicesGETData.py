@@ -1,0 +1,203 @@
+import time
+
+from app.models.dataDAO import DataDAO
+
+
+
+class GetDataServices():
+
+
+    def __init__(self):
+        self.pdao = DataDAO()
+
+
+    def display_data(self, url: str):
+        """Affiche les données sous la forme d'un dictionnaire python
+
+        Args:
+            url (str): url servant à afficher les données
+            que l'on veut afficher
+
+        Returns:
+            dict: les données sous forme d'un dictionnaire qui contient une liste de dictionnaires,
+                un dictionnaire par item
+        """
+        data = self.pdao.get_data(url)
+        return data
+    
+
+    def display_places(self, url_item: str, urlu: str, urlft: str, urlt: str, urlr: str):
+        """Affiche les données sous la forme d'un dictionnaire python
+           # impact à rajouter
+           # doit certainement pouvoir être optimisé car chargement assez long... 
+           # + ajouter vérif éventuellement
+
+        Args:
+            url (str): url servant à afficher les forums ou fiches
+            urlu (str) : url servant à faire la correspondance entre user_id et pseudo de l'user
+            urlft (str) : url servant à faire la correspondance entre id du tag et forum/fiche et id du tag
+            urlt (str) : url servant à faire la correspondance entre tag_id et tag_name
+            urlr (str) : url servant à faire la correspondance entre room_id et room_name
+
+        Returns:
+            dict: les données sous forme de dictionnaire avec des entrées supplémentaires permettant
+            de récupérer les noms à la place des id du modèle de données
+        """
+        data = self.pdao.get_data(url_item)['data']
+        # parcourt la liste d'items du dictionnaire data
+        for item in data :
+            # récupère les infos du user avec l'id correspondant au champ user_id du forum/fiche
+            user = self.item_by_id(urlu, item['user_id'])
+           
+            # crée une nouvelle key pseudo au dict du forum/fiche avec comme valeur le pseudo correspondant à l'user
+            item['pseudo'] = user['pseudo']
+            
+            # on récupère la liste de noms de tags
+            tags_name = self.find_tag(urlft, urlt, item["tag"])
+
+            # on ajoute la liste de noms de tags à une nouvelle entrée du dict forum/fiche
+            item['tags_name'] = tags_name
+            # même chose pour avoir le room_name
+            room = self.item_by_id(urlr, item['room_id'])
+            item['room_name'] = room['room_name']
+
+        return data
+    
+
+    def find_tag(self, urlft: str, urlt: str, list_tag: list):
+        """Affiche les données sous la forme d'une liste
+
+        Args:
+            urlft (str) : url servant à faire la correspondance entre id du tag et forum/fiche et id du tag
+            urlt (str) : url servant à faire la correspondance entre tag_id et tag_name
+            list_tag (list) : liste d'id de relation tags-forums ou tags-fiches
+
+        Returns:
+            list : liste des tag_name pour un forum/fiche
+        """
+        # parcourt la liste d'id contenu dans le champ tag du forum/fiche
+        # ces id correspondent aux id des croisements de forum/fiche et tags (table forums_tags/ alternative_cards_tags)
+        tags_name = []
+        for t in list_tag:
+            # récupère l'id du tag du lien tag-forum / tag-fiche
+            tag_id = self.item_by_id(urlft, str(t))
+            
+            # récupère le nom du tag avec l'id récupéré avant
+            tag = self.item_by_id(urlt, tag_id["tags_id"])
+            
+            tags_name.append(tag['tag_name'])
+            
+        return tags_name
+
+
+    def display_instance(self, idForum: str, url_item: str, urlu: str, urlt: str, urlft: str, urlr: str, urlc: str):
+        # pas fini
+        data = self.item_by_id(url_item, idForum)
+        # récupère les infos du user avec l'id correspondant au champ user_id du forum/fiche
+        user = self.item_by_id(urlu, data['user_id'])
+        # crée une nouvelle key pseudo au dict du forum/fiche avec comme valeur le pseudo correspondant à l'user
+        data['pseudo'] = user['pseudo']
+        data['avatar'] = user['avatar']
+        # on récupère la liste de noms de tags
+        tags_name = self.find_tag(urlft, urlt, data["tag"])
+        # on ajoute la liste de noms de tags à une nouvelle entrée du dict forum/fiche
+        data['tags_name'] = tags_name
+        # même chose pour avoir le room_name
+        room = self.item_by_id(urlr, data['room_id'])
+        data['room_name'] = room['room_name']
+        data['comments'] = self.find_comments(idForum, urlc, urlu)
+        return data
+    
+
+    def find_comments(self, idForum: str, urlc: str, urlu: str):
+        # pas fini
+        data = self.pdao.get_data(urlc)['data']
+        comments = []
+        for c in data:
+            if c['forum_id'] == idForum:
+                comments.append(c)
+                user = self.item_by_id(urlu, c['user_id'])
+                c['pseudo'] = user['pseudo']
+                c['avatar'] = user['avatar']
+        return comments
+
+
+    def display_title(self, url: str):
+        """Retourne tout les titre des éléments
+        d'une collection particulière de Directus 
+
+        Args:
+            url (str): url de la collection recherché
+
+        Returns:
+            list: la liste des titres
+        """
+        data = self.pdao.get_data(url)['data']
+        title = []
+        for i in data:
+            title.append(i['title'])
+        return title
+
+
+    def room_by_alternative(self, url: str):
+        """Retourne un dictionnaire avec en clé
+        le titre de l'alternative_cards et en valeur le
+        nom de la pièce de la maison qui lui est associé.
+        
+        ***Cette fonction sera amené à être généralisé
+
+        Args:
+            url (str): url de la collection (alternative_cards
+            dans cette exemple)
+
+        Returns:
+            dict: retourne le dictionnaire avec les élements titre & pièces
+            de la maison associé
+        """
+        id_room = {'032160c4-caa2-451f-b3c8-72c53360345f': 'Salle de bain', '8a855849-86a0-47e0-b4ff-c240f6e6bf4f': 'Cuisine'}
+        data = self.pdao.get_data(url)['data']
+        room = {}
+        for i in data:
+            room[i['title']] = id_room[str(i['room_id'])]
+        list_room = []
+        for i in room:
+            list_room.append((i, room.get(i)))
+        return list_room
+
+
+    def item_by_title(self, url: str, title: str):
+        """Retourne l'ensemble des informations d'une
+        collection données à partir de son titre
+
+            récupérer les informations
+        Returns:
+            dict: un dictionnaire avec toutes les informations de
+            l'élément de la collection, si le titre n'a pas été
+            trouvé, la fonction renvoie un message d'erreur.
+        """
+        data = self.pdao.get_data(url)['data']
+        for i in data:
+            if i['title'] == title:
+                return i
+        return 'Aucun élément ne présente ce titre dans la base de donnée'
+    
+
+    def item_by_id(self, url: str, id: str):
+        """Retourne l'ensemble des informations d'une
+        collection données à partir de son id
+
+        Args:
+            url (str): nom de la collection recherché
+            id (str): id de l'élément dont l'on veut
+            récupérer les informations
+
+        Returns:
+            dict: un dictionnaire avec toutes les informations de
+            l'élément de la collection, si l'id n'a pas été
+            trouvé, la fonction renvoie un message d'erreur.
+        """
+        data = self.pdao.get_instance(url, id)['data']
+        if isinstance(data, dict):
+            return data
+        else:
+            return 'Aucun élément ne présente cet id dans la base de donnée'
