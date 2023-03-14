@@ -1,0 +1,77 @@
+{% extends 'layout.html' %} {% block content %}
+<style>
+    .error-message {
+        color: red;
+        font-weight: bold;
+    }
+    
+    .avatar-preview {
+        max-width: 100px;
+        max-height: 100px;
+        margin-left: 10px;
+    }
+</style>
+
+<body>
+    <div class="section-h1">
+        <h1>Inscription</h1>
+    </div>
+
+    <div class="row">
+
+        <div class="col">
+            <h2>Etape 1 : Crée ton compte ! </h2>
+
+        </div>
+        <div>
+            <li>Pour commencer, renseigne ton e-mail comme identifiant,</li>
+            <li> crée un mot de passe et enfin décide du pseudo et de l’avatar par lequel tu souhaite que les autres membres t’identifie. </li>
+        </div>
+        <form id="register-form" enctype="multipart/form-data" method="POST" action="{{ url_for('register') }}">
+            <label for="email">E-mail *</label>
+            <input type="email" id="email" name="email" placeholder="exemple@mail.fr">
+
+            <label for="password-input">Mot de passe*</label>
+            <input type="password" id="password" name="password">
+
+            <label for="passwordComfirmation-input" class="form-label">Comfirmation du mot de passe *</label>
+            <input type="password" id="passwordComfirmation" oninput="checkInputs()" name="passwordComfirmation">
+
+            <div id="error-message"></div>
+
+            <label for="pseudo-input" class="form-label">Pseudo (Visible par la communauté) *</label>
+            <input type="text" class="form-control" id="pseudo" name="pseudo">
+
+            <label for="avatar">Avatar :</label>
+
+            <input type="file" id="avatar" name="avatar" onchange="loadAvatar(event)"><br>
+            <img id="avatar-preview" class="avatar-preview" src="#" alt="Aperçu de l'avatar" style="display: none;"><br><br>
+
+
+            <button type="submit" class="btn btn-primary">S'inscrire</button>
+        </form>
+
+
+
+        <script>
+            function checkInputs() {
+                var input1 = document.getElementById("inputPassWord").value;
+                var input2 = document.getElementById("inputPassWordComfirmation").value;
+
+                if (input1 === input2) {
+                    document.getElementById("error-message").innerHTML = "Les entrées sont identiques";
+                } else {
+                    document.getElementById("error-message").innerHTML = "Les entrées ne sont pas identiques.";
+                }
+            }
+
+            function loadAvatar(event) {
+                var avatar = document.getElementById("avatar");
+                var output = document.getElementById("avatar-preview");
+                output.src = URL.createObjectURL(avatar.files[0]);
+                output.style.display = "block";
+            }
+        </script>
+</body>
+
+{% endblock %}

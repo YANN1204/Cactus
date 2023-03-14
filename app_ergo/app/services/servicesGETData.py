@@ -1,6 +1,6 @@
-import time
-
 from app.models.dataDAO import DataDAO
+import datetime
+from datetime import datetime
 
 
 
@@ -201,3 +201,37 @@ class GetDataServices():
             return data
         else:
             return 'Aucun élément ne présente cet id dans la base de donnée'
+
+    def display_impact(self, url: str,impacttype : str):
+        """Renvoi la somme des impacts selon un type 
+
+        Args:
+            url (str): url servant à afficher les données
+            que l'on veut afficher
+
+            impacttype (str): numero du type d'impact : 1=impact communauté, 2=impact fiche
+         
+
+        Returns:
+            int : sommes des impacts
+        """
+        
+        data = self.pdao.get_data(url)['data']
+        qty=0
+        for i in data:
+            if i['impact_type'] == impacttype:
+                qty+=int(i['numerical_data'])
+        return qty
+    
+    def display_impact_now(self):
+        #affiche seulement le nombre de jour depuis le 01/01/23
+        #il manque à calculer l'impact de la communauté en cumulant les nombres d'user qui ont 
+        #adopté les fiches
+        #et stocker cette valeur dans directus (pour pas a la calculer tout le temps)
+        date_actuelle = datetime.now().date()
+        janvier2023 = datetime.strptime('2023-01-01', '%Y-%m-%d').date()
+        difference =  date_actuelle-janvier2023 
+        return difference.days
+    
+
+    
