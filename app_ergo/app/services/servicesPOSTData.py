@@ -23,7 +23,9 @@ class PostDataServices():
             le contenu associé
         """
         path = self.pdao.path + collection
+        
         auth = ('yann.riopro@gmail.com', 'ACmerlu12')
+        
         response = requests.post(path, auth=auth, json=data)
         if response.status_code == 200:
             print('L\'individu a été créé avec succès')

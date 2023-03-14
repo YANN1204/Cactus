@@ -1,10 +1,9 @@
 <nav class="navbar navbar-expand bg-light">
     <div class="container-fluid justify-content-between">
         <ul class="navbar-nav w-100 mx-auto">
-            {% for menu_item in ["accueil", "cactus", "fiches", "forums", "articles_scientifiques", "jeux", "profil"] %}
+            {% for menu_item in ["accueil", "cactus", "fiches", "forums", "articles_scientifiques", "jeux", "profil","sign_up"] %}
             <li class="nav-item">
-                <a class="nav-link {{ 'active' if menu_item==metadata.pagename else '' }}"
-                    href="{{ url_for(menu_item) }}">{{ menu_item|capitalize }}</a>
+                <a class="nav-link {{ 'active' if menu_item==metadata.pagename else '' }}" href="{{ url_for(menu_item) }}">{{ menu_item|capitalize }}</a>
             </li>
             {% endfor %}
         </ul>

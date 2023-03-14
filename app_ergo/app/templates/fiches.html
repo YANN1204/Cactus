@@ -1,6 +1,4 @@
-{% extends 'layout.html' %}
-
-{% block content %}
+{% extends 'layout.html' %} {% block content %}
 
 <div class="section-h1">
     <h1>Fiches</h1>
@@ -155,5 +153,9 @@
 </form>
 
 </div>
+
+<form method="SET" action="{{ url_for('button_click_set') }}">
+    <button type="submit">Modifier une fiche</button>
+</form>
 
 {% endblock %}
