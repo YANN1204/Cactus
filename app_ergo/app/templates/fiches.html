@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 {% extends 'layout.html' %}
 
 {% block content %}
@@ -17,242 +16,144 @@
     </div>
 
     <div>
-        <form>
-            <div class="mb-3">
-                <label for="inputKeyWord" class="form-label">Mots clés</label>
-                <input type="text" class="form-control" id="inputKeyWord">
-            </div>
-            <div class="mb-3">
-                <select class="form-select" aria-label="Type de contenu à afficher">
-                    <option selected>Tous</option>
-                    <option value="1">Fiche témoignage</option>
-                    <option value="2">Fiche pratique</option>
-                    <option value="3">Fiche conseil</option>
-                </select>
-            </div>
-            <div class="mb-3">
-                <div class="form-check">
-                    <input class="form-check-input" type="checkbox" value="" id="checkKitchen">
-                    <label class="form-check-label" for="checkKitchen">
-                        Cuisine
-                    </label>
-                </div>
-                <div class="form-check">
-                    <input class="form-check-input" type="checkbox" value="" id="checkBathroom">
-                    <label class="form-check-label" for="checkBathroom">
-                        Salle de bain
-                    </label>
-                </div>
-                <div class="form-check">
-                    <input class="form-check-input" type="checkbox" value="" id="checkGarage">
-                    <label class="form-check-label" for="checkGarage">
-                        Garage
-                    </label>
-                </div>
-                <div class="form-check">
-                    <input class="form-check-input" type="checkbox" value="" id="checkLivingRoom">
-                    <label class="form-check-label" for="checkLivingRoom">
-                        Salon
-                    </label>
-                </div>
-                <div class="form-check">
-                    <input class="form-check-input" type="checkbox" value="" id="checkBedroom">
-                    <label class="form-check-label" for="checkBedroom">
-                        Chambre
-                    </label>
-                </div>
-                <div class="form-check">
-                    <input class="form-check-input" type="checkbox" value="" id="checkGarden">
-                    <label class="form-check-label" for="checkGarden">
-                        Jardin
-                    </label>
-                </div>
-                <div class="form-check">
-                    <input class="form-check-input" type="checkbox" value="" id="checkAllRooms">
-                    <label class="form-check-label" for="checkAllRooms">
-                        Maison entière
-                    </label>
-                </div>
-            </div>
-            <button type="submit" class="btn btn-primary">Rechercher</button>
+        <form method="GET" action="{{ url_for('research_in_cards') }}">
+            <label for="content_research">Mots clés</label>
+            <input type="text" name="content_research" id="content_research">
+            <button type="submit">Rechercher</button>
         </form>
+
+
+        <select class="form-select" aria-label="Type de contenu à afficher">
+            <option selected>Tous</option>
+            <option value="1">Fiche témoignage</option>
+            <option value="2">Fiche pratique</option>
+            <option value="3">Fiche conseil</option>
+        </select>
     </div>
-
-    <div class="cta-post">
-        <p>Tu veux partager une astuce, une alternative, ou témoigner ?</p>
-        <form method="POST" action="{{ url_for('handle_button_click') }}">
-            <button type="submit">Poster une fiche</button>
-        </form>
-    </div>
-
-    <form method="DELETE" action="{{ url_for('button_click_delete') }}">
-        <button type="submit">Supprimer une fiche</button>
-    </form>
-
-    <form method="SET" action="{{ url_for('button_click_set') }}">
-        <button type="submit">Modifier une fiche</button>
-    </form>
-
-</div>
-
-=======
-{% extends 'layout.html' %}
-
-{% block content %}
-
-<div class="section-h1">
-    <h1>Fiches</h1>
-</div>
-
-<div class="container">
-
-    <div>
-        <p>
-            Dans l'espace Fiches, retrouve conseils, DIY et témoignages
-            partagés par tous les utilisateur·ices de Cactus.
-        </p>
-    </div>
-
-    <div>
-        <form>
-            <div class="mb-3">
-                <label for="inputKeyWord" class="form-label">Mots clés</label>
-                <input type="text" class="form-control" id="inputKeyWord">
-            </div>
-            <div class="mb-3">
-                <select class="form-select" aria-label="Type de contenu à afficher">
-                    <option selected>Tous</option>
-                    <option value="1">Fiche témoignage</option>
-                    <option value="2">Fiche pratique</option>
-                    <option value="3">Fiche conseil</option>
-                </select>
-            </div>
-            <div class="mb-3">
-                <div class="form-check">
-                    <input class="form-check-input" type="checkbox" value="" id="checkKitchen">
-                    <label class="form-check-label" for="checkKitchen">
-                        Cuisine
-                    </label>
-                </div>
-                <div class="form-check">
-                    <input class="form-check-input" type="checkbox" value="" id="checkBathroom">
-                    <label class="form-check-label" for="checkBathroom">
-                        Salle de bain
-                    </label>
-                </div>
-                <div class="form-check">
-                    <input class="form-check-input" type="checkbox" value="" id="checkGarage">
-                    <label class="form-check-label" for="checkGarage">
-                        Garage
-                    </label>
-                </div>
-                <div class="form-check">
-                    <input class="form-check-input" type="checkbox" value="" id="checkLivingRoom">
-                    <label class="form-check-label" for="checkLivingRoom">
-                        Salon
-                    </label>
-                </div>
-                <div class="form-check">
-                    <input class="form-check-input" type="checkbox" value="" id="checkBedroom">
-                    <label class="form-check-label" for="checkBedroom">
-                        Chambre
-                    </label>
-                </div>
-                <div class="form-check">
-                    <input class="form-check-input" type="checkbox" value="" id="checkGarden">
-                    <label class="form-check-label" for="checkGarden">
-                        Jardin
-                    </label>
-                </div>
-                <div class="form-check">
-                    <input class="form-check-input" type="checkbox" value="" id="checkAllRooms">
-                    <label class="form-check-label" for="checkAllRooms">
-                        Maison entière
-                    </label>
-                </div>
-            </div>
-            <button type="submit" class="btn btn-primary">Rechercher</button>
-        </form>
-    </div>
-
-    <div>
-        <!-- on parcourt la liste d qui contient autant de dict que de fiches dans directus -->
-        {% for card in data %}
-        <div class="div-list card">
-
-            {% if card['type_of_card'] == "1" %}
-            <div class="div-head-list-cards">
-                <span class="type-card pratique icon icon-regular icon-wrench">Fiche pratique</span>
-                <h3 class="title-list-item">{{ card['title'] }}</h3>
-            </div>
-            <div class="div-tags-button">
-                <div class="div-tags pratique">
-                    <span> {{ card['room_name'] }} </span>
-                    {% for tag in card['tags_name'] %}
-                    <span> {{ tag }} </span>
-                    {% endfor %}
-                </div>
-                {% set idFiche = card['id']|string %}
-                <a href="{{ url_for('fiche', idFiche=card['id']|string) }}"
-                    class="icon icon-solid icon-chevron-right button-secondary">Voir plus</a>
-            </div>
-
-            {% elif card['type_of_card'] == "2" %}
-            <div class="div-head-list-cards">
-                <span class="type-card conseil icon icon-regular icon-lightbulb">Fiche conseil</span>
-                <h3 class="title-list-item">{{ card['title'] }}</h3>
-            </div>
-            <div class="div-tags-button">
-                <div class="div-tags conseil">
-                    <span> {{ card['room_name'] }} </span>
-                    {% for tag in card['tags_name'] %}
-                    <span> {{ tag }} </span>
-                    {% endfor %}
-                </div>
-                {% set idFiche = card['id']|string %}
-                <a href="{{ url_for('fiche', idFiche=card['id']|string) }}"
-                    class="icon icon-solid icon-chevron-right button-secondary">Voir plus</a>
-            </div>
-
-            {% else %}
-            <div class="div-head-list-cards">
-                <span class="type-card temoignage icon icon-regular icon-micro">Fiche témoignage</span>
-                <h3 class="title-list-item">{{ card['title'] }}</h3>
-            </div>
-            <div class="div-tags-button">
-                <div class="div-tags temoignage">
-                    <span> {{ card['room_name'] }} </span>
-                    {% for tag in card['tags_name'] %}
-                    <span> {{ tag }} </span>
-                    {% endfor %}
-                </div>
-                {% set idFiche = card['id']|string %}
-                <a href="{{ url_for('fiche', idFiche=card['id']|string) }}"
-                    class="icon icon-solid icon-chevron-right button-secondary">Voir plus</a>
-            </div>
-
-            {% endif %}
-
+    <div class="mb-3">
+        <div class="form-check">
+            <input class="form-check-input" type="checkbox" value="" id="checkKitchen">
+            <label class="form-check-label" for="checkKitchen">
+                Cuisine
+            </label>
         </div>
-        {% endfor %}
+        <div class="form-check">
+            <input class="form-check-input" type="checkbox" value="" id="checkBathroom">
+            <label class="form-check-label" for="checkBathroom">
+                Salle de bain
+            </label>
+        </div>
+        <div class="form-check">
+            <input class="form-check-input" type="checkbox" value="" id="checkGarage">
+            <label class="form-check-label" for="checkGarage">
+                Garage
+            </label>
+        </div>
+        <div class="form-check">
+            <input class="form-check-input" type="checkbox" value="" id="checkLivingRoom">
+            <label class="form-check-label" for="checkLivingRoom">
+                Salon
+            </label>
+        </div>
+        <div class="form-check">
+            <input class="form-check-input" type="checkbox" value="" id="checkBedroom">
+            <label class="form-check-label" for="checkBedroom">
+                Chambre
+            </label>
+        </div>
+        <div class="form-check">
+            <input class="form-check-input" type="checkbox" value="" id="checkGarden">
+            <label class="form-check-label" for="checkGarden">
+                Jardin
+            </label>
+        </div>
+        <div class="form-check">
+            <input class="form-check-input" type="checkbox" value="" id="checkAllRooms">
+            <label class="form-check-label" for="checkAllRooms">
+                Maison entière
+            </label>
+        </div>
     </div>
+    </form>
+</div>
 
-    <div class="cta-post">
-        <p>Tu veux partager une astuce, une alternative, ou témoigner ?</p>
-        <form method="POST" action="{{ url_for('handle_button_click') }}">
-            <button type="submit">Poster une fiche</button>
-        </form>
+<div>
+    <!-- on parcourt la liste d qui contient autant de dict que de fiches dans directus -->
+    {% for card in data %}
+    <div class="div-list card">
+
+        {% if card['type_of_card'] == "1" %}
+        <div class="div-head-list-cards">
+            <span class="type-card pratique icon icon-regular icon-wrench">Fiche pratique</span>
+            <h3 class="title-list-item">{{ card['title'] }}</h3>
+        </div>
+        <div class="div-tags-button">
+            <div class="div-tags pratique">
+                <span> {{ card['room_name'] }} </span>
+                {% for tag in card['tags_name'] %}
+                <span> {{ tag }} </span>
+                {% endfor %}
+            </div>
+            {% set idFiche = card['id']|string %}
+            <a href="{{ url_for('fiche', idFiche=card['id']|string) }}"
+                class="icon icon-solid icon-chevron-right button-secondary">Voir plus</a>
+        </div>
+
+        {% elif card['type_of_card'] == "2" %}
+        <div class="div-head-list-cards">
+            <span class="type-card conseil icon icon-regular icon-lightbulb">Fiche conseil</span>
+            <h3 class="title-list-item">{{ card['title'] }}</h3>
+        </div>
+        <div class="div-tags-button">
+            <div class="div-tags conseil">
+                <span> {{ card['room_name'] }} </span>
+                {% for tag in card['tags_name'] %}
+                <span> {{ tag }} </span>
+                {% endfor %}
+            </div>
+            {% set idFiche = card['id']|string %}
+            <a href="{{ url_for('fiche', idFiche=card['id']|string) }}"
+                class="icon icon-solid icon-chevron-right button-secondary">Voir plus</a>
+        </div>
+
+        {% else %}
+        <div class="div-head-list-cards">
+            <span class="type-card temoignage icon icon-regular icon-micro">Fiche témoignage</span>
+            <h3 class="title-list-item">{{ card['title'] }}</h3>
+        </div>
+        <div class="div-tags-button">
+            <div class="div-tags temoignage">
+                <span> {{ card['room_name'] }} </span>
+                {% for tag in card['tags_name'] %}
+                <span> {{ tag }} </span>
+                {% endfor %}
+            </div>
+            {% set idFiche = card['id']|string %}
+            <a href="{{ url_for('fiche', idFiche=card['id']|string) }}"
+                class="icon icon-solid icon-chevron-right button-secondary">Voir plus</a>
+        </div>
+
+        {% endif %}
+
     </div>
+    {% endfor %}
+</div>
 
-    <form method="DELETE" action="{{ url_for('button_click_delete') }}">
-        <button type="submit">Supprimer une fiche</button>
+<div class="cta-post">
+    <p>Tu veux partager une astuce, une alternative, ou témoigner ?</p>
+    <form method="POST" action="{{ url_for('handle_button_click') }}">
+        <button type="submit">Poster une fiche</button>
     </form>
+</div>
 
-    <form method="SET" action="{{ url_for('button_click_set') }}">
-        <button type="submit">Modifier une fiche</button>
-    </form>
+<form method="DELETE" action="{{ url_for('button_click_delete') }}">
+    <button type="submit">Supprimer une fiche</button>
+</form>
+
+<form method="SET" action="{{ url_for('button_click_set') }}">
+    <button type="submit">Modifier une fiche</button>
+</form>
 
 </div>
 
->>>>>>> yann
 {% endblock %}

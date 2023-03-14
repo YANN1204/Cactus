@@ -13,6 +13,7 @@ sds = SetDataServices()
 basepath = '/'
 # les noms des différentes collection associées à l'item qui nous
 # intéresse ici (fiche)
+
 url_item = "alternative_cards"
 urlu = "users"
 urlt = "tags"
@@ -25,6 +26,15 @@ def fiches():
     data = gds.display_places(url_item, urlu, urlft, urlt, urlr)
     metadata = {"title":"Fiches", "pagename": "fiches"}
     return render_template('fiches.html', metadata=metadata, data=data)
+
+@app.route(basepath + 'research', methods=['GET'])
+def research_in_cards():
+    data = gds.display_places(url_item, urlu, urlft, urlt, urlr)
+    content_research = request.args.get('content_research')
+    data_filter = gds.filter(data, content_research)
+    metadata = {"title":"Fiches", "pagename":"fiches"}
+    return render_template('fiches.html', metadata=metadata, data=data_filter)
+
 
 @app.route('/fiche')
 def fiche():
