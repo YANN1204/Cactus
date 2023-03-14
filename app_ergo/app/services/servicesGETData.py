@@ -1,4 +1,5 @@
 import time
+import json
 
 from app.models.dataDAO import DataDAO
 
@@ -43,12 +44,13 @@ class GetDataServices():
             dict: les données sous forme de dictionnaire avec des entrées supplémentaires permettant
             de récupérer les noms à la place des id du modèle de données
         """
-        data = self.pdao.get_data(url_item)['data']
+        data = self.pdao.get_data(url_item)
+
         # parcourt la liste d'items du dictionnaire data
         for item in data :
             # récupère les infos du user avec l'id correspondant au champ user_id du forum/fiche
             user = self.item_by_id(urlu, item['user_id'])
-           
+
             # crée une nouvelle key pseudo au dict du forum/fiche avec comme valeur le pseudo correspondant à l'user
             item['pseudo'] = user['pseudo']
             
@@ -80,7 +82,7 @@ class GetDataServices():
         tags_name = []
         for t in list_tag:
             # récupère l'id du tag du lien tag-forum / tag-fiche
-            tag_id = self.item_by_id(urlft, str(t))
+            tag_id = self.item_by_id(urlft, t)
             
             # récupère le nom du tag avec l'id récupéré avant
             tag = self.item_by_id(urlt, tag_id["tags_id"])
@@ -90,9 +92,9 @@ class GetDataServices():
         return tags_name
 
 
-    def display_instance(self, idForum: str, url_item: str, urlu: str, urlt: str, urlft: str, urlr: str, urlc: str):
+    def display_instance(self, idInstance: str, url_item: str, urlu: str, urlt: str, urlft: str, urlr: str, urlc: str):
         # pas fini
-        data = self.item_by_id(url_item, idForum)
+        data = self.item_by_id(url_item, idInstance)
         # récupère les infos du user avec l'id correspondant au champ user_id du forum/fiche
         user = self.item_by_id(urlu, data['user_id'])
         # crée une nouvelle key pseudo au dict du forum/fiche avec comme valeur le pseudo correspondant à l'user
@@ -105,13 +107,13 @@ class GetDataServices():
         # même chose pour avoir le room_name
         room = self.item_by_id(urlr, data['room_id'])
         data['room_name'] = room['room_name']
-        data['comments'] = self.find_comments(idForum, urlc, urlu)
+        data['comments'] = self.find_comments(idInstance, urlc, urlu)
         return data
     
 
     def find_comments(self, idForum: str, urlc: str, urlu: str):
         # pas fini
-        data = self.pdao.get_data(urlc)['data']
+        data = self.pdao.get_data(urlc)
         comments = []
         for c in data:
             if c['forum_id'] == idForum:
@@ -132,7 +134,7 @@ class GetDataServices():
         Returns:
             list: la liste des titres
         """
-        data = self.pdao.get_data(url)['data']
+        data = self.pdao.get_data(url)
         title = []
         for i in data:
             title.append(i['title'])
@@ -155,7 +157,7 @@ class GetDataServices():
             de la maison associé
         """
         id_room = {'032160c4-caa2-451f-b3c8-72c53360345f': 'Salle de bain', '8a855849-86a0-47e0-b4ff-c240f6e6bf4f': 'Cuisine'}
-        data = self.pdao.get_data(url)['data']
+        data = self.pdao.get_data(url)
         room = {}
         for i in data:
             room[i['title']] = id_room[str(i['room_id'])]
@@ -175,7 +177,7 @@ class GetDataServices():
             l'élément de la collection, si le titre n'a pas été
             trouvé, la fonction renvoie un message d'erreur.
         """
-        data = self.pdao.get_data(url)['data']
+        data = self.pdao.get_data(url)
         for i in data:
             if i['title'] == title:
                 return i
@@ -196,8 +198,48 @@ class GetDataServices():
             l'élément de la collection, si l'id n'a pas été
             trouvé, la fonction renvoie un message d'erreur.
         """
-        data = self.pdao.get_instance(url, id)['data']
-        if isinstance(data, dict):
-            return data
+        data = self.pdao.get_data(url)
+        
+        for i in data:
+            if i['id'] == id:
+                return i
+            
+        return 'Aucun élément ne présente cet id dans la base de donnée'
+
+
+    def filter(self, data_item, research_data):
+        """_summary_
+
+        Args:
+            data_item (dict): l'essemble des instances d'un item donnée
+            de l'API Directus
+            research_data (str): données de recherche qui vont servir pour
+            le filtre de ce qui sera retourné
+
+        Returns:
+            dict: données filtrées de l'item 
+        """
+
+        if research_data[0].isupper():
+            new_research = research_data[0].lower() + research_data[1:]
         else:
-            return 'Aucun élément ne présente cet id dans la base de donnée'
+            new_research = research_data[0].upper() + research_data[1:]
+
+        data_item_filter = []
+        for i in data_item:
+            title = i['title']
+            list_tags = i['tags_name']
+            room_name = i['room_name']
+            if research_data in title or new_research in title:
+                data_item_filter.append(i)
+            for tag in list_tags:
+                if tag in research_data or tag in new_research:
+                    data_item_filter.append(i)
+            if room_name in research_data or room_name in new_research:
+                data_item_filter.append(i)
+
+        return data_item_filter
+
+        
+
+

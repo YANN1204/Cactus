@@ -16,7 +16,6 @@ class PostDataServices():
         """Crée un individu pour une collection donnée avec un status
         un titre et une pièce de la maison sur Directus.
         ***Cette fonction est amené à être généralisé.
-
         Args:
             collection (str): la collection dans laquelle on veut 
             ajouter un élément
