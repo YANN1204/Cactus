@@ -29,6 +29,7 @@ def register():
     # Récupérer les valeurs de l'e-mail, du mot de passe et de l'adresse e-mail depuis le formulaire
     email = request.form.get("email")
     password = request.form.get("password")  
+    print(email)
     #tag = request.form.get("result")      
     #avatar= request.form.get("avatar")
     pseudo=request.form.get("pseudo")    
@@ -51,5 +52,5 @@ def register():
 
 
     data = pds.post_data('users', data=newData)
-    return render_template('sign_up.html', metadata=metadata, data=data)
+    return render_template('login.html', metadata=metadata, data=data)
 

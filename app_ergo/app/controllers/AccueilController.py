@@ -5,6 +5,7 @@ from app.models.dataDAO import DataDAO
 
 app.secret_key = "secret_key"
 
+dd = DataDAO()
 gds = GetDataServices()
 basepath = '/'
 
@@ -37,14 +38,24 @@ def accueil():
 @app.route(basepath + 'connexion', methods = ['GET', 'POST'])
 def connexion():
     is_connected = session.get("is_connected", False)
-    session["is_connected"] = True
-    is_connected = True  # set is_connected to True
-    data={}
+    email = request.form.get("email")
+    password = request.form.get("password")
+    print(email)
+    print(password)
+    data_users = dd.get_data(urlu)
     metadata = {"title": "Accueil", "pagename": "accueil"}
-    data["impact"] = int(gds.display_impact(url=urlimp,impacttype="1"))
-    data["impact_now"] = gds.display_impact_now()
-        
-    return render_template('accueil.html', metadata=metadata, data=data, is_connected=is_connected)
+
+    for i in data_users:
+        if i['mail'] == email and i['password'] == password:
+            data={}
+            session["is_connected"] = True
+            is_connected = True  # set is_connected to True
+            data["impact"] = int(gds.display_impact(url=urlimp,impacttype="1"))
+            data["impact_now"] = gds.display_impact_now()
+            return render_template('accueil.html', metadata=metadata, data=data, is_connected=is_connected)
+        else:
+            data = "Aucun compte reconnu, créez-vous en un !"
+            return render_template('login.html', metadata=metadata, data=data, is_connected=is_connected)
 
 
 @app.route(basepath + 'accueil', methods = ['GET'])
