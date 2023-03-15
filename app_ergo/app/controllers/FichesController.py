@@ -1,4 +1,4 @@
-from flask import render_template, request
+from flask import render_template, request, session
 from app import app
 from app.services.servicesGETData import GetDataServices
 from app.services.servicesPOSTData import PostDataServices
@@ -17,31 +17,35 @@ basepath = '/'
 url_item = "alternative_cards"
 urlu = "users"
 urlt = "tags"
-urlft = "alternative_cards_tags"
+urlact = "alternative_cards_tags"
 urlr = "rooms"
 urlc = "comments"
 
 @app.route(basepath + 'fiches', methods = ['GET'])
 def fiches():
-    data = gds.display_places(url_item, urlu, urlft, urlt, urlr)
+    is_connected = session.get("is_connected", False)
+    print(is_connected)
+    data = gds.display_places(url_item, urlu, urlact, urlt, urlr)
     metadata = {"title":"Fiches", "pagename": "fiches"}
-    return render_template('fiches.html', metadata=metadata, data=data)
+    return render_template('fiches.html', metadata=metadata, data=data, is_connected=is_connected)
 
 @app.route(basepath + 'research', methods=['GET'])
 def research_in_cards():
-    data = gds.display_places(url_item, urlu, urlft, urlt, urlr)
+    is_connected = session.get("is_connected", False)
+    data = gds.display_places(url_item, urlu, urlact, urlt, urlr)
     content_research = request.args.get('content_research')
     data_filter = gds.filter(data, content_research)
     metadata = {"title":"Fiches", "pagename":"fiches"}
-    return render_template('fiches.html', metadata=metadata, data=data_filter)
+    return render_template('fiches.html', metadata=metadata, data=data_filter, is_connected=is_connected)
 
 
 @app.route('/fiche')
 def fiche():
+    is_connected = session.get("is_connected", False)
     idFiche = request.args.get('idFiche', None)
-    data = gds.display_instance(idFiche, url_item, urlu, urlt, urlft, urlr, urlc)
+    data = gds.display_instance(idFiche, url_item, urlu, urlt, urlact, urlr, urlc)
     metadata = {"title":"Fiche", "pagename": "fiche"}
-    return render_template('fiche.html', data = data, metadata=metadata)
+    return render_template('fiche.html', data = data, metadata=metadata, is_connected=is_connected)
 
 @app.route('/fiches', methods=['GET', 'POST'])
 def handle_button_click():

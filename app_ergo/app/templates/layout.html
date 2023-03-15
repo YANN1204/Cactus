@@ -17,7 +17,11 @@
 </head>
 
 <body>
+    {% if is_connected == True %}
     {% include 'nav.html' %}
+    {% else %}
+    {% include 'nav_guest.html' %}
+    {% endif %}
     <div>
         {% block content %}{% endblock %}
     </div>
