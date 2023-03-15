@@ -1,9 +1,11 @@
-from flask import render_template, redirect, url_for
+from flask import render_template, session
 from app import app
 
 basepath = '/'
 
 @app.route(basepath + 'profil', methods = ['GET'])
 def profil():
+    is_connected = session.get("is_connected", False)
+    print(is_connected)
     metadata = {"title":"Profil", "pagename": "profil"}
-    return render_template('profil.html', metadata=metadata)
+    return render_template('profil.html', metadata=metadata, is_connected=is_connected)

@@ -1,4 +1,4 @@
-from flask import render_template, redirect, request, url_for
+from flask import render_template, session, request
 import requests
 import os
 from app import app
@@ -10,6 +10,7 @@ basepath = '/'
 
 @app.route(basepath + 'sign_up', methods = ['GET'])
 def sign_up():
+    is_connected = session.get("is_connected", False)
     metadata = {"title":"Sign_up", "pagename": "sign_up"}
     return render_template('sign_up.html', metadata=metadata)
 
