@@ -1,77 +1,216 @@
 {% extends 'layout.html' %} {% block content %}
 <style>
-    .error-message {
-        color: red;
-        font-weight: bold;
-    }
-    
     .avatar-preview {
         max-width: 100px;
         max-height: 100px;
         margin-left: 10px;
     }
+    
+    #tagId {
+        display: none;
+    }
 </style>
+<ul class="nav nav-tabs">
+    <li class="active"><a href="#tab1" data-toggle="tab">Onglet 1</a></li>
+    <li><a href="#tab2" data-toggle="tab">Onglet 2</a></li>
+    <li><a href="#tab3" data-toggle="tab">Onglet 3</a></li>
+</ul>
 
-<body>
-    <div class="section-h1">
-        <h1>Inscription</h1>
+<div class="tab-content">
+    <div class="tab-pane active" id="tab1">
+        <div class="section-h1">
+            <h1>Inscription</h1>
+        </div>
+        <div class="row">
+            <div class="col">
+                <h2>Etape 1 : Crée ton compte ! </h2>
+
+            </div>
+            <div>
+                <li>Pour commencer, renseigne ton e-mail comme identifiant,</li>
+                <li> crée un mot de passe et enfin décide du pseudo et de l’avatar par lequel tu souhaite que les autres membres t’identifie. </li>
+            </div>
+            <form id="register-form" enctype="multipart/form-data" method="POST" action="{{ url_for('register') }}">
+                <label for="email">E-mail *</label>
+                <input type="email" id="email" name="email" placeholder="exemple@mail.fr" required>
+
+                <label for="password-input">Mot de passe*</label>
+                <input type="password" id="password" oninput="checkInputs()" name="password">
+
+                <label for="passwordComfirmation-input" class="form-label">Comfirmation du mot de passe *</label>
+                <input type="password" id="passwordComfirmation" oninput="checkInputs()" name="passwordComfirmation">
+
+                <div id="error-message"></div>
+
+                <label for="pseudo-input" class="form-label">Pseudo (Visible par la communauté) *</label>
+                <input type="text" class="form-control" id="pseudo" name="pseudo" aria-required="">
+
+                <label for="avatar">Avatar :</label>
+
+                <input type="file" id="avatar" name="avatar" onchange="loadAvatar(event)"><br>
+                <img id="avatar-preview" class="avatar-preview" src="#" alt="Aperçu de l'avatar" style="display: none;"><br><br>
+
+
+                <button type="submit" id="inscription" class="btn btn-primary">S'inscrire</button>
+            </form>
+        </div>
+
+        <div class="tab-pane" id="tab2">
+            <div class="row">
+
+                <div class="col">
+                    <h2>Etape 2 : Renseigne tes préférences ! </h2>
+
+                </div>
+                <div>
+                    <h3>Paramètre tes notifictions et clique sur les tags ci-dessous pour renseigner tes centres d'intérêts.</h3>
+
+                </div>
+                <form>
+                    <div class="form-check form-switch">
+                        <input class="form-check-input" type="checkbox" id="friendficheToggle">
+                        <label class="form-check-label" for="friendficheToggle">Recevoir des notifications des fiches de pratiques publiées par ses ami·es.</label>
+                    </div>
+
+                    <div class="form-check form-switch">
+
+                        <input class="form-check-input" type="checkbox" id="newficheToggle">
+                        <label class="form-check-label" for="newficheToggle">Recevoir des notifications lorsqu’un nouvel article est publié.</label>
+                    </div>
+
+                    <div class="form-check form-switch">
+                        <input class="form-check-input" type="checkbox" id="newforumToggle">
+                        <label class="form-check-label" for="newforumToggle">Recevoir des notifications lorsqu’un nouveau forum est publié.</label>
+                    </div>
+
+                </form>
+                <div>
+                    <h3>Sujets qui t’intéressent</h3>
+                </div>
+                <div class="div-tags-button">
+                    <div class="div-tags temoignage">
+
+                    </div>
+                </div>
+                <div id='result' href="result={{id}}"></div>
+
+            </div>
+
+
+            <div class="tab-pane" id="tab3">
+                <div class="col">
+                    <h2>Étape 3 : As-tu déjà des pratiques écologiques ? </h2>
+
+                </div>
+                <div>
+                    <li>Pour commencer dans l’application, renseigne les alternatives que tu as adoptées. Si tu ne trouve pas une alternative, pas de panique, tu pourras créer sa fiche plus tard...</li>
+
+                </div>
+                <form>
+
+
+                </form>
+                <div>
+                    <h3>Sujets qui t’intéressent</h3>
+                </div>
+
+
+            </div>
+        </div>
     </div>
 
-    <div class="row">
-
-        <div class="col">
-            <h2>Etape 1 : Crée ton compte ! </h2>
-
-        </div>
-        <div>
-            <li>Pour commencer, renseigne ton e-mail comme identifiant,</li>
-            <li> crée un mot de passe et enfin décide du pseudo et de l’avatar par lequel tu souhaite que les autres membres t’identifie. </li>
-        </div>
-        <form id="register-form" enctype="multipart/form-data" method="POST" action="{{ url_for('register') }}">
-            <label for="email">E-mail *</label>
-            <input type="email" id="email" name="email" placeholder="exemple@mail.fr">
-
-            <label for="password-input">Mot de passe*</label>
-            <input type="password" id="password" name="password">
-
-            <label for="passwordComfirmation-input" class="form-label">Comfirmation du mot de passe *</label>
-            <input type="password" id="passwordComfirmation" oninput="checkInputs()" name="passwordComfirmation">
-
-            <div id="error-message"></div>
-
-            <label for="pseudo-input" class="form-label">Pseudo (Visible par la communauté) *</label>
-            <input type="text" class="form-control" id="pseudo" name="pseudo">
-
-            <label for="avatar">Avatar :</label>
-
-            <input type="file" id="avatar" name="avatar" onchange="loadAvatar(event)"><br>
-            <img id="avatar-preview" class="avatar-preview" src="#" alt="Aperçu de l'avatar" style="display: none;"><br><br>
-
-
-            <button type="submit" class="btn btn-primary">S'inscrire</button>
-        </form>
+</div>
 
 
 
-        <script>
-            function checkInputs() {
-                var input1 = document.getElementById("inputPassWord").value;
-                var input2 = document.getElementById("inputPassWordComfirmation").value;
 
-                if (input1 === input2) {
-                    document.getElementById("error-message").innerHTML = "Les entrées sont identiques";
-                } else {
-                    document.getElementById("error-message").innerHTML = "Les entrées ne sont pas identiques.";
-                }
-            }
+<script>
+    //"<form>
+    //    {% for i in data %}
 
-            function loadAvatar(event) {
-                var avatar = document.getElementById("avatar");
-                var output = document.getElementById("avatar-preview");
-                output.src = URL.createObjectURL(avatar.files[0]);
-                output.style.display = "block";
-            }
-        </script>
+    //    <label>
+    //        <input type="checkbox" name="tag">
+    //       {{ i['tag_name'] }}
+
+    //  </label> {% endfor %}
+    //</form>
+
+
+    // Sélectionnez les éléments d'entrée et le bouton suivant
+    const email = document.getElementById('email');
+    const password = document.getElementById('password');
+    const pseudo = document.getElementById('pseudo');
+    const inscription = document.getElementById('inscription');
+    const checkpsw = document.getElementById('error-message');
+    var passwOK = 0;
+    var user_id = session.get('user_id')
+        // Récupérer les éléments HTML pour chaque bouton basculant
+    var friendficheToggle = document.getElementById("friendficheToggle");
+    //var newficheToggle = document.getElementById("newficheToggle");
+    //var newforumToggle = document.getElementById("newforumToggle");
+
+    // Récupérer l'état de chaque bouton basculant
+    var friendficheEnabled = friendficheToggle.checked;
+    //var newficheEnabled = newficheToggle.checked;
+    //var newforumEnabled = newforumToggle.checked;
+
+    // Désactiver le bouton suivant au chargement de la page
+    inscription.disabled = true;
+
+    // Ajouter des écouteurs d'événements pour les champs de saisie d'entrée
+    email.addEventListener('input', activerSuivant);
+    password.addEventListener('input', activerSuivant);
+    pseudo.addEventListener('input', activerSuivant);
+    checkpsw.addEventListener('input', activerSuivant)
+
+    function activerSuivant() {
+        // Vérifiez si les champs de saisie d'entrée sont remplis
+        if (email.value.trim() !== '' && password.value.trim() !== '' && pseudo.value.trim() !== '' && passwOK == 1) {
+
+            // Activer le bouton suivant
+            inscription.disabled = false;
+
+        } else {
+            inscription.disabled = true;
+        }
+    }
+
+    let selected_tags = [];
+
+    function tagClicked(tag_id) {
+        // Récupérer la div de résultat
+        let resultDiv = document.getElementById("result");
+
+        // Créer un nouvel élément span pour contenir le nom de la balise
+
+        resultDiv.textContent = tag_id;
+
+
+
+    }
+
+
+
+    function checkInputs() {
+        var input1 = document.getElementById('password').value
+        var input2 = document.getElementById('passwordComfirmation').value
+
+        if (input1 === input2) {
+            document.getElementById("error-message").innerHTML = "Les entrées sont identiques"
+            passwOK = 1;
+        } else {
+            document.getElementById("error-message").innerHTML = "Les entrées ne sont pas identiques."
+            passwOK = 0;
+        }
+    }
+
+    function loadAvatar(event) {
+        var avatar = document.getElementById("avatar");
+        var output = document.getElementById("avatar-preview");
+        output.src = URL.createObjectURL(avatar.files[0]);
+        output.style.display = "block";
+    }
+</script>
 </body>
 
 {% endblock %}
