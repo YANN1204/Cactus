@@ -52,7 +52,7 @@ class GetDataServices():
 
             # crée une nouvelle key pseudo au dict du forum/fiche avec comme valeur le pseudo correspondant à l'user
             item['pseudo'] = user['pseudo']
-            
+
             # on récupère la liste de noms de tags
             tags_name = self.find_tag(urlft, urlt, item["tag"])
 
@@ -82,7 +82,7 @@ class GetDataServices():
         for t in list_tag:
             # récupère l'id du tag du lien tag-forum / tag-fiche
             tag_id = self.item_by_id(urlft, t)
-            
+  
             # récupère le nom du tag avec l'id récupéré avant
             tag = self.item_by_id(urlt, tag_id["tags_id"])
             
@@ -226,16 +226,23 @@ class GetDataServices():
 
         data_item_filter = []
         for i in data_item:
+            added = 0
             title = i['title']
             list_tags = i['tags_name']
             room_name = i['room_name']
             if research_data in title or new_research in title:
-                data_item_filter.append(i)
+                if added == 0:
+                    data_item_filter.append(i)
+                    added += 1
             for tag in list_tags:
                 if tag in research_data or tag in new_research:
-                    data_item_filter.append(i)
+                    if added == 0:
+                        data_item_filter.append(i)
+                        added += 1
             if room_name in research_data or room_name in new_research:
-                data_item_filter.append(i)
+                if added == 0:
+                    data_item_filter.append(i)
+                    added += 1
 
         return data_item_filter
 
