@@ -43,6 +43,9 @@
                 <p>{% for i in range(data["cost"]|int) %} 💲 {% endfor %}</p>
                 <p>{{ data["impact"]}}</p>
                 <p>Ce qu'il faut savoir : {{ data["what_we_need_to_know"]}}</p>
+                <form method="SET" action="{{ url_for('button_click_adopt') }}">
+                    <button type="submit">Adopter</button>
+                </form>
             </div>
             <div class="tab-pane fade" id="tuto" role="tabpanel" aria-labelledby="tuto-tab">
                 <h2>Tuto</h2>
