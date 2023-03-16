@@ -44,6 +44,7 @@ def fiche():
     is_connected = session.get("is_connected", False)
     idFiche = request.args.get('idFiche', None)
     data = gds.display_instance(idFiche, url_item, urlu, urlt, urlact, urlr, urlc)
+    
     metadata = {"title":"Fiche", "pagename": "fiche"}
     return render_template('fiche.html', data = data, metadata=metadata, is_connected=is_connected)
 
