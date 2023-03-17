@@ -50,13 +50,13 @@ def fiche():
 @app.route('/ficheAdopt')
 def button_click_adopt():
     idFiche = "25b2f9dc-6a13-4b0b-ad21-ee1e0d7d3043"
-    idUsers = "eca95393-2325-45e5-bacb-bf0c59285fad"
+    idUsers = "eca88393-2325-45e5-bacb-bf0c59285fad"
     ##du coup ca marche pas j'arrive pas à rentrer les bon id.
     ##enfin les numéros enregistrer dans "alternative_card_adopted" c'est pas les id des fiches...
-    new_data = {"alternative_card_adopted": [3, 4,]}
-    sds.update_smt(urlu, id=idUsers, new_data=new_data)
-
     
+    new_data = {"id":"6","users_id":idUsers,"alternative_cards_id":idFiche}
+    sds.update_smt("users_alternative_cards", id="2", new_data=new_data)
+   
     metadata = {"title":"Fiches", "pagename": "fiches"}
     #retourn un pop up "c'est ok"
     return render_template('fiches.html', metadata=metadata)
