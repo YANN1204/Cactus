@@ -8,6 +8,7 @@ app.config['SESSION_TYPE'] = 'filesystem'
 app.config['SESSION_FILE_DIR'] = '/tmp/flask_session'
 app.config['SESSION_PERMANENT'] = False
 app.config['SESSION_USE_SIGNER'] = True
+app.config["SESSION_COOKIE_SECURE"] = True
 app.secret_key = 'une_cle_secrete_pour_la_session'
 Session(app)
 
