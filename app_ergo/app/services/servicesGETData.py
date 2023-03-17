@@ -48,7 +48,7 @@ class GetDataServices():
         # parcourt la liste d'items du dictionnaire data
         for item in data :
             # récupère les infos du user avec l'id correspondant au champ user_id du forum/fiche
-            user = self.item_by_id(urlu, item['user_id'])
+            user = self.instance_by_id(urlu, item['user_id'])
 
             # crée une nouvelle key pseudo au dict du forum/fiche avec comme valeur le pseudo correspondant à l'user
             item['pseudo'] = user['pseudo']
@@ -59,7 +59,7 @@ class GetDataServices():
             # on ajoute la liste de noms de tags à une nouvelle entrée du dict forum/fiche
             item['tags_name'] = tags_name
             # même chose pour avoir le room_name
-            room = self.item_by_id(urlr, item['room_id'])
+            room = self.instance_by_id(urlr, item['room_id'])
             item['room_name'] = room['room_name']
 
         return data
@@ -81,10 +81,10 @@ class GetDataServices():
         tags_name = []
         for t in list_tag:
             # récupère l'id du tag du lien tag-forum / tag-fiche
-            tag_id = self.item_by_id(urlft, t)
+            tag_id = self.instance_by_id(urlft, t)
   
             # récupère le nom du tag avec l'id récupéré avant
-            tag = self.item_by_id(urlt, tag_id["tags_id"])
+            tag = self.instance_by_id(urlt, tag_id["tags_id"])
             
             tags_name.append(tag['tag_name'])
             
@@ -93,9 +93,9 @@ class GetDataServices():
 
     def display_instance(self, idInstance: str, url_item: str, urlu: str, urlt: str, urlft: str, urlr: str, urlc: str):
         # pas fini
-        data = self.item_by_id(url_item, idInstance)
+        data = self.instance_by_id(url_item, idInstance)
         # récupère les infos du user avec l'id correspondant au champ user_id du forum/fiche
-        user = self.item_by_id(urlu, data['user_id'])
+        user = self.instance_by_id(urlu, data['user_id'])
         # crée une nouvelle key pseudo au dict du forum/fiche avec comme valeur le pseudo correspondant à l'user
         data['pseudo'] = user['pseudo']
         data['avatar'] = user['avatar']
@@ -104,7 +104,7 @@ class GetDataServices():
         # on ajoute la liste de noms de tags à une nouvelle entrée du dict forum/fiche
         data['tags_name'] = tags_name
         # même chose pour avoir le room_name
-        room = self.item_by_id(urlr, data['room_id'])
+        room = self.instance_by_id(urlr, data['room_id'])
         data['room_name'] = room['room_name']
         data['comments'] = self.find_comments(idInstance, urlc, urlu)
         return data
@@ -117,7 +117,7 @@ class GetDataServices():
         for c in data:
             if c['forum_id'] == idForum:
                 comments.append(c)
-                user = self.item_by_id(urlu, c['user_id'])
+                user = self.instance_by_id(urlu, c['user_id'])
                 c['pseudo'] = user['pseudo']
                 c['avatar'] = user['avatar']
         return comments
@@ -183,9 +183,10 @@ class GetDataServices():
         return 'Aucun élément ne présente ce titre dans la base de donnée'
     
 
-    def item_by_id(self, url: str, id: str):
+    def instance_by_id(self, url: str, id: str):
         """Retourne l'ensemble des informations d'une
-        collection données à partir de son id
+        instance d'une collection données à partir de 
+        son id
 
         Args:
             url (str): nom de la collection recherché
@@ -204,6 +205,29 @@ class GetDataServices():
                 return i
             
         return 'Aucun élément ne présente cet id dans la base de donnée'
+    
+
+    def instance_by_attribute(self, url: str, attribute: str, content_attribute: str):
+        """Cette fonction est une généralisation de la fonction instance_by_id et permet
+        de récupérer l'instance d'une collection à partir de n'importe lequel de ces
+        champs ou attribut
+
+        Args:
+            url (str): _description_
+            attribute (str): l'attribut qui servira à la reconnaissance
+            de l'instance (celle-ci ne doit pas contenir des instances qui ont
+            la même valeur pour cet attribut)
+            content_attribute (str): le contenu identifiant pour reconnaître
+            l'instance
+
+        Returns:
+            dict: l'instance de la collection que l'on veut récupérer
+        """
+        data = self.pdao.get_data(url)
+
+        for i in data:
+            if i[attribute] == content_attribute:
+                return i
 
 
     def filter(self, data_item, research_data):

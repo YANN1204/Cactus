@@ -24,35 +24,46 @@ urlc = "comments"
 @app.route(basepath + 'fiches', methods = ['GET'])
 def fiches():
     is_connected = session.get("is_connected", False)
-    print(is_connected)
+    id_user = session.get("id_user", None)
     data = gds.display_places(url_item, urlu, urlact, urlt, urlr)
     metadata = {"title":"Fiches", "pagename": "fiches"}
-    return render_template('fiches.html', metadata=metadata, data=data, is_connected=is_connected)
+    return render_template('fiches.html', metadata=metadata, data=data, is_connected=is_connected, id_user=id_user)
 
 @app.route(basepath + 'research', methods=['GET'])
 def research_in_cards():
     is_connected = session.get("is_connected", False)
+    id_user = session.get("id_user", None)
     data = gds.display_places(url_item, urlu, urlact, urlt, urlr)
     content_research = request.args.get('content_research')
     data_filter = gds.filter(data, content_research)
     metadata = {"title":"Fiches", "pagename":"fiches"}
-    return render_template('fiches.html', metadata=metadata, data=data_filter, is_connected=is_connected)
+    return render_template('fiches.html', metadata=metadata, data=data_filter, is_connected=is_connected, id_user=id_user)
 
 
 @app.route('/fiche')
 def fiche():
     is_connected = session.get("is_connected", False)
+    id_user = session.get("id_user", None)
     idFiche = request.args.get('idFiche', None)
     data = gds.display_instance(idFiche, url_item, urlu, urlt, urlact, urlr, urlc)
     
     metadata = {"title":"Fiche", "pagename": "fiche"}
-    return render_template('fiche.html', data = data, metadata=metadata, is_connected=is_connected)
+    return render_template('fiche.html', data = data, metadata=metadata, is_connected=is_connected, id_user=id_user)
+
+
+# Route pour indiquer à la base de donnée qu'un utilisateur à adopté une fiche (qui n'est pas fini je crois)
 @app.route('/ficheAdopt')
 def button_click_adopt():
+    is_connected = session.get("is_connected", False)
+    id_user = session.get("id_user", None)
     idFiche = "25b2f9dc-6a13-4b0b-ad21-ee1e0d7d3043"
     idUsers = "eca88393-2325-45e5-bacb-bf0c59285fad"
     ##du coup ca marche pas j'arrive pas à rentrer les bon id.
     ##enfin les numéros enregistrer dans "alternative_card_adopted" c'est pas les id des fiches...
+    new_data = {"alternative_card_adopted": [3, 4,]}
+    metadata = {"title":"Fiche", "pagename": "fiche"}
+    sds.update_smt(urlu, id=idUsers, new_data=new_data, metadata=metadata, is_connected=is_connected, id_user=id_user)
+
     
     new_data = {"id":"6","users_id":idUsers,"alternative_cards_id":idFiche}
     sds.update_smt("users_alternative_cards", id="2", new_data=new_data)
@@ -61,6 +72,8 @@ def button_click_adopt():
     #retourn un pop up "c'est ok"
     return render_template('fiches.html', metadata=metadata)
 
+
+# Route pour poster une fiche qui n'est pas fini je crois
 @app.route('/fiches', methods=['GET', 'POST'])
 def handle_button_click():
     # Appel de votre fonction Python
