@@ -6,28 +6,32 @@
 
 <div>
 
-    <div>
-        <p>
+    <div class="container-fluid">
+        <p class="p-intro">
             Dans l'espace Fiches, retrouve conseils, DIY et témoignages
             partagés par tous les utilisateur·ices de Cactus.
         </p>
     </div>
 
-    <div class="div-form-cards">
+    <div class="container-fluid div-form-cards">
         <form method="GET" action="{{ url_for('research_in_cards') }}">
-            <label for="content_research">Mots clés</label>
-            <input type="text" name="content_research" id="content_research">
-            <button type="submit">Rechercher</button>
+            <div class="form-group input-content-research">
+                <label for="content_research">Mots clés</label>
+                <input type="text" name="content_research" id="content_research">
+                <button type="submit">Rechercher</button>
+            </div>
         </form>
 
         <form>
-            <span>Type de contenu à afficher</span>
-            <select class="form-select" aria-label="Type de contenu à afficher">
-                <option selected>Tous</option>
-                <option value="1">Fiche témoignage</option>
-                <option value="2">Fiche pratique</option>
-                <option value="3">Fiche conseil</option>
-            </select>
+            <div class="form-group select-content-type">
+                <label>Type de contenu à afficher</label>
+                <select class="form-select" aria-label="Type de contenu à afficher">
+                    <option selected>Tous</option>
+                    <option value="1">Fiche témoignage</option>
+                    <option value="2">Fiche pratique</option>
+                    <option value="3">Fiche conseil</option>
+                </select>
+            </div>
 
             <div class="container text-center">
                 <div class="row justify-content-center">
@@ -107,7 +111,7 @@
     </div>
 </div>
 
-<div class="container">
+<div class="container-fluid">
     <!-- on parcourt la liste d qui contient autant de dict que de fiches dans directus -->
     {% for card in data %}
     <div class="div-list card">
@@ -167,12 +171,13 @@
 
     </div>
     {% endfor %}
+
 </div>
 
 <div class="cta-post">
     <p>Tu veux partager une astuce, une alternative, ou témoigner ?</p>
     <form method="POST" action="{{ url_for('handle_button_click') }}">
-        <button type="submit">Poster une fiche</button>
+        <a role="button" class="icon icon-solid icon-plus btn btn-primary">Poster une fiche</a>
     </form>
 </div>
 
@@ -185,9 +190,5 @@
 </form>
 
 </div>
-
-<form method="SET" action="{{ url_for('button_click_set') }}">
-    <button type="submit">Modifier une fiche</button>
-</form>
 
 {% endblock %}
