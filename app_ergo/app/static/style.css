@@ -176,22 +176,92 @@ body {
     column-gap: 2em;
 }
 
-.button-secondary {
-    padding: 0.3em 0.6em;
-    width: fit-content;
-    border: 1px solid var(--dark-green);
-    border-radius: 50px;
-    background-color: white;
-    color: var(--dark-green);
-    font-weight: 500;
-    font-size: 22px;
-    display: flex;
-    column-gap: 0.5em;
-    align-items: center;
+.btn-primary {
+    --bs-btn-color: var(--darker-green);
+    --bs-btn-border-color: var(--clearer-green);
+    --bs-btn-hover-bg: var(--clearer-green);
+    --bs-btn-hover-border-color: var(--clearer-green);
+    --bs-btn-active-bg: var(--clearer-green);
+    --bs-btn-active-border-color: var(--clearer-green);
+    --bs-btn-bg: var(--clearer-green);
+    --bs-btn-hover-color: var(--darker-green);
+    --bs-btn-hover-bg: #C5E37E;
+}
+
+.btn-outline-secondary {
+    --bs-btn-color: var(--dark-green);
+    --bs-btn-border-color: var(--dark-green);
+    --bs-btn-hover-bg: var(--dark-green);
+    --bs-btn-hover-border-color: var(--dark-green);
+    --bs-btn-active-bg: var(--dark-green);
+    --bs-btn-active-border-color: var(--dark-green);
+}
+
+.btn {
+    --bs-btn-padding-x: 0.6em;
+    --bs-btn-padding-y: 0.3em;
+    --bs-btn-font-size: 1.2em;
+    --bs-btn-font-weight: 500;
+    --bs-btn-border-radius: 50px;
+}
+.btn svg {
+    margin-left: 0.5em;
 }
 
 .div-tags-button {
     display: flex;
     justify-content: space-between;
     align-items: end;
+}
+
+.div-form-button {
+    display: flex;
+    justify-content: end;
+    margin-top: 1em;
+}
+
+.div-room-checkbox {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: var(--clearer-green);
+    border-radius: 20px;
+    padding: 0.5em;
+    color: var(--darker-green);
+    font-weight: bold;
+    font-size: 1em;
+    margin: 1.5em 1.5em;
+}
+.div-room-checkbox img {
+    width: 63%;
+}
+.div-room-checkbox div {
+    margin-top: 0.3em;
+}
+
+.col-2 {
+    width: 15%;
+}
+
+.form-check .form-check-input {
+    margin-left: 0;
+    margin-right: 0.3em;
+}
+.form-check-input:checked {
+    background-color: var(--darker-green);
+    border-color: var(--darker-green);
+}
+.form-check-input:focus {
+    box-shadow: 0 1px 1px rgba(0, 0, 0, 0.075) inset, 0 0 8px rgba(0, 77, 0, 0.6);
+    border-color: var(--dark-green);
+}
+
+.div-form-cards {
+    background-color: rgba(0, 77, 0, 0.9);
+    padding: 3em 6em;
+}
+
+.form-select {
+    border-radius: 50px;
+    border-color: var(--darker-green);
 }
