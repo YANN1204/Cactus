@@ -24,7 +24,7 @@ class GetDataServices():
         """
         data = self.pdao.get_data(url)
         return data
-    
+    ##remplacer get data par get instance pour modifier les alternative adopté
 
     def display_places(self, url_item: str, urlu: str, urlft: str, urlt: str, urlr: str):
         """Affiche les données sous la forme d'un dictionnaire python
@@ -47,6 +47,7 @@ class GetDataServices():
 
         # parcourt la liste d'items du dictionnaire data
         for item in data :
+            print(item)
             # récupère les infos du user avec l'id correspondant au champ user_id du forum/fiche
             user = self.instance_by_id(urlu, item['user_id'])
 

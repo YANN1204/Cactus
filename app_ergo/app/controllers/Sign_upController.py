@@ -17,7 +17,6 @@ basepath = '/'
 
 @app.route(basepath + 'sign_up', methods = ['GET'])
 def sign_up():
-    is_connected = session.get("is_connected", False)
     data=dd.get_data(url=urlt)
     
     metadata = {"title":"Sign_up", "pagename": "sign_up"}

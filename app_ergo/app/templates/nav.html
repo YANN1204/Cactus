@@ -1,16 +1,17 @@
-{% set list_pages = ({"accueil": "accueil_connected"}, {"cactus": "cactus"}, {"fiches":"fiches"},
-{"forums": "forums"}, {"articles_scientifiques": "articles_scientifiques"},
-{"jeux": "jeux"}, {"profil": "profil"}, {"deconnexion": "deconnexion"}) %}
 <nav class="navbar navbar-expand">
     <img src="./static/Images/logo-cactus.png">
     <ul class="navbar-nav">
-        {% for my_dict in list_pages %}
-        {% for menu_item in my_dict.keys() %}
+        {% for menu_item in ["accueil", "cactus", "fiches", "forums", "articles_scientifiques", "jeux"] %}
         <li class="nav-item">
             <a class="nav-link {{ 'active' if menu_item==metadata.pagename else '' }}"
-                href="{{ url_for(my_dict[menu_item]) }}">{{ menu_item|capitalize }}</a>
+                href="{{ url_for(menu_item) }}">{{ menu_item|capitalize }}</a>
         </li>
         {% endfor %}
-        {% endfor %}
     </ul>
+    {% if "logged" in session %}
+    <a href="{{ url_for('profil') }}" class="btn">Profil</a>
+    <a href="{{ url_for('logout') }}" class="btn">Logout</a>
+    {% else %}
+    <a href="{{ url_for('login') }}" class="btn">Login</a>
+    {% endif %}
 </nav>
