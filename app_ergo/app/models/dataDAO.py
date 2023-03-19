@@ -32,7 +32,7 @@ class DataDAO():
 
         return data
     
-    def get_instance(self, url: str, id: str):
+    def get_instance(self, url: str):
         """Retourne les informations sous la forme d'un
         dictionnaire d'une seul instance d'un item (ou collection)
         sur Directus avec son id
@@ -46,7 +46,7 @@ class DataDAO():
         Returns:
             dict: les données sur l'instance que l'on veut récupérer
         """
-        response = requests.get(self.path + url + '/' + id)
+        response = requests.get(self.path + url)
         data = json.loads(response.text)
 
         return data
