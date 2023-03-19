@@ -2,3 +2,83 @@ h2 {
   font-size: 1.5em !important;
   font-weight: 600 !important;
 }
+
+.div-tags {
+  margin-bottom: 3em;
+}
+
+.nav-tabs {
+  display: flex;
+  column-gap: 1em;
+  --bs-nav-tabs-border-width: 1px;
+  --bs-nav-tabs-border-color: var(--dark-green);
+  --bs-nav-tabs-border-radius: 20px;
+  --bs-nav-tabs-link-hover-border-color: var(--darker-green);
+  --bs-nav-tabs-link-active-color: var(--dark-green);
+  --bs-nav-tabs-link-active-bg: rgba(167, 201, 87, 0.3);
+  --bs-nav-tabs-link-active-border-color: var(--dark-green);
+  --bs-nav-tabs-border-width: 1px 1px 0 1px;
+}
+.nav-tabs .nav-link {
+  border: 1px solid var(--dark-green);
+  margin-bottom: -1px;
+}
+.nav-tabs .nav-link.active {
+  border: 1px solid;
+  border-color: var(--dark-green) var(--dark-green) #E5EFCD var(--dark-green);
+  margin-bottom: -1px;
+}
+
+.nav-item {
+  font-size: 1.1em;
+}
+
+.nav {
+  --bs-nav-link-color: var(--dark-green);
+  --bs-nav-link-hover-color: var(--darker-green);
+}
+
+.nav-item > .active {
+  font-weight: 600;
+}
+
+.tab-content > .tab-pane {
+  border-radius: 0 20px 20px 20px;
+  border: 1px solid var(--dark-green);
+  border-width: 1px 1px 1px 1px;
+  padding: 2em 0;
+  background-color: rgba(167, 201, 87, 0.3);
+}
+
+.btn-adopt {
+  padding: 0.6em 1em;
+  font-weight: 600;
+}
+
+.div-pin {
+  border-radius: 0 20px 20px 0;
+  padding: 0.1em 1em 0.5em 0;
+  margin-bottom: 2em;
+}
+.div-pin.dark {
+  background-color: var(--dark-green);
+  color: white;
+}
+
+.div-pin img {
+  width: 7%;
+}
+
+.div-pin p {
+  margin: 0.5em 0 1em 2em;
+}
+
+.div-pin .col-3 img {
+  width: 100%;
+  margin: 0.5em 0 1em 2em;
+}
+
+.div-pin.clear {
+  background-color: var(--clearer-green);
+  color: var(--darker-green);
+}

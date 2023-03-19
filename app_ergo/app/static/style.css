@@ -59,7 +59,7 @@ body {
 }
 
 .container-fluid {
-    padding: 2em 7em !important;
+    padding: 2em 7em;
 }
 
 .div-list {
@@ -126,7 +126,7 @@ body {
 .navbar {
     padding: 0.7em 3em;
     display: flex;
-    justify-content: space-between !important;
+    justify-content: space-between;
     background-color: white;
     box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.10);
     position: sticky;
