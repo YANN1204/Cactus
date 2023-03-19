@@ -33,6 +33,10 @@ body {
     content: '\f0ad';
 }
 
+.icon-plus::after {
+    content: '\e59e';
+}
+
 .icon-solid::after {
     font: var(--fa-font-solid);
 }
@@ -61,8 +65,30 @@ body {
     display: block;
 }
 
+.container-fluid {
+    padding: 2em 7em;
+}
+
 .element {
     margin: 10px;
+}
+
+.navbar {
+    padding: 0.7em 3em;
+    display: flex;
+    justify-content: space-between;
+}
+.navbar ul {
+    display: flex;
+    column-gap: 3em;
+}
+.navbar-nav .nav-link.active, .navbar-nav .show>.nav-link {
+    color: var(--darker-green);
+    font-weight: 500;
+}
+
+.nav-item {
+    color: rgb(47, 66, 47, 0.8)
 }
 
 .section-h1 {
@@ -71,22 +97,33 @@ body {
     color: var(--darker-green);
     padding: 1.5em 3em !important;
 }
-
 .section-h1 h1 {
     font-size: 64px;
     font-weight: 800;
     padding-left: 1em;
 }
 
+.p-intro {
+    font-size: 1.3em;
+    margin: 0;
+}
+
 .cta-post {
     background: var(--dark-green);
-    padding: 1.5em 2em 1em 6em;
+    padding: 1em 2em 1em 6em;
     color: white;
-    font: 24px 500;
     display: flex;
     column-gap: 2em;
     width: fit-content;
     border-radius: 0 20px 20px 0;
+    align-items: center;
+    position: fixed;
+    bottom: 2em;
+    filter: drop-shadow(2px 4px 10px rgba(0, 0, 0, 0.3));
+}
+.cta-post p {
+    font: 1.1em 500;
+    margin: 0;
 }
 
 .div-list {
@@ -176,22 +213,120 @@ body {
     column-gap: 2em;
 }
 
-.button-secondary {
-    padding: 0.3em 0.6em;
+.btn-primary {
+    --bs-btn-color: var(--darker-green);
+    --bs-btn-border-color: var(--clearer-green);
+    --bs-btn-hover-bg: var(--clearer-green);
+    --bs-btn-hover-border-color: var(--clearer-green);
+    --bs-btn-active-bg: var(--clearer-green);
+    --bs-btn-active-border-color: var(--clearer-green);
+    --bs-btn-bg: var(--clearer-green);
+    --bs-btn-hover-color: var(--darker-green);
+    --bs-btn-hover-bg: #C5E37E;
+}
+
+.btn-outline-secondary {
+    --bs-btn-color: var(--dark-green);
+    --bs-btn-border-color: var(--dark-green);
+    --bs-btn-hover-bg: var(--dark-green);
+    --bs-btn-hover-border-color: var(--dark-green);
+    --bs-btn-active-bg: var(--dark-green);
+    --bs-btn-active-border-color: var(--dark-green);
+}
+
+.btn {
+    --bs-btn-padding-x: 0.6em;
+    --bs-btn-padding-y: 0.3em;
+    --bs-btn-font-size: 1.2em;
+    --bs-btn-font-weight: 500;
+    --bs-btn-border-radius: 50px;
     width: fit-content;
-    border: 1px solid var(--dark-green);
-    border-radius: 50px;
-    background-color: white;
-    color: var(--dark-green);
-    font-weight: 500;
-    font-size: 22px;
-    display: flex;
-    column-gap: 0.5em;
-    align-items: center;
+}
+.btn svg {
+    margin-left: 0.5em;
 }
 
 .div-tags-button {
     display: flex;
     justify-content: space-between;
     align-items: end;
+}
+
+.div-form-button {
+    display: flex;
+    justify-content: end;
+    margin-top: 1em;
+}
+
+.div-room-checkbox {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: var(--clearer-green);
+    border-radius: 20px;
+    padding: 0.5em;
+    color: var(--darker-green);
+    font-weight: bold;
+    font-size: 1em;
+    margin: 1.5em 1.5em;
+}
+.div-room-checkbox img {
+    width: 63%;
+}
+.div-room-checkbox div {
+    margin-top: 0.3em;
+}
+
+.col-2 {
+    width: 15%;
+}
+
+.form-check .form-check-input {
+    margin-left: 0;
+    margin-right: 0.3em;
+}
+.form-check-input:checked {
+    background-color: var(--darker-green);
+    border-color: var(--darker-green);
+}
+.form-check-input:focus {
+    box-shadow: 0 1px 1px rgba(0, 0, 0, 0.075) inset, 0 0 8px rgba(0, 77, 0, 0.6);
+    border-color: var(--dark-green);
+}
+
+.div-form-cards {
+    background-color: rgba(0, 77, 0, 0.9);
+}
+
+.form-select {
+    border-radius: 50px;
+    border-color: var(--darker-green);
+}
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+}
+
+.input-content-research input {
+    width: 65%;
+    border-radius: 50px;
+    border: 1px solid var(--darker-green);
+    padding: .375rem 2.25rem .375rem .75rem;
+}
+.input-content-research input:focus {
+    box-shadow: 0 1px 1px rgba(0, 0, 0, 0.075) inset, 0 0 8px rgba(0, 77, 0, 0.6);
+    border: 1px solid var(--dark-green);
+}
+.input-content-research label {
+    color: white;
+}
+
+.select-content-type {
+    width: 25%;
+    color: white;
+}
+.select-content-type select:focus{
+    box-shadow: 0 1px 1px rgba(0, 0, 0, 0.075) inset, 0 0 8px rgba(0, 77, 0, 0.6);
+    border-color: var(--dark-green);
 }

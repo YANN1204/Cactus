@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 <nav class="navbar navbar-expand bg-light">
     <div class="container-fluid justify-content-between">
         <ul class="navbar-nav w-100 mx-auto">
@@ -15,4 +16,21 @@
         <a href="{{ url_for('login') }}" class="btn">Login</a>
         {% endif %}
     </div>
+=======
+{% set list_pages = ({"accueil": "accueil_connected"}, {"cactus": "cactus"}, {"fiches":"fiches"},
+{"forums": "forums"}, {"articles_scientifiques": "articles_scientifiques"},
+{"jeux": "jeux"}, {"profil": "profil"}, {"deconnexion": "deconnexion"}) %}
+<nav class="navbar navbar-expand">
+    <img src="./static/Images/logo-cactus.png">
+    <ul class="navbar-nav">
+        {% for my_dict in list_pages %}
+        {% for menu_item in my_dict.keys() %}
+        <li class="nav-item">
+            <a class="nav-link {{ 'active' if menu_item==metadata.pagename else '' }}"
+                href="{{ url_for(my_dict[menu_item]) }}">{{ menu_item|capitalize }}</a>
+        </li>
+        {% endfor %}
+        {% endfor %}
+    </ul>
+>>>>>>> origin/style-lea
 </nav>
