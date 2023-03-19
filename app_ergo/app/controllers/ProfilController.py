@@ -1,12 +1,13 @@
 from flask import render_template, session
 from app import app
+from app.controllers.LoginController import reqlogged
 
 basepath = '/'
 
 @app.route(basepath + 'profil', methods = ['GET'])
+@reqlogged
 def profil():
-    is_connected = session.get("is_connected", False)
-    id_user = session.get("id_user", None)
-    print(is_connected)
+    logged = session.get("logged", False)
+    username = session.get("username", None)
     metadata = {"title":"Profil", "pagename": "profil"}
-    return render_template('profil.html', metadata=metadata, is_connected=is_connected, id_user=id_user)
+    return render_template('profil.html', metadata=metadata, logged=logged, username=username)

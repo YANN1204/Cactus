@@ -5,7 +5,7 @@ basepath = '/'
 
 @app.route(basepath + 'jeux', methods = ['GET'])
 def jeux():
-    is_connected = session.get("is_connected", False)
-    id_user = session.get("id_user", None)
+    logged = session.get("logged", False)
+    username = session.get("username", None)
     metadata = {"title":"Jeux", "pagename": "jeux"}
-    return render_template('jeux.html', metadata=metadata, is_connected=is_connected, id_user=id_user)
+    return render_template('jeux.html', metadata=metadata, logged=logged, username=username)

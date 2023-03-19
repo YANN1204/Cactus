@@ -2,6 +2,7 @@ import signal
 from flask import Flask, session
 from flask_session import Session
 import sys
+from app.models.dataDAO import DataDAO
 
 app = Flask(__name__, static_url_path='/static')
 app.config['SESSION_TYPE'] = 'filesystem'
@@ -19,5 +20,11 @@ def signal_handler(signal, frame):
 
 signal.signal(signal.SIGTERM, signal_handler)
 signal.signal(signal.SIGINT, signal_handler)
+
+# import de la base de donnée
+list_item = ['alternative_cards', 'alternative_cards_tags', 'comments', 'forums', 'forums_tags', 'impacts',
+             'rooms', 'tags', 'users', 'users_alternative_cards', 'users_tags']
+dd = DataDAO()
+dd.save_all_items(list_item)
 
 from app.controllers import *
