@@ -59,7 +59,7 @@ body {
 }
 
 .container-fluid {
-    padding: 2em 7em;
+    padding: 2em 7em !important;
 }
 
 .div-list {
@@ -126,7 +126,11 @@ body {
 .navbar {
     padding: 0.7em 3em;
     display: flex;
-    justify-content: space-between;
+    justify-content: space-between !important;
+    background-color: white;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.10);
+    position: sticky;
+    top: 0;
 }
 .navbar ul {
     display: flex;
@@ -324,7 +328,7 @@ body {
     color: white;
 }
 .select-content-type select:focus{
-    box-shadow: 0 1px 1px rgba(0, 0, 0, 0.075) inset, 0 0 8px rgba(0, 77, 0, 0.6);
+    box-shadow: 0 1px 1px rgba(0, 0, 0, 0.075) inset, 0 0 8px rgba(167, 201, 87, 0.6);
     border-color: var(--dark-green);
 }
 
@@ -336,12 +340,28 @@ body {
     padding: .375rem 2.25rem .375rem .75rem;
 }
 .input-content-research input:focus {
-    box-shadow: 0 1px 1px rgba(0, 0, 0, 0.075) inset, 0 0 8px rgba(0, 77, 0, 0.6);
+    box-shadow: 0 1px 1px rgba(0, 0, 0, 0.075) inset, 0 0 8px rgba(167, 201, 87, 0.6);
     border: 1px solid var(--dark-green);
 }
 .input-content-research label {
     color: white;
 }
+
+
+/*------------ ELEMENTS FORM DE RECHERCHE ESPACE FORUMS ------------*/
+
+.div-form-forums {
+    width: 30%;
+    padding: 2em;
+    align-self: center;
+    background-color: var(--dark-green);
+    border-radius: 20px;
+    margin-bottom: 2em;
+}
+.div-form-forums .form-control{
+    width: 100%;
+}
+
 
 /*------------ ACCUEIL ------------*/
 
@@ -401,10 +421,10 @@ body {
     padding: 2em;
 }
 .div-forums-articles-home h2 {
-    display: flex;
-    column-gap: 1em;
     font-size: 1.4em;
     font-weight: 500;
+    display: flex;
+    column-gap: 1em;
     align-items: center;
 }
 .div-forums-articles-home p {
@@ -421,4 +441,84 @@ body {
 .div-games-home {
     background-color: rgba(242, 120, 31, 0.8);
     color:#000000;
+    margin: 2em 0;
+}
+.div-games-home h2 {
+    font-size: 1.4em;
+    font-weight: 500;
+    margin-bottom: 2em;
+}
+.div-games-home img {
+    width: 100%;
+    border-radius: 20px;
+}
+.div-games-home .col-3 {
+    position: relative;
+}
+.div-games-home .col-3 .fa-circle-play {
+    position: absolute; 
+    bottom: 45%; 
+    left: 45%;
+    font-size: 2em;
+    color: #000000;
+}
+
+
+/*------------ CONNEXION ------------*/
+.div-bg-login {
+    background: repeat url("Images/background-cacti.png");
+    height: 90vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.div-form-login {
+    background-color: white;
+    border-radius: 20px;
+    border: 1px solid var(--dark-green);
+    width: 35%;
+    height: 70%;
+    padding: 3em;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+.div-form-login form {
+    width: 80%;
+}
+.div-form-login .form-control {
+    margin-bottom: 2em;
+    border-radius: 20px;
+}
+.div-form-login .form-control:focus {
+    margin-bottom: 2em;
+    box-shadow: 0 1px 1px rgba(0, 0, 0, 0.075) inset, 0 0 8px rgba(167, 201, 87, 0.6);
+    border: 1px solid rgba(167, 201, 87, 0.6);
+}
+.div-form-login h1 {
+    font-size: 2.5em;
+    font-weight: 800;
+    margin-bottom: 2em;
+}
+.div-form-login .div-form-button {
+    justify-content: space-between;
+    margin-top: 3em;
+}
+
+
+/*------------ PAGES EN CONSTRUCTION ------------*/
+.div-wip {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    row-gap: 1em;
+}
+.div-wip img {
+    width: 20%;
+}
+.div-wip p {
+    font-size: 1.5em;
+    font-weight: 600;
 }

@@ -5,10 +5,10 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
 </head>
 <div class="section-h1">
-    <h1>Fiches {% if data["type_of_card"] == "1" %} pratique {% endif %} {% if data["type_of_card"] == "2" %} conseil {% endif %} {% if data["type_of_card"] == "3" %} témoignage {% endif %}</h1>
+    <h1>Fiches {% if data["type_of_card"] == "1" %} pratique {% elif data["type_of_card"] == "3" %} conseil {% else %} témoignage {% endif %}</h1>
 </div>
 
-<div class="div-list forum">
+<div class="container-fluid">
 
     <h2>{{ data['title'] }}</h2>
 
@@ -16,9 +16,12 @@
         <span> {{ data['room_name'] }} </span> {% for tag in data['tags_name'] %}
         <span> {{ tag }} </span> {% endfor %}
     </div>
+
     <!--- affichage des onglets et contenu -->
+
+    <!--- pratique -->
     {% if data["type_of_card"] == "1" %}
-    <div class="container">
+    <div>
         <ul class="nav nav-tabs" id="myTab" role="tablist">
             <li class="nav-item">
                 <a class="nav-link active" id="description-tab" data-toggle="tab" href="#description" role="tab" aria-controls="description" aria-selected="true">Description</a>
@@ -39,8 +42,8 @@
             <div class="tab-pane fade show active" id="description" role="tabpanel" aria-labelledby="description-tab">
                 <h2>Description</h2>
                 <p>{{ data["description"]}}</p>
-                <p>⏲{{ data["duration_exact"]}}minutes</p>
-                <p>{% for i in range(data["cost"]|int) %} 💲 {% endfor %}</p>
+                <p><i class="fa-regular fa-clock"></i>{{ data["duration_exact"]}}minutes</p>
+                <p>{% for i in range(data["cost"]|int) %} <i class="fa-solid fa-euro-sign"></i> {% endfor %}</p>
                 <p>{{ data["impact"]}}</p>
                 <p>Ce qu'il faut savoir : {{ data["what_we_need_to_know"]}}</p>
                 <form method="SET" action="{{ url_for('button_click_adopt') }}">
@@ -67,8 +70,10 @@
             </div>
         </div>
     </div>
-    {% endif %} {% if data["type_of_card"] == "2" %}
-    <div class="container">
+
+    <!--- conseil -->
+    {% elif data["type_of_card"] == "3" %}
+    <div>
         <ul class="nav nav-tabs" id="myTab" role="tablist">
             <li class="nav-item">
                 <a class="nav-link active" id="description-tab" data-toggle="tab" href="#description" role="tab" aria-controls="description" aria-selected="true">Description</a>
@@ -97,8 +102,10 @@
             </div>
         </div>
     </div>
-    {% endif %} {% if data["type_of_card"] == "3" %}
-    <div class="container">
+
+    <!--- témoignage -->
+    {% else %}
+    <div>
         <ul class="nav nav-tabs" id="myTab" role="tablist">
             <li class="nav-item">
                 <a class="nav-link active" id="description-tab" data-toggle="tab" href="#description" role="tab" aria-controls="description" aria-selected="true">Description</a>

@@ -19,11 +19,11 @@
             <form method="GET" action="{{ url_for('research_accueil') }}">
                 <div class="form-group input-content-research">
                     <label for="content_research">Mots clés</label>
-                    <input type="text" name="content_research" id="content_research">
+                    <input class="form-control" type="text" name="content_research" id="content_research">
                     <button type="submit">Rechercher</button>
                 </div>
             </form>
-            <div class="col form-group">
+            <div class="col form-group select-content-type">
                 <label>Type de contenu à afficher</label>
                 <select class="form-select" aria-label="Type de contenu à afficher">
                     <option selected>Tous</option>
@@ -34,7 +34,7 @@
                     <option value="5">Article scientifique</option>
                 </select>
             </div>
-            <div class="col form-group">
+            <div class="col form-group select-content-type">
                 <label>Pièce de la maison</label>
                 <select class="form-select" aria-label="Pièce de la maison">
                     <option selected>Toutes</option>
@@ -90,6 +90,20 @@
 
     <div class="container-fluid div-games-home">
         <h2>Les mini-jeux de Pousspousse</h2>
+        <div class="row justify-content-around">
+            <div class="col-3">
+                <img src="./static/Images/pousspousse1.png">               
+                <a href=""><i class="fa-regular fa-circle-play"></i></a>
+            </div>
+            <div class="col-3">
+                <img src="./static/Images/pousspousse2.png">               
+                <a href=""><i class="fa-regular fa-circle-play"></i></a>
+            </div>
+            <div class="col-3">
+                <img src="./static/Images/pousspousse3.png">               
+                <a href=""><i class="fa-regular fa-circle-play"></i></a>
+            </div>
+        </div>        
     </div>
 
 </div>
