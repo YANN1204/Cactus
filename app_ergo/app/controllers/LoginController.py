@@ -23,7 +23,7 @@ def login():
     data = dd.get_data('users')
     if request.method == 'POST':
         for i in data:
-            if request.form['username'] == i['mail'] or request.form['password'] == i['password']:
+            if request.form['username'] == i['mail'] and request.form['password'] == i['password']:
                 session['logged'] = True
                 session['username'] = request.form['username']
                 return redirect(url_for('accueil_connected'))
