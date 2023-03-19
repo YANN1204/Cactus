@@ -1,11 +1,18 @@
-{% extends 'layout.html' %} {% block content %}
+{% extends 'layout.html' %}
+{% block content %}
 
 
 <div>
 
-    <h1>Cactus</h1>
-    <img src="./static/Images/maison-cactus.png" alt="illustration maison avec cactus à la fenêtre">
-    <p>Rejoins une communauté active et engagée à créer un monde plus vert en commençant par son foyer !</p>
+    <div class="container-fluid row header-home">
+        <div class="col-8">
+            <h1 class="h1-home">Cactus</h1>
+            <p>Rejoins une communauté active et engagée à créer un monde plus vert en commençant par son foyer !</p>
+        </div>
+        <div class="col">
+            <img src="./static/Images/maison-cactus.png" alt="illustration maison avec cactus à la fenêtre">
+        </div>
+    </div>
 
     <div>
         <h2>Sur Cactus, recherche tuto, forum, article et bien plus autour de l'écologie !</h2>
@@ -45,25 +52,6 @@
             communauté
             Cactus !</p>
         <p>Dont <span> {{ data['impact_now'] }} </span> depuis le 01/01/2023</p>
-    </div>
-
-    <div class="container-fluid row">
-        <div class="col">
-            <h2>Forums</h2>
-            <p>C'est dans cet espace que toute la communauté de Cactus s'entraide et s'échange ses conseils pour aller
-                plus
-                loin dans la vie en vert !
-            </p>
-            <button class="btn btn-primary">Voir les forums</button>
-        </div>
-        <div class="col">
-            <h2>Articles scientifiques</h2>
-            <p>Place aux faits ! Tu trouveras dans cet espace toutes les sources scientifiques utilisées pour justifier
-                les
-                indicateurs d'impact et enrichir tes connaissances.
-            </p>
-            <button class="btn btn-primary">Rechercher</button>
-        </div>
     </div>
 
     <div class="container-fluid">
