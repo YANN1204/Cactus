@@ -47,6 +47,7 @@ class GetDataServices():
 
         # parcourt la liste d'items du dictionnaire data
         for item in data :
+            print(item)
             # récupère les infos du user avec l'id correspondant au champ user_id du forum/fiche
             user = self.instance_by_id(urlu, item['user_id'])
 
