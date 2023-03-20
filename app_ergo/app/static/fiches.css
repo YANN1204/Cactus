@@ -60,13 +60,22 @@ h2 {
   padding: 0.1em 1em 0.5em 0;
   margin-bottom: 2em;
 }
+
+.right {
+  border-radius: 20px 0 0 20px;
+}
+
+.div-pin:last-child {
+  margin-bottom: 0;
+}
+
 .div-pin.dark {
   background-color: var(--dark-green);
   color: white;
 }
 
 .div-pin img {
-  width: 7%;
+  width: 46px;
 }
 
 .div-pin p {
@@ -81,4 +90,24 @@ h2 {
 .div-pin.clear {
   background-color: var(--clearer-green);
   color: var(--darker-green);
+}
+
+.div-description {
+  margin: 0 4em;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  font-size: 1.2em;
+}
+
+#materiel p {
+  font-size: 1.2em;
+  font-weight: 600;
+}
+
+#temoignage svg {
+  font-size: 3em;
+}
+#temoignage p {
+  font-size: 0.9em;
 }

@@ -23,7 +23,7 @@
     <div>
         <ul class="nav nav-tabs" id="myTab" role="tablist">
             <li class="nav-item">
-                <a class="nav-link active" id="description-tab" data-toggle="tab" href="#description" role="tab" aria-controls="description" aria-selected="true">Description</a>
+                <a class="nav-link active" id="description-tab" data-toggle="tab" href="#description-pratique" role="tab" aria-controls="description-pratique" aria-selected="true">Description</a>
             </li>
             <li class="nav-item">
                 <a class="nav-link" id="tuto-tab" data-toggle="tab" href="#tuto" role="tab" aria-controls="tuto" aria-selected="false">Tuto</a>
@@ -32,13 +32,13 @@
                 <a class="nav-link" id="materiel-tab" data-toggle="tab" href="#materiel" role="tab" aria-controls="materiel" aria-selected="false">Materiel</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" id="impact-tab" data-toggle="tab" href="#impact" role="tab" aria-controls="impact" aria-selected="false">Impact</a></li>
+                <a class="nav-link" id="impact-tab" data-toggle="tab" href="#impact-pratique" role="tab" aria-controls="impact-pratique" aria-selected="false">Impact</a></li>
             <li class="nav-item">
                 <a class="nav-link" id="avis-tab" data-toggle="tab" href="#avis" role="tab" aria-controls="avis" aria-selected="false">Avis</a>
             </li>
         </ul>
-        <div class="tab-content" id="myTabContent">
-            <div class="tab-pane fade show active" id="description" role="tabpanel" aria-labelledby="description-tab">
+        <div class="tab-content" id="tabContent-pratique">
+            <div class="tab-pane fade show active" id="description-pratique" role="tabpanel" aria-labelledby="description-tab">
                 <div class="row">
                     <div class="col-5">
                         <div class="div-pin dark">
@@ -59,7 +59,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col">
+                    <div class="col div-description">
                         <p>{{ data["description"]}}</p>
                         <form method="SET" action="{{ url_for('button_click_adopt') }}">
                             <button type="submit" class="btn btn-primary btn-adopt">J'adopte cette pratique !</button>
@@ -68,17 +68,49 @@
                 </div>
             </div>
             <div class="tab-pane fade" id="tuto" role="tabpanel" aria-labelledby="tuto-tab">
-                <p>{{ data["astuce_or_step_tuto"]}}</p>
+                <div class="d-flex justify-content-between mb-4 mx-4">
+                    <a role="button" href="" class="icon icon-regular icon-arrow-down-to-bracket btn btn-outline-secondary">Télécharger la fiche</a>
+                    <a role="button" href="" class="icon icon-regular icon-share-nodes btn btn-outline-secondary">Partager la fiche</a>
+                </div>
+                {% set steps = data["astuce_or_step_tuto"].split(";") %}
+                {% for s in range(steps|length - 1) %}
+                    <div class="col-10 div-pin dark">
+                        <img src="./static/Images/left-clear-clip.png" alt="trombone">
+                        <p>{{ steps[s] }}</p>
+                    </div>
+                    <div class="col-10 div-pin clear">
+                        <img src="./static/Images/left-dark-clip.png" alt="trombone">
+                        <p>{{ steps[s+1] }}</p>
+                    </div>
+                {% endfor %}
+                <div class="d-flex justify-content-center mt-5">
+                    <form method="SET" action="{{ url_for('button_click_adopt') }}">
+                        <button type="submit" class="btn btn-primary btn-adopt">J'adopte cette pratique !</button>
+                    </form>
+                </div>
             </div>
             <div class="tab-pane fade" id="materiel" role="tabpanel" aria-labelledby="materiel-tab">
-                <p>Ce qu'il vous faudra : {{ data["material"]}}</p>
-                <p>Où trouver le matériel : {{ data["position"] }}</p>
+                <div class="row mx-0">
+                    <div class="col-4 mx-3">
+                        <p><i class="fa-regular fa-screwdriver-wrench"></i> Ce qu'il vous faudra :</p>
+                        {% set materials = data["material"].split(",") %}
+                        <ul>
+                            {% for m in materials %}
+                                <li>{{ m }}</li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+                    <div class="col div-pin clear right">
+                        <p><i class="fa-regular fa-map-location-dot"></i> Où trouver le matériel ?</p>
+                        <p>Vous verrez ici une carte avec les magasins autour de vous qui vendent le matériel si vous activez votre géolocalisation...</p>
+                    </div>
+                </div>
             </div>
-            <div class="tab-pane fade" id="impact" role="tabpanel" aria-labelledby="impact-tab">
+            <div class="tab-pane fade" id="impact-pratique" role="tabpanel" aria-labelledby="impact-tab">
                 <p>{{ data["impact"]}}</p>
             </div>
             <div class="tab-pane fade" id="avis" role="tabpanel" aria-labelledby="avis-tab">
-                <p>J'ai pas trouvé dans Directus les avis 😢</p>
+                <p></p>
             </div>
         </div>
     </div>
@@ -88,25 +120,44 @@
     <div>
         <ul class="nav nav-tabs" id="myTab" role="tablist">
             <li class="nav-item">
-                <a class="nav-link active" id="description-tab" data-toggle="tab" href="#description" role="tab" aria-controls="description" aria-selected="true">Description</a>
+                <a class="nav-link active" id="description-tab" data-toggle="tab" href="#description-conseil" role="tab" aria-controls="description-conseil" aria-selected="true">Description</a>
             </li>
             <li class="nav-item">
                 <a class="nav-link" id="astuce-tab" data-toggle="tab" href="#astuce" role="tab" aria-controls="tuto" aria-selected="false">Astuce</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" id="impact-tab" data-toggle="tab" href="#impact" role="tab" aria-controls="impact" aria-selected="false">Impact</a></li>
+                <a class="nav-link" id="impact-tab" data-toggle="tab" href="#impact-conseil" role="tab" aria-controls="impact-conseil" aria-selected="false">Impact</a></li>
 
         </ul>
-        <div class="tab-content" id="myTabContent">
-            <div class="tab-pane fade show active" id="description" role="tabpanel" aria-labelledby="description-tab">
-                <p>{{ data["description"]}}</p>
-                <p>{{ data["impact"]}}</p>
-                <p>Ce qu'il faut savoir : {{ data["what_we_need_to_know"]}}</p>
+        <div class="tab-content" id="tabContent-conseil">
+            <div class="tab-pane fade show active" id="description-conseil" role="tabpanel" aria-labelledby="description-tab">
+                <div class="row">
+                    <div class="col-5">
+                        <div class="div-pin dark">
+                            <img src="./static/Images/left-clear-clip.png" alt="trombone">
+                            <p>Ce qu'il faut savoir : {{ data["what_we_need_to_know"]}}</p>
+                        </div>
+                        <div class="div-pin clear">
+                            <img src="./static/Images/left-dark-clip.png" alt="trombone">
+                            <div class="row">
+                                <div class="col-3">
+                                    <img src="./static/Images/love-earth.png" alt="planete terre avec coeur">
+                                </div>
+                                <div class="col">
+                                    <p>{{ data["impact"]}}</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col div-description justify-content-center">
+                        <p>{{ data["description"]}}</p>
+                    </div>
+                </div>
             </div>
             <div class="tab-pane fade" id="astuce" role="tabpanel" aria-labelledby="astuce-tab">
                 <p>{{ data["astuce_or_step_tuto"]}}</p>
             </div>
-            <div class="tab-pane fade" id="impact" role="tabpanel" aria-labelledby="impact-tab">
+            <div class="tab-pane fade" id="impact-conseil" role="tabpanel" aria-labelledby="impact-tab">
                 <p>{{ data["impact"]}}</p>
             </div>
         </div>
@@ -117,25 +168,43 @@
     <div>
         <ul class="nav nav-tabs" id="myTab" role="tablist">
             <li class="nav-item">
-                <a class="nav-link active" id="description-tab" data-toggle="tab" href="#description" role="tab" aria-controls="description" aria-selected="true">Description</a>
+                <a class="nav-link active" id="description-tab" data-toggle="tab" href="#description-temoignage" role="tab" aria-controls="description-temoignage" aria-selected="true">Description</a>
             </li>
             <li class="nav-item">
                 <a class="nav-link" id="temoignage-tab" data-toggle="tab" href="#temoignage" role="tab" aria-controls="temoignage" aria-selected="false">Témoignage</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" id="impact-tab" data-toggle="tab" href="#impact" role="tab" aria-controls="impact" aria-selected="false">Impact</a>
+                <a class="nav-link" id="impact-tab" data-toggle="tab" href="#impact-temoignage" role="tab" aria-controls="impact-temoignage" aria-selected="false">Impact</a>
             </li>
         </ul>
-        <div class="tab-content" id="myTabContent">
-            <div class="tab-pane fade show active" id="description" role="tabpanel" aria-labelledby="description-tab">
-                <p>{{ data["description"]}}</p>
-                <p>{{ data["impact"]}}</p>
-                <p>Ce qu'il faut savoir : {{ data["what_we_need_to_know"]}}</p>
+        <div class="tab-content" id="tabContent-temoignage">
+            <div class="tab-pane fade show active" id="description-temoignage" role="tabpanel" aria-labelledby="description-tab">
+                <div class="row">
+                    <div class="col-2">
+                        <div class="">
+                            <img src="" alt="avatar">
+                            <p>Pseudo</p>
+                        </div>
+                    </div>
+                    <div class="col div-description justify-content-center">
+                        <p>{{ data["description"]}}</p>
+                    </div>
+                </div>
             </div>
             <div class="tab-pane fade" id="temoignage" role="tabpanel" aria-labelledby="temoignage-tab">
-                <p>""{{ data["astuce_or_step_tuto"]}}""</p>
+                <div class="row">
+                    <div class="col-2">
+                        <div class="">
+                            <img src="" alt="avatar">
+                            <p>Pseudo</p>
+                        </div>
+                    </div>
+                    <div class="col div-description justify-content-center">
+                        <p><i class="fa-solid fa-quote-left"></i> {{ data["shared_experience"] }} <br> <i class="fa-solid fa-quote-right"></i></p>
+                    </div>
+                </div>
             </div>
-            <div class="tab-pane fade" id="impact" role="tabpanel" aria-labelledby="impact-tab">
+            <div class="tab-pane fade" id="impact-temoignage" role="tabpanel" aria-labelledby="impact-tab">
                 <p>{{ data["impact"]}}</p>
             </div>
         </div>

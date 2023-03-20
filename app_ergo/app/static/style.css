@@ -42,6 +42,14 @@ body {
     content: '\e59e';
 }
 
+.icon-arrow-down-to-bracket::after {
+    content: '\e094';
+}
+
+.icon-share-nodes::after {
+    content: '\f1e0';
+}
+
 .icon-solid::after {
     font: var(--fa-font-solid);
 }
@@ -107,6 +115,7 @@ body {
     --bs-btn-hover-border-color: var(--dark-green);
     --bs-btn-active-bg: var(--dark-green);
     --bs-btn-active-border-color: var(--dark-green);
+    --bs-btn-bg: white;
 }
 
 .btn {
