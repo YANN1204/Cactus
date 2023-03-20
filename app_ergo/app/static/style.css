@@ -184,7 +184,7 @@ body {
     border: solid 1px var(--burgundy);
 }
 
-.div-list.card {
+.div-list.acard {
     border-radius: 20px;
     row-gap: 1em;
     border: solid 1px var(--clear-green);

@@ -26,6 +26,7 @@ class GetDataServices():
         return data
     ##remplacer get data par get instance pour modifier les alternative adopté
 
+
     def display_places(self, url_item: str, urlu: str, urlft: str, urlt: str, urlr: str):
         """Affiche les données sous la forme d'un dictionnaire python
            # impact à rajouter
@@ -47,16 +48,14 @@ class GetDataServices():
 
         # parcourt la liste d'items du dictionnaire data
         for item in data :
-            print(item)
+            #print(item)
+            item['date_created'] = self.convert_date(item['date_created'])
             # récupère les infos du user avec l'id correspondant au champ user_id du forum/fiche
             user = self.instance_by_id(urlu, item['user_id'])
-
             # crée une nouvelle key pseudo au dict du forum/fiche avec comme valeur le pseudo correspondant à l'user
             item['pseudo'] = user['pseudo']
-
             # on récupère la liste de noms de tags
             tags_name = self.find_tag(urlft, urlt, item["tag"])
-
             # on ajoute la liste de noms de tags à une nouvelle entrée du dict forum/fiche
             item['tags_name'] = tags_name
             # même chose pour avoir le room_name
@@ -92,14 +91,30 @@ class GetDataServices():
         return tags_name
 
 
+    def convert_date(self, date: str) :
+        """Convertit la date au format jj/mm/aaaa
+
+        Args:
+            date (str) : la date à convertir
+
+        Returns:
+            date : string de la date convertie
+        """
+        timestamp = date[0:19]
+        timestamp = datetime.strptime((timestamp), "%Y-%m-%dT%H:%M:%S")
+        date = timestamp.strftime("%d/%m/%Y")
+        return date
+
+
     def display_instance(self, idInstance: str, url_item: str, urlu: str, urlt: str, urlft: str, urlr: str, urlc: str):
         # pas fini
         data = self.instance_by_id(url_item, idInstance)
+        data['date_created'] = self.convert_date(data['date_created'])
         # récupère les infos du user avec l'id correspondant au champ user_id du forum/fiche
         user = self.instance_by_id(urlu, data['user_id'])
         # crée une nouvelle key pseudo au dict du forum/fiche avec comme valeur le pseudo correspondant à l'user
         data['pseudo'] = user['pseudo']
-        data['avatar'] = user['avatar']
+        data['avatar'] = "https://d10b6z4v.directus.app/assets/" + user['avatar']
         # on récupère la liste de noms de tags
         tags_name = self.find_tag(urlft, urlt, data["tag"])
         # on ajoute la liste de noms de tags à une nouvelle entrée du dict forum/fiche
@@ -109,18 +124,36 @@ class GetDataServices():
         data['room_name'] = room['room_name']
         data['comments'] = self.find_comments(idInstance, urlc, urlu)
         return data
-    
 
-    def find_comments(self, idForum: str, urlc: str, urlu: str):
-        # pas fini
+    def find_comments(self, idInstance: str, urlc: str, urlu: str):
+        """Retourne tous les commentaires d'une fiche ou d'un forum 
+
+        Args:
+            urlc (str): url de la collection comments
+            urlu (str): url de la collection users
+
+        Returns:
+            comments: la liste des commentaires avec pseudo et avatr des users qui l'ont posté
+        """
         data = self.pdao.get_data(urlc)
         comments = []
         for c in data:
-            if c['forum_id'] == idForum:
+            if c['forum_id'] == idInstance:
                 comments.append(c)
                 user = self.instance_by_id(urlu, c['user_id'])
                 c['pseudo'] = user['pseudo']
-                c['avatar'] = user['avatar']
+                c['avatar'] = "https://d10b6z4v.directus.app/assets/" + user['avatar']
+                c['date_created'] = self.convert_date(c['date_created'])
+            elif  c['alternative_card_id'] == idInstance:
+                comments.append(c)
+                user = self.instance_by_id(urlu, c['user_id'])
+                c['pseudo'] = user['pseudo']
+                c['avatar'] = "https://d10b6z4v.directus.app/assets/" + user['avatar']
+                c['date_created'] = self.convert_date(c['date_created'])
+                if c['comment_type'] == "1" :
+                    c['comment_type'] = "Commentaire"
+                elif c['comment_type'] == "2" :
+                    c['comment_type'] = "Suggestion"
         return comments
 
 
