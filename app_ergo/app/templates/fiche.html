@@ -1,24 +1,26 @@
-{% extends 'layout.html' %} {% block content %}
+{% extends 'layout.html' %} 
+{% block content %}
 
-<head>
-    <!-- Charger les styles Bootstrap -->
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
-</head>
+<link rel="stylesheet" type="text/css" href="/static/fiches.css">
+
 <div class="section-h1">
-    <h1>Fiches {% if data["type_of_card"] == "1" %} pratique {% endif %} {% if data["type_of_card"] == "2" %} conseil {% endif %} {% if data["type_of_card"] == "3" %} témoignage {% endif %}</h1>
+    <h1>Fiches {% if data["type_of_card"] == "1" %} pratique {% elif data["type_of_card"] == "3" %} conseil {% else %} témoignage {% endif %}</h1>
 </div>
 
-<div class="div-list forum">
+<div class="container-fluid">
 
     <h2>{{ data['title'] }}</h2>
 
-    <div class="div-tags forum">
+    <div class="div-tags pratique">
         <span> {{ data['room_name'] }} </span> {% for tag in data['tags_name'] %}
         <span> {{ tag }} </span> {% endfor %}
     </div>
+
     <!--- affichage des onglets et contenu -->
+
+    <!--- pratique -->
     {% if data["type_of_card"] == "1" %}
-    <div class="container">
+    <div>
         <ul class="nav nav-tabs" id="myTab" role="tablist">
             <li class="nav-item">
                 <a class="nav-link active" id="description-tab" data-toggle="tab" href="#description" role="tab" aria-controls="description" aria-selected="true">Description</a>
@@ -37,38 +39,53 @@
         </ul>
         <div class="tab-content" id="myTabContent">
             <div class="tab-pane fade show active" id="description" role="tabpanel" aria-labelledby="description-tab">
-                <h2>Description</h2>
-                <p>{{ data["description"]}}</p>
-                <p>⏲{{ data["duration_exact"]}}minutes</p>
-                <p>{% for i in range(data["cost"]|int) %} 💲 {% endfor %}</p>
-                <p>{{ data["impact"]}}</p>
-                <p>Ce qu'il faut savoir : {{ data["what_we_need_to_know"]}}</p>
-                <form method="SET" action="{{ url_for('button_click_adopt') }}">
-                    <button type="submit">Adopter</button>
-                </form>
+                <div class="row">
+                    <div class="col-5">
+                        <div class="div-pin dark">
+                            <img src="./static/Images/left-clear-clip.png" alt="trombone">
+                            <p><i class="fa-regular fa-clock"></i>{{ data["duration_exact"]}}minutes</p>
+                            <p>{% for i in range(data["cost"]|int) %} <i class="fa-solid fa-euro-sign"></i> {% endfor %}</p>
+                            <p>Ce qu'il faut savoir : {{ data["what_we_need_to_know"]}}</p>
+                        </div>
+                        <div class="div-pin clear">
+                            <img src="./static/Images/left-dark-clip.png" alt="trombone">
+                            <div class="row">
+                                <div class="col-3">
+                                    <img src="./static/Images/love-earth.png" alt="planete terre avec coeur">
+                                </div>
+                                <div class="col">
+                                    <p>{{ data["impact"]}}</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col">
+                        <p>{{ data["description"]}}</p>
+                        <form method="SET" action="{{ url_for('button_click_adopt') }}">
+                            <button type="submit" class="btn btn-primary btn-adopt">J'adopte cette pratique !</button>
+                        </form>
+                    </div>
+                </div>
             </div>
             <div class="tab-pane fade" id="tuto" role="tabpanel" aria-labelledby="tuto-tab">
-                <h2>Tuto</h2>
                 <p>{{ data["astuce_or_step_tuto"]}}</p>
             </div>
             <div class="tab-pane fade" id="materiel" role="tabpanel" aria-labelledby="materiel-tab">
-                <h2>Materiel</h2>
                 <p>Ce qu'il vous faudra : {{ data["material"]}}</p>
                 <p>Où trouver le matériel : {{ data["position"] }}</p>
-
             </div>
             <div class="tab-pane fade" id="impact" role="tabpanel" aria-labelledby="impact-tab">
-                <h2>Impacts</h2>
                 <p>{{ data["impact"]}}</p>
             </div>
             <div class="tab-pane fade" id="avis" role="tabpanel" aria-labelledby="avis-tab">
-                <h2>Avis</h2>
                 <p>J'ai pas trouvé dans Directus les avis 😢</p>
             </div>
         </div>
     </div>
-    {% endif %} {% if data["type_of_card"] == "2" %}
-    <div class="container">
+
+    <!--- conseil -->
+    {% elif data["type_of_card"] == "3" %}
+    <div>
         <ul class="nav nav-tabs" id="myTab" role="tablist">
             <li class="nav-item">
                 <a class="nav-link active" id="description-tab" data-toggle="tab" href="#description" role="tab" aria-controls="description" aria-selected="true">Description</a>
@@ -82,23 +99,22 @@
         </ul>
         <div class="tab-content" id="myTabContent">
             <div class="tab-pane fade show active" id="description" role="tabpanel" aria-labelledby="description-tab">
-                <h2>Description</h2>
                 <p>{{ data["description"]}}</p>
                 <p>{{ data["impact"]}}</p>
                 <p>Ce qu'il faut savoir : {{ data["what_we_need_to_know"]}}</p>
             </div>
             <div class="tab-pane fade" id="astuce" role="tabpanel" aria-labelledby="astuce-tab">
-                <h2>Astuce</h2>
                 <p>{{ data["astuce_or_step_tuto"]}}</p>
             </div>
             <div class="tab-pane fade" id="impact" role="tabpanel" aria-labelledby="impact-tab">
-                <h2>Impacts</h2>
                 <p>{{ data["impact"]}}</p>
             </div>
         </div>
     </div>
-    {% endif %} {% if data["type_of_card"] == "3" %}
-    <div class="container">
+
+    <!--- témoignage -->
+    {% else %}
+    <div>
         <ul class="nav nav-tabs" id="myTab" role="tablist">
             <li class="nav-item">
                 <a class="nav-link active" id="description-tab" data-toggle="tab" href="#description" role="tab" aria-controls="description" aria-selected="true">Description</a>
@@ -107,22 +123,19 @@
                 <a class="nav-link" id="temoignage-tab" data-toggle="tab" href="#temoignage" role="tab" aria-controls="temoignage" aria-selected="false">Témoignage</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" id="impact-tab" data-toggle="tab" href="#impact" role="tab" aria-controls="impact" aria-selected="false">Impact</a></li>
-
+                <a class="nav-link" id="impact-tab" data-toggle="tab" href="#impact" role="tab" aria-controls="impact" aria-selected="false">Impact</a>
+            </li>
         </ul>
         <div class="tab-content" id="myTabContent">
             <div class="tab-pane fade show active" id="description" role="tabpanel" aria-labelledby="description-tab">
-                <h2>Description</h2>
                 <p>{{ data["description"]}}</p>
                 <p>{{ data["impact"]}}</p>
                 <p>Ce qu'il faut savoir : {{ data["what_we_need_to_know"]}}</p>
             </div>
             <div class="tab-pane fade" id="temoignage" role="tabpanel" aria-labelledby="temoignage-tab">
-                <h2>Témoignage</h2>
                 <p>""{{ data["astuce_or_step_tuto"]}}""</p>
             </div>
             <div class="tab-pane fade" id="impact" role="tabpanel" aria-labelledby="impact-tab">
-                <h2>Impacts</h2>
                 <p>{{ data["impact"]}}</p>
             </div>
         </div>
