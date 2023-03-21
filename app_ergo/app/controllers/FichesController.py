@@ -4,7 +4,9 @@ from app.services.servicesGETData import GetDataServices
 from app.services.servicesPOSTData import PostDataServices
 from app.services.servicesDELETEData import DeleteDataServices
 from app.services.servicesSETData import SetDataServices
+from app.models.dataDAO import DataDAO 
 
+dd = DataDAO()
 gds = GetDataServices()
 pds = PostDataServices()
 dds = DeleteDataServices()
@@ -55,15 +57,15 @@ def fiche():
 def button_click_adopt():
     #il manque a réussir a recupérer l'id courant de la diche qui est deja dans l'url mais je sais pas comment faire ..
     #et aussi recuperer l'id de l'user mais ca on va bientot le terminer
-    idFiche = "298d5868-37c4-41fd-bad8-5b0b1b9ccd66"
-    idUsers = "eca95393-2325-45e5-bacb-bf0c59285fad"  
+    idFiche = request.args.get('idFiche', None)
+    idUsers = "eca95393-2325-45e5-bacb-bf0c59285fad"  ##
     #Ajout de l'id de l'user dans la table users_alternative_cards 
     pds.post_data("users_alternative_cards/",{"users_id": idUsers})    
     #récupération du nb d'element dans la table users_alternative_cards
     ###remplacer get data par get instance pour modifier les alternative adopter à la ligne 59 de servicesGETData.py
-    cardsList=gds.display_data("users_alternative_cards/")
+    cardsAdoptedList=dd.get_data("users_alternative_cards")
     #obtention de l'id de l'element de la table users_alternative_cards à modifier
-    idcard=str(cardsList["data"][-1]["id"])
+    idcard=str(cardsAdoptedList[-1]["id"])
     #ajout de l'id de la card
     sds.update_smt(path="users_alternative_cards",id=idcard,new_data={"alternative_cards_id":idFiche})
 
