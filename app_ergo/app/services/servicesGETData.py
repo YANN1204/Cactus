@@ -64,6 +64,26 @@ class GetDataServices():
 
         return data
     
+    """ A VOIR SI MIEUX CAR UTILISE LA METHODE DONNEE PAR LE PROF """
+    def display_places2(self, url_item: str, urlu: str, urlft: str, urlt: str, urlr: str):
+        data = self.pdao.get_data2(url_item + "?fields=*.*")
+        # parcourt la liste d'items du dictionnaire data
+        list_dic = []
+        for i in data["data"] :
+            #print(item)
+            item = {}
+            item['id'] = i['id']
+            item['title'] = i['title']
+            item['date_created'] = self.convert_date(i['date_created'])
+            item['pseudo'] = i['user_id']['pseudo']
+            tags_id = []
+            for t in i['tag'] :
+                tags_id.append(t['tags_id'])
+            item['tags'] = tags_id
+            item['room_name'] = i['room_id']['room_name']
+            list_dic.append(item)
+        return list_dic
+    
 
     def find_tag(self, urlft: str, urlt: str, list_tag: list):
         """Affiche les données sous la forme d'une liste
@@ -337,3 +357,16 @@ class GetDataServices():
         difference =  date_actuelle-janvier2023 
         return difference.days
     
+
+    def cards_adopted(self, id: str):
+        data = self.pdao.get_data2("users_alternative_cards" + "?fields=*.*")
+        list_dic = []
+        for i in data["data"] :
+            if i['users_id'] and i['users_id']['id'] == id : 
+                #print(item)
+                item = {}
+                item['id'] = i['alternative_cards_id']['id']
+                item['title'] = i['alternative_cards_id']['title']
+                item['room_name'] = i['alternative_cards_id']['room_id']
+                list_dic.append(item)
+        return list_dic

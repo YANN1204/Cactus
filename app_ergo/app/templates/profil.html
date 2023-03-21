@@ -3,7 +3,8 @@
 {% block content %}
 
 <div class="section-h1">
-    <h1>Profil de ##pseudo user##</h1>
+    <img src=" {{ session['avatar'] }} " alt="votre avatar">
+    <h1>Profil de {{ session['pseudo'] }}</h1>
 </div>
 
 <div class="row">
@@ -25,6 +26,9 @@
 
 <div>
     <h2>L'impact de tes pratiques par thématique</h2>
+    {{ session['alternative_card_adopted'] }}
+    {{ data }}
+    <button class="btn btn-primary">Voir plus</button>
 </div>
 
 <div>
