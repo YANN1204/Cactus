@@ -121,7 +121,14 @@
                                     {{ data["comments"][c]["pseudo"] }}
                                     {{ data["comments"][c]["date_created"] }}
                                 </div>
-                                {{ data["comments"][c]["comment_type"] }}
+                                <div class="d-flex">
+                                    {% if data["comments"][c]["comment_type"] == "Commentaire" %}
+                                        <i class="fa-regular fa-thought-bubble"></i>
+                                    {% else %}
+                                        <i class="fa-regular fa-gears"></i>
+                                    {% endif %}
+                                    {{ data["comments"][c]["comment_type"] }}
+                                </div>
                             </div>
                             {{ data["comments"][c]["text"] }}
                         </div>

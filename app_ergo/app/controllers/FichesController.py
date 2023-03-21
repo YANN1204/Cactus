@@ -53,7 +53,7 @@ def fiche():
 
 @app.route('/ficheAdopt')
 def button_click_adopt():
-    #il manque a réussir a recupérer l'id courant de la diche qui est deja dans l'url mais je sais pas comment faire ..
+    #il manque a réussir a recupérer l'id courant de la fiche qui est deja dans l'url mais je sais pas comment faire ..
     #et aussi recuperer l'id de l'user mais ca on va bientot le terminer
     idFiche = "298d5868-37c4-41fd-bad8-5b0b1b9ccd66"
     idUsers = "eca95393-2325-45e5-bacb-bf0c59285fad"  

@@ -337,5 +337,3 @@ class GetDataServices():
         difference =  date_actuelle-janvier2023 
         return difference.days
     
-
-    
