@@ -1,4 +1,5 @@
 from flask import render_template, request, session
+from flask import request
 from app import app
 from app.services.servicesGETData import GetDataServices
 from app.services.servicesPOSTData import PostDataServices
@@ -47,25 +48,31 @@ def fiche():
     logged = session.get("logged", False)
     username = session.get("username", None)
     idFiche = request.args.get('idFiche', None)
+    print(idFiche)
+    
     data = gds.display_instance(idFiche, url_item, urlu, urlt, urlact, urlr, urlc)
     
     metadata = {"title":"Fiche", "pagename": "fiche"}
-    return render_template('fiche.html', data = data, metadata=metadata, logged=logged, username=username)
+    return render_template('fiche.html', data = data, metadata=metadata, logged=logged, username=username, idFiche=idFiche)
 
 
-@app.route('/ficheAdopt')
-def button_click_adopt():
-    #il manque a réussir a recupérer l'id courant de la diche qui est deja dans l'url mais je sais pas comment faire ..
-    #et aussi recuperer l'id de l'user mais ca on va bientot le terminer
-    idFiche = request.args.get('idFiche', None)
-    idUsers = "eca95393-2325-45e5-bacb-bf0c59285fad"  ##
+
+@app.route('/button_click_adopt/<idFiche>')
+def button_click_adopt(idFiche):
+    if (session.get("logged", False)==False):
+        metadata = {"title":"Fiches", "pagename": "fiches"}
+        return render_template('login.html', metadata=metadata)
+    
+    idFiche = request.args.get('idFiche')
+    idUser = session.get("userId", None)
+     
     #Ajout de l'id de l'user dans la table users_alternative_cards 
-    pds.post_data("users_alternative_cards/",{"users_id": idUsers})    
-    #récupération du nb d'element dans la table users_alternative_cards
-    ###remplacer get data par get instance pour modifier les alternative adopter à la ligne 59 de servicesGETData.py
-    cardsAdoptedList=dd.get_data("users_alternative_cards")
+    pds.post_data("users_alternative_cards/",{"users_id": idUser})    
+   
+    cardsAdoptedList=dd.get_dataInDirectus("users_alternative_cards")
     #obtention de l'id de l'element de la table users_alternative_cards à modifier
-    idcard=str(cardsAdoptedList[-1]["id"])
+    idcard=str(cardsAdoptedList["data"][-1]["id"])
+    
     #ajout de l'id de la card
     sds.update_smt(path="users_alternative_cards",id=idcard,new_data={"alternative_cards_id":idFiche})
 

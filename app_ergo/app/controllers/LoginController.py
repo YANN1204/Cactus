@@ -26,6 +26,7 @@ def login():
             if request.form['username'] == i['mail'] and request.form['password'] == i['password']:
                 session['logged'] = True
                 session['username'] = request.form['username']
+                session['userId'] = i["id"]
                 return redirect(url_for('accueil_connected'))
         else: 
             msg_error = "identifiants incorrects"
