@@ -3,6 +3,7 @@ from app import app
 
 from app.services.servicesPOSTData import PostDataServices
 from app.services.servicesGETData import GetDataServices
+from app.controllers.LoginController import reqlogged
 
 gds = GetDataServices()
 pds = PostDataServices()
@@ -20,6 +21,7 @@ urlc = "comments"
 
 
 @app.route(basepath + 'forums', methods = ['GET'])
+@reqlogged
 def forums():
     logged = session.get("logged", False)
     username = session.get("username", None)
@@ -53,11 +55,16 @@ def forum():
 def com_forum():
     text_com = request.form.get("com")
     id_forum = request.form.get("id-forum")
+    if request.form.get("id-com"):
+        id_com = request.form.get("id-com")
+    else :
+        id_com = None
     newData = {
         "text": text_com,
         "user_id": session["id"],
         "text": text_com,
-        "forum_id": id_forum
+        "forum_id": id_forum,
+        "comment_subject": id_com
     }
     metadata = {"title":"Forum", "pagename": "Forum"}
     data = pds.post_data('comments', data=newData)

@@ -543,3 +543,10 @@ body {
 .div-bg.green{
     background-color: var(--clear-green);
 }
+
+
+/*------------ FORUM ------------*/
+
+.answer-form {
+    display: none;
+}

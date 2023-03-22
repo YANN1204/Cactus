@@ -23,10 +23,11 @@
             {{ data['pseudo'] }}
             {{ data['date_created'] }}
             {{ data['forum_subject'] }}
+            <button class="btn btn-primary" onclick="toggle_visibility('1');">Répondre</button>
         </div>
     </div>
 
-    <div>
+    <div class="answer-form" id="1" >
         <p>{{ session["pseudo"] }}</p>
         <form id="com-form" enctype="multipart/form-data" method="POST" action="{{ url_for('com_forum') }}">
             <textarea id="com" name="com" rows="5" cols="33"> Ecris ta réponse ici... </textarea>
@@ -35,7 +36,9 @@
         </form>
     </div>
 
+    {% set i = namespace(value=1) %}
     {% for c in range(data["comments"]|length) %}
+        {% set i.value = i.value + 1 %}
     <div class="row comment mx-3 div-list forum">
         <div class="col-1">
             <img src=' {{ data["comments"][c]["avatar"] }} ' alt="avatar">
@@ -47,9 +50,29 @@
             </div>
             {{ data["comments"][c]["text"] }}
         </div>
+        <button class="btn btn-outline-secondary" onclick="toggle_visibility('{{i.value}}');">Répondre</button>
+    </div>
+    <div class="answer-form" id="{{i.value}}" >
+        <p>{{ session["pseudo"] }}</p>
+        <form id="com-form" enctype="multipart/form-data" method="POST" action="{{ url_for('com_forum') }}">
+            <textarea id="com" name="com" rows="5" cols="33"> Ecris ta réponse ici... </textarea>
+            <input id="id-forum" name="id-forum" type="hidden" value="{{ data['id'] }}">
+            <input id="id-com" name="id-com" type="hidden" value="{{ data['comments'][c]['id'] }}">
+            <button type="submit" class="btn btn-primary btn-adopt">Poster ma réponse</button>
+        </form>
     </div>
     {% endfor %}
 
 </div>
+
+<script type="text/javascript">
+    function toggle_visibility(id) {
+        var e = document.getElementById(id);
+        if(e.style.display == 'block')
+           e.style.display = 'none';
+        else
+           e.style.display = 'block';
+    }
+ </script>
 
 {% endblock %}
