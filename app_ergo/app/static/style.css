@@ -75,6 +75,7 @@ body {
     padding: 1em 1.5em;
     display: flex;
     flex-direction: column;
+    background-color: white;
 }
 
 /*------------ Titres et textes ------------*/
@@ -447,24 +448,26 @@ body {
     font-size: 1.5em;
 }
 
-.div-games-home {
-    background-color: rgba(242, 120, 31, 0.8);
+.div-bg {
     color:#000000;
     margin: 2em 0;
 }
-.div-games-home h2 {
+.div-bg.orange{
+    background-color: rgba(242, 120, 31, 0.8);
+}
+.div-bg h2 {
     font-size: 1.4em;
     font-weight: 500;
     margin-bottom: 2em;
 }
-.div-games-home img {
+.div-bg img {
     width: 100%;
     border-radius: 20px;
 }
-.div-games-home .col-3 {
+.div-bg .col-3 {
     position: relative;
 }
-.div-games-home .col-3 .fa-circle-play {
+.div-bg .col-3 .fa-circle-play {
     position: absolute; 
     bottom: 45%; 
     left: 45%;
@@ -530,4 +533,13 @@ body {
 .div-wip p {
     font-size: 1.5em;
     font-weight: 600;
+}
+
+
+/*------------ PROFIL ------------*/
+#avatar-profile {
+    border-radius: 50%;
+}
+.div-bg.green{
+    background-color: var(--clear-green);
 }

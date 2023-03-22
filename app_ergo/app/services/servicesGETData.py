@@ -358,15 +358,35 @@ class GetDataServices():
         return difference.days
     
 
+
     def cards_adopted(self, id: str):
         data = self.pdao.get_data2("users_alternative_cards" + "?fields=*.*")
         list_dic = []
         for i in data["data"] :
             if i['users_id'] and i['users_id']['id'] == id : 
-                #print(item)
                 item = {}
                 item['id'] = i['alternative_cards_id']['id']
                 item['title'] = i['alternative_cards_id']['title']
-                item['room_name'] = i['alternative_cards_id']['room_id']
+                item['room_name'] = self.instance_by_id('rooms', i['alternative_cards_id']['room_id'])['room_name']
+                item['tags'] = self.find_tag('alternative_cards_tags', 'tags', i['alternative_cards_id']['tag'])
+                if i['alternative_cards_id']['impact'] :
+                    item['impact'] = i['alternative_cards_id']['impact']
+                list_dic.append(item)
+        return list_dic
+    
+    def cards_suggested(self, id: str):
+        data = self.pdao.get_data2("alternative_cards" + "?fields=*.*")
+        list_dic = []
+        for i in data["data"] :
+            if i['user_id'] and i['user_id']['id'] == id : 
+                item = {}
+                item['id'] = i['id']
+                item['title'] = i['title']
+                item['room_name'] = i['room_id']['room_name']
+                item['date_created'] = self.convert_date(i['date_created'])
+                tags_id = []
+                for t in i['tag'] :
+                    tags_id.append(t['id'])
+                item['tags'] = self.find_tag('alternative_cards_tags', 'tags', tags_id)
                 list_dic.append(item)
         return list_dic

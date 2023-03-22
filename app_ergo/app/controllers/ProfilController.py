@@ -12,6 +12,8 @@ basepath = '/'
 def profil():
     logged = session.get("logged", False)
     username = session.get("username", None)
-    data = gds.cards_adopted(session['id'])
+    data = {}
+    data['cards_adopted'] = gds.cards_adopted(session['id'])
+    data['cards_suggested'] = gds.cards_suggested(session['id'])
     metadata = {"title":"Profil", "pagename": "profil"}
     return render_template('profil.html', metadata=metadata, data=data, logged=logged, username=username)
