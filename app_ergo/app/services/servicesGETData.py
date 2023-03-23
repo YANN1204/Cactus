@@ -24,7 +24,7 @@ class GetDataServices():
         """
         data = self.pdao.get_data(url)
         return data
-    ##remplacer get data par get instance pour modifier les alternative adopté
+   
 
 
     def display_places(self, url_item: str, urlu: str, urlft: str, urlt: str, urlr: str):
