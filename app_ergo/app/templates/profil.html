@@ -26,7 +26,7 @@
 <div class="container-fluid div-bg orange">
     <h2>Tes pratiques adoptées</h2>
 
-    {% for card in data['cards_adopted'] %}
+    {% for card in data['cards_adopted'][0:2] %}
      <div class="div-list acard">
         <div class="div-head-list-cards">
             <h3 class="title-list-item">{{ card['title'] }}</h3>
@@ -44,8 +44,29 @@
         </div>
     </div>
     {% endfor %}
-
-    <button class="btn btn-primary">Voir plus</button>
+    <div class="hidden-div" id="next_cards2">
+        {% for card in data['cards_adopted'][2:] %}
+        <div class="div-list acard">
+            <div class="div-head-list-cards">
+                <h3 class="title-list-item">{{ card['title'] }}</h3>
+            </div>
+            <div class="div-tags-button">
+                <div class="div-tags pratique">
+                    <span> {{ card['room_name'] }} </span>
+                    {% for tag in card['tags'] %}
+                        <span> {{ tag }} </span>
+                    {% endfor %}
+                </div>
+                {% set idFiche = card['id'] %}
+                <a role="button" href="{{ url_for('fiche', idFiche=card['id']) }}"
+                    class="icon icon-solid icon-chevron-right btn btn-outline-secondary">Voir plus</a>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+    {% if data['cards_adopted']|length > 2 %}
+        <button class="btn btn-outline-secondary" onclick="toggle_visibility('next_cards2');">Voir plus</button>
+    {% endif %}
 </div>
 
 <div>
@@ -54,8 +75,8 @@
 
 <div class="container-fluid div-bg green">
     <h2>Les fiches postées</h2>
-    {% for card in data['cards_suggested'] %}
-     <div class="div-list acard">
+    {% for card in data['cards_suggested'][0:2] %}
+    <div class="div-list acard">
         <div><i class="fa-solid fa-check"></i> Publiée</div>
         <div class="div-head-list-cards">
             <p>Publiée le : {{ card['date_created'] }}</p>
@@ -74,7 +95,41 @@
         </div>
     </div>
     {% endfor %}
-    <button class="btn btn-primary">Voir plus</button>
+    <div class="hidden-div" id="next_cards2">
+        {% for card in data['cards_suggested'][2:] %}
+        <div class="div-list acard">
+            <div><i class="fa-solid fa-check"></i> Publiée</div>
+            <div class="div-head-list-cards">
+                <p>Publiée le : {{ card['date_created'] }}</p>
+                <h3 class="title-list-item">{{ card['title'] }}</h3>
+            </div>
+            <div class="div-tags-button">
+                <div class="div-tags pratique">
+                    <span> {{ card['room_name'] }} </span>
+                    {% for tag in card['tags'] %}
+                        <span> {{ tag }} </span>
+                    {% endfor %}
+                </div>
+                {% set idFiche = card['id'] %}
+                <a role="button" href="{{ url_for('fiche', idFiche=card['id']) }}"
+                    class="icon icon-solid icon-chevron-right btn btn-outline-secondary">Voir plus</a>
+            </div>
+        </div>
+        {% endfor %}
+    </div> 
+    {% if data['cards_suggested']|length > 2 %}
+        <button class="btn btn-outline-secondary" onclick="toggle_visibility('next_cards2');">Voir plus</button>
+    {% endif %}
 </div>
+
+<script type="text/javascript">
+    function toggle_visibility(id) {
+        var e = document.getElementById(id);
+        if(e.style.display == 'block')
+           e.style.display = 'none';
+        else
+           e.style.display = 'block';
+    }
+ </script>
 
 {% endblock %}

@@ -58,7 +58,7 @@ def button_click_adopt():
     #il manque a réussir a recupérer l'id courant de la fiche qui est deja dans l'url mais je sais pas comment faire ..
     #et aussi recuperer l'id de l'user mais ca on va bientot le terminer
     idFiche = request.args.get('idFiche', None)
-    idUsers = "eca95393-2325-45e5-bacb-bf0c59285fad"  ##
+    idUsers = session['id']
     #Ajout de l'id de l'user dans la table users_alternative_cards 
     pds.post_data("users_alternative_cards/",{"users_id": idUsers})    
     #récupération du nb d'element dans la table users_alternative_cards
@@ -72,6 +72,23 @@ def button_click_adopt():
     metadata = {"title":"Fiches", "pagename": "fiches"}
     #retourn un pop up "c'est ok"
     return render_template('fiches.html', metadata=metadata)
+
+
+@app.route(basepath + 'postCard', methods=['POST'])
+def com_card():
+    text_com = request.form.get("com")
+    id_card = request.form.get("id-card")
+    newData = {
+        "text": text_com,
+        "user_id": session["id"],
+        "text": text_com,
+        "alternative_card_id": id_card,
+    }
+    metadata = {"title":"Fiche", "pagename": "Fiche"}
+    data = pds.post_data('comments', data=newData)
+    # afficher fiche avec nouveau com --> à corriger
+    return render_template('accueil.html', metadata=metadata, data=data)
+
 
 @app.route('/fiches', methods=['GET', 'POST'])
 def handle_button_click():

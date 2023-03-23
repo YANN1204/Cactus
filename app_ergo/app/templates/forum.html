@@ -27,10 +27,10 @@
         </div>
     </div>
 
-    <div class="answer-form" id="1" >
+    <div class="hidden-div" id="1" >
         <p>{{ session["pseudo"] }}</p>
         <form id="com-form" enctype="multipart/form-data" method="POST" action="{{ url_for('com_forum') }}">
-            <textarea id="com" name="com" rows="5" cols="33"> Ecris ta réponse ici... </textarea>
+            <textarea id="com" name="com" class="form-control"> Ecris ta réponse ici... </textarea>
             <input id="id-forum" name="id-forum" type="hidden" value="{{ data['id'] }}">
             <button type="submit" class="btn btn-primary btn-adopt">Poster ma réponse</button>
         </form>
@@ -52,10 +52,10 @@
         </div>
         <button class="btn btn-outline-secondary" onclick="toggle_visibility('{{i.value}}');">Répondre</button>
     </div>
-    <div class="answer-form" id="{{i.value}}" >
+    <div class="hidden-div" id="{{i.value}}" >
         <p>{{ session["pseudo"] }}</p>
         <form id="com-form" enctype="multipart/form-data" method="POST" action="{{ url_for('com_forum') }}">
-            <textarea id="com" name="com" rows="5" cols="33"> Ecris ta réponse ici... </textarea>
+            <textarea id="com" name="com" class="form-control"> Ecris ta réponse ici... </textarea>
             <input id="id-forum" name="id-forum" type="hidden" value="{{ data['id'] }}">
             <input id="id-com" name="id-com" type="hidden" value="{{ data['comments'][c]['id'] }}">
             <button type="submit" class="btn btn-primary btn-adopt">Poster ma réponse</button>
@@ -66,6 +66,7 @@
 </div>
 
 <script type="text/javascript">
+    // permet de faire apparaître/disparaître les formulaires de réponse
     function toggle_visibility(id) {
         var e = document.getElementById(id);
         if(e.style.display == 'block')
@@ -73,6 +74,6 @@
         else
            e.style.display = 'block';
     }
- </script>
+</script>
 
 {% endblock %}

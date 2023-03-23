@@ -547,6 +547,6 @@ body {
 
 /*------------ FORUM ------------*/
 
-.answer-form {
+.hidden-div {
     display: none;
 }
