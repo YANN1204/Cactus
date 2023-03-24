@@ -26,7 +26,10 @@ def login():
             if request.form['username'] == i['mail'] and request.form['password'] == i['password']:
                 session['logged'] = True
                 session['username'] = request.form['username']
-                session['userId'] = i["id"]
+                session['userId'] = i['id']
+                session['pseudo'] = i['pseudo']
+                session['avatar'] = "https://d10b6z4v.directus.app/assets/" + i['avatar']
+                session['alternative_card_adopted'] = i['alternative_card_adopted']
                 return redirect(url_for('accueil_connected'))
         else: 
             msg_error = "identifiants incorrects"

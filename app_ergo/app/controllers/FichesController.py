@@ -6,6 +6,7 @@ from app.services.servicesPOSTData import PostDataServices
 from app.services.servicesDELETEData import DeleteDataServices
 from app.services.servicesSETData import SetDataServices
 from app.models.dataDAO import DataDAO 
+from app.controllers.LoginController import reqlogged
 
 dd = DataDAO()
 gds = GetDataServices()
@@ -23,6 +24,7 @@ urlt = "tags"
 urlact = "alternative_cards_tags"
 urlr = "rooms"
 urlc = "comments"
+urli = "impacts"
 
 @app.route(basepath + 'fiches', methods = ['GET'])
 def fiches():
@@ -42,7 +44,6 @@ def research_in_cards():
     metadata = {"title":"Fiches", "pagename":"fiches"}
     return render_template('fiches.html', metadata=metadata, data=data_filter, logged=logged, username=username)
 
-
 @app.route('/fiche')
 def fiche():
     logged = session.get("logged", False)
@@ -56,6 +57,7 @@ def fiche():
     dd.save_all_items(list_item)
     adopted=gds.card_adopted(idFiche,session.get("userId","0"))
     
+    data = gds.display_instance(idFiche, url_item, urlu, urlt, urlact, urlr, urlc, urli)
     metadata = {"title":"Fiche", "pagename": "fiche"}
     return render_template('fiche.html', data = data, metadata=metadata, logged=logged, username=username, idFiche=idFiche, adopted=adopted)
 
@@ -120,6 +122,32 @@ def button_click_unadopt(idFiche):
     username = session.get("username", None)
     adopted=gds.card_adopted(idFiche,session.get("userId","0"))
     return render_template('fiche.html',  metadata=metadata, adopted=adopted, data=data, logged=logged ,username=username, idFiche=idFiche)
+
+
+@app.route(basepath + 'postCard', methods=['POST'])
+@reqlogged
+def com_card():
+    text_com = request.form.get("com")
+    id_card = request.form.get("id-card")
+    com_radio = request.form.get("comRadio")
+    newData = {
+        "text": text_com,
+        "user_id": session["id"],
+        "comment_type": com_radio,
+        "alternative_card_id": id_card,
+    }
+    metadata = {"title":"Fiche", "pagename": "Fiche"}
+    data = pds.post_data('comments', data=newData)
+    # on retélécharge le json pour voir le nouveau commentaire
+    list_item = ['alternative_cards', 'alternative_cards_tags', 'comments', 'forums', 'forums_tags', 'impacts',
+             'rooms', 'tags', 'users', 'users_alternative_cards', 'users_tags']
+    dd.save_all_items(list_item)
+    # afficher fiche avec nouveau com --> à corriger
+    data = gds.display_instance(id_card, url_item, urlu, urlt, urlact, urlr, urlc)
+    return render_template('fiche.html', metadata=metadata, data=data)
+
+
+
 
 @app.route('/fiches', methods=['GET', 'POST'])
 def handle_button_click():
