@@ -522,3 +522,32 @@ body {
     font-size: 1.5em;
     font-weight: 600;
 }
+
+
+.hidden-div {
+    display: none;
+}
+
+
+/*------------ INSCRIPTION ------------*/
+.sign-up {
+    margin-bottom: 1.5em;
+}
+.sign-up .form-control {
+    border-radius: 50px;
+    border: 1px solid var(--clearer-green);
+}
+.sign-up .form-control:focus {
+    box-shadow: 0 1px 1px rgba(0, 0, 0, 0.075) inset, 0 0 8px rgba(167, 201, 87, 0.6);
+    border: 1px solid var(--clear-green);
+}
+
+.div-room-checkbox.sign-up {
+    flex-direction: row;
+    width: 24%;
+}
+.div-room-checkbox.sign-up label {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-around;
+}
