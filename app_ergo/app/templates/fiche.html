@@ -7,8 +7,6 @@
 />
 
 
-
-
 <div class="section-h1">
     <h1>Fiches {% if data["type_of_card"] == "1" %} pratique {% elif data["type_of_card"] == "3" %} conseil {% else %} témoignage {% endif %}</h1>
 </div>
@@ -65,21 +63,24 @@
                             </div>
                         </div>
                     </div>
-                    <div class="modal fade" id="mod">
+                    <div class="modal fade" id="mod" tabindex="-1">
                         <div class="modal-dialog">
                             <div class="modal-content">
                                 <div class="modal-header">
-                                    <p> Entête du pop-up </p>
+                                    <h1 class="modal-title fs-5" id="staticBackdropLabel">Pratique adoptée !</h1>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                 </div>
                                 <div class="modal-body">
-                                    <p> Je suis un magnifique pop-up</p>
+                                    Bravo tu viens d'adopter une nouvelle pratique !
                                 </div>
                                 <div class="modal-footer">
-                                    <p> Footer du pop-up</p>
+                                    <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Super, je continue !</button>
                                 </div>
                             </div>
                         </div>
                     </div>
+
+
                     <div class="col">
                         <p>{{ data["description"]}}</p>
                         {% if adopted == false%}
@@ -175,7 +176,7 @@
 </div>
 
 <!-- Vérifier la valeur de la variable Flask et afficher la modale en conséquence -->
-{% if adopte %}
+{% if adopted == True%}
 <script>
     $(document).ready(function() {
         $('#mod').modal('show');

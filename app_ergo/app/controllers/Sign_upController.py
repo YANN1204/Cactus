@@ -45,11 +45,6 @@ def register():
         id_avatar="04bbc5e6-d05d-4376-bbd1-1e5d0afae53e"
     if avatar_number=="4.png":
         id_avatar="e6dad96c-4d70-43ba-98b4-4ae5d6dec8b6"
-
-    
-    
-   
-
     # Créer un nouvel utilisateur dans Directus avec ces valeurs
     newData = {
         "mail": email,
@@ -59,7 +54,6 @@ def register():
         "avatar": id_avatar
     }
     metadata = {"title": "Sign_up", "pagename": "sign_up"}
-
 
     data = pds.post_data('users', data=newData)  
 
