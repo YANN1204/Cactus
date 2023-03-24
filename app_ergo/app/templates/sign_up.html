@@ -5,7 +5,7 @@
         max-height: 100px;
         margin-left: 10px;
     }
-
+    
     #tagId {
         display: none;
     }
@@ -28,8 +28,7 @@
             </div>
             <div>
                 <li>Pour commencer, renseigne ton e-mail comme identifiant,</li>
-                <li> crée un mot de passe et enfin décide du pseudo et de l’avatar par lequel tu souhaite que les autres
-                    membres t’identifie. </li>
+                <li> crée un mot de passe et enfin décide du pseudo et de l’avatar par lequel tu souhaite que les autres membres t’identifie. </li>
             </div>
             <form id="register-form" enctype="multipart/form-data" method="POST" action="{{ url_for('register') }}">
                 <label for="email">E-mail *</label>
@@ -46,11 +45,29 @@
                 <label for="pseudo-input" class="form-label">Pseudo (Visible par la communauté) *</label>
                 <input type="text" class="form-control" id="pseudo" name="pseudo" aria-required="">
 
-                <label for="avatar">Avatar :</label>
+                <label for="avatar">Avatar :</label> {% set static_folder = url_for('static', filename='') %}
 
-                <input type="file" id="avatar" name="avatar" onchange="loadAvatar(event)"><br>
-                <img id="avatar-preview" class="avatar-preview" src="#" alt="Aperçu de l'avatar"
-                    style="display: none;"><br><br>
+                <label for="image-1">
+                    <img src="{{ static_folder }}Avatar/1.png" alt="Image 1" width="100">
+                    <br>
+                    <input type="radio" name="image" id="image-1" value="1.png">
+                </label>
+                <label for="image-2">
+                    <img src="{{ static_folder }}Avatar/2.png" alt="Image 2" width="100">
+                    <br>
+                    <input type="radio" name="image" id="image-2" value="2.png">
+                </label>
+                <label for="image-3">
+                    <img src="{{ static_folder }}Avatar/3.png" alt="Image 3" width="100">
+                    <br>
+                    <input type="radio" name="image" id="image-3" value="3.png">
+                </label>
+                <label for="image-4">
+                    <img src="{{ static_folder }}Avatar/4.png" alt="Image 4" width="100">
+                    <br>
+                    <input type="radio" name="image" id="image-4" value="4.png">
+                </label>
+
                 <button type="submit" id="connexion" class="btn btn-primary">S'inscrire</button>
             </form>
 
@@ -64,8 +81,8 @@
 
                 </div>
                 <div>
-                    <h3>Paramètre tes notifictions et clique sur les tags ci-dessous pour renseigner tes centres
-                        d'intérêts.</h3>
+                    <h3>Paramètre tes notifictions et clique sur les tags ci-dessous pour renseigner tes centres d'intérêts.
+                    </h3>
 
                 </div>
                 <form>
@@ -108,8 +125,7 @@
 
                 </div>
                 <div>
-                    <li>Pour commencer dans l’application, renseigne les alternatives que tu as adoptées. Si tu ne
-                        trouve pas une alternative, pas de panique, tu pourras créer sa fiche plus tard...</li>
+                    <li>Pour commencer dans l’application, renseigne les alternatives que tu as adoptées. Si tu ne trouve pas une alternative, pas de panique, tu pourras créer sa fiche plus tard...</li>
 
                 </div>
                 <form>
@@ -131,7 +147,6 @@
 
 
 <script>
-
     // Sélectionnez les éléments d'entrée et le bouton suivant
     const email = document.getElementById('email');
     const password = document.getElementById('password');
@@ -140,7 +155,7 @@
     const checkpsw = document.getElementById('error-message');
     var passwOK = 0;
     var user_id = session.get('user_id')
-    // Récupérer les éléments HTML pour chaque bouton basculant
+        // Récupérer les éléments HTML pour chaque bouton basculant
     var friendficheToggle = document.getElementById("friendficheToggle");
     //var newficheToggle = document.getElementById("newficheToggle");
     //var newforumToggle = document.getElementById("newforumToggle");
