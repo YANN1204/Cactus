@@ -24,7 +24,7 @@ class GetDataServices():
         """
         data = self.pdao.get_data(url)
         return data
-    
+   
 
     def display_places(self, url_item: str, urlu: str, urlft: str, urlt: str, urlr: str):
         """Affiche les données sous la forme d'un dictionnaire python
@@ -47,19 +47,20 @@ class GetDataServices():
 
         # parcourt la liste d'items du dictionnaire data
         for item in data :
+            print(item)
             # récupère les infos du user avec l'id correspondant au champ user_id du forum/fiche
-            user = self.item_by_id(urlu, item['user_id'])
+            user = self.instance_by_id(urlu, item['user_id'])
 
             # crée une nouvelle key pseudo au dict du forum/fiche avec comme valeur le pseudo correspondant à l'user
             item['pseudo'] = user['pseudo']
-            
+
             # on récupère la liste de noms de tags
             tags_name = self.find_tag(urlft, urlt, item["tag"])
 
             # on ajoute la liste de noms de tags à une nouvelle entrée du dict forum/fiche
             item['tags_name'] = tags_name
             # même chose pour avoir le room_name
-            room = self.item_by_id(urlr, item['room_id'])
+            room = self.instance_by_id(urlr, item['room_id'])
             item['room_name'] = room['room_name']
 
         return data
@@ -81,10 +82,10 @@ class GetDataServices():
         tags_name = []
         for t in list_tag:
             # récupère l'id du tag du lien tag-forum / tag-fiche
-            tag_id = self.item_by_id(urlft, t)
-            
+            tag_id = self.instance_by_id(urlft, t)
+  
             # récupère le nom du tag avec l'id récupéré avant
-            tag = self.item_by_id(urlt, tag_id["tags_id"])
+            tag = self.instance_by_id(urlt, tag_id["tags_id"])
             
             tags_name.append(tag['tag_name'])
             
@@ -93,9 +94,9 @@ class GetDataServices():
 
     def display_instance(self, idInstance: str, url_item: str, urlu: str, urlt: str, urlft: str, urlr: str, urlc: str):
         # pas fini
-        data = self.item_by_id(url_item, idInstance)
+        data = self.instance_by_id(url_item, idInstance)
         # récupère les infos du user avec l'id correspondant au champ user_id du forum/fiche
-        user = self.item_by_id(urlu, data['user_id'])
+        user = self.instance_by_id(urlu, data['user_id'])
         # crée une nouvelle key pseudo au dict du forum/fiche avec comme valeur le pseudo correspondant à l'user
         data['pseudo'] = user['pseudo']
         data['avatar'] = user['avatar']
@@ -104,7 +105,7 @@ class GetDataServices():
         # on ajoute la liste de noms de tags à une nouvelle entrée du dict forum/fiche
         data['tags_name'] = tags_name
         # même chose pour avoir le room_name
-        room = self.item_by_id(urlr, data['room_id'])
+        room = self.instance_by_id(urlr, data['room_id'])
         data['room_name'] = room['room_name']
         data['comments'] = self.find_comments(idInstance, urlc, urlu)
         return data
@@ -117,11 +118,33 @@ class GetDataServices():
         for c in data:
             if c['forum_id'] == idForum:
                 comments.append(c)
-                user = self.item_by_id(urlu, c['user_id'])
+                user = self.instance_by_id(urlu, c['user_id'])
                 c['pseudo'] = user['pseudo']
                 c['avatar'] = user['avatar']
         return comments
 
+    def card_adopted(self, idFiche : str, idUser : str):
+        data = self.pdao.get_data("users_alternative_cards")
+        found = False
+        for d in data:
+            #if d['users_id'] == type(None) or d['alternative_cards_id'] == type(None):
+            #    found = False
+            
+            if d['users_id'] == idUser and d['alternative_cards_id'] == idFiche:                
+                found = True
+                
+
+
+        return found
+    
+    def index_users_alternative_cards(self, idFiche : str, idUser : str):
+        data = self.pdao.get_data("users_alternative_cards")
+        found = "null"
+        for d in data:
+            if (d['users_id'] == idUser and d['alternative_cards_id'] == idFiche):
+                found = d["id"]
+                break
+        return found
 
     def display_title(self, url: str):
         """Retourne tout les titre des éléments
@@ -183,9 +206,10 @@ class GetDataServices():
         return 'Aucun élément ne présente ce titre dans la base de donnée'
     
 
-    def item_by_id(self, url: str, id: str):
+    def instance_by_id(self, url: str, id: str):
         """Retourne l'ensemble des informations d'une
-        collection données à partir de son id
+        instance d'une collection données à partir de 
+        son id
 
         Args:
             url (str): nom de la collection recherché
@@ -204,6 +228,29 @@ class GetDataServices():
                 return i
             
         return 'Aucun élément ne présente cet id dans la base de donnée'
+    
+
+    def instance_by_attribute(self, url: str, attribute: str, content_attribute: str):
+        """Cette fonction est une généralisation de la fonction instance_by_id et permet
+        de récupérer l'instance d'une collection à partir de n'importe lequel de ces
+        champs ou attribut
+
+        Args:
+            url (str): _description_
+            attribute (str): l'attribut qui servira à la reconnaissance
+            de l'instance (celle-ci ne doit pas contenir des instances qui ont
+            la même valeur pour cet attribut)
+            content_attribute (str): le contenu identifiant pour reconnaître
+            l'instance
+
+        Returns:
+            dict: l'instance de la collection que l'on veut récupérer
+        """
+        data = self.pdao.get_data(url)
+
+        for i in data:
+            if i[attribute] == content_attribute:
+                return i
 
 
     def filter(self, data_item, research_data):
@@ -226,16 +273,23 @@ class GetDataServices():
 
         data_item_filter = []
         for i in data_item:
+            added = 0
             title = i['title']
             list_tags = i['tags_name']
             room_name = i['room_name']
             if research_data in title or new_research in title:
-                data_item_filter.append(i)
+                if added == 0:
+                    data_item_filter.append(i)
+                    added += 1
             for tag in list_tags:
                 if tag in research_data or tag in new_research:
-                    data_item_filter.append(i)
+                    if added == 0:
+                        data_item_filter.append(i)
+                        added += 1
             if room_name in research_data or room_name in new_research:
-                data_item_filter.append(i)
+                if added == 0:
+                    data_item_filter.append(i)
+                    added += 1
 
         return data_item_filter
 

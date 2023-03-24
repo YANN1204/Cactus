@@ -1,5 +1,7 @@
 @import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500;1,600;1,700&display=swap');
+
+/*------------ VARIABLES ------------*/
 body {
     --darker-green: #2F422F;
     --dark-green: #004D00;
@@ -11,8 +13,11 @@ body {
     --dark-burgundy: #70292A;
     --dark-grey: #333333;
     font-family: "Montserrat" !important;
+    color: var(--darker-green);
 }
 
+
+/*------------ ICONES ------------*/
 .icon::after {
     display: none;
 }
@@ -33,6 +38,10 @@ body {
     content: '\f0ad';
 }
 
+.icon-plus::after {
+    content: '\e59e';
+}
+
 .icon-solid::after {
     font: var(--fa-font-solid);
 }
@@ -41,52 +50,16 @@ body {
     font: var(--fa-font-regular);
 }
 
-.center-content {
-    text-align: center;
-    margin: auto;
-    width: 100%;
-}
 
-.arrow-right {
-    width: 0;
-    height: 0;
-    border-top: 10px solid transparent;
-    border-bottom: 10px solid transparent;
-    border-left: 20px solid black;
-    display: inline-block;
-    vertical-align: middle;
-}
+/*------------ ELEMENTS GLOBAUX ------------*/
 
+/*------------ Containers et div ------------*/
 .container {
-    display: block;
+    margin: 2em 7em;
 }
 
-.element {
-    margin: 10px;
-}
-
-.section-h1 {
-    background: repeat url("Images/background-cacti.png");
-    width: 100%;
-    color: var(--darker-green);
-    padding: 1.5em 3em !important;
-}
-
-.section-h1 h1 {
-    font-size: 64px;
-    font-weight: 800;
-    padding-left: 1em;
-}
-
-.cta-post {
-    background: var(--dark-green);
-    padding: 1.5em 2em 1em 6em;
-    color: white;
-    font: 24px 500;
-    display: flex;
-    column-gap: 2em;
-    width: fit-content;
-    border-radius: 0 20px 20px 0;
+.container-fluid {
+    padding: 2em 7em;
 }
 
 .div-list {
@@ -96,6 +69,106 @@ body {
     flex-direction: column;
 }
 
+/*------------ Titres et textes ------------*/
+.section-h1 {
+    background: repeat url("Images/background-cacti.png");
+    width: 100%;
+    color: var(--darker-green);
+    padding: 1.5em 3em !important;
+}
+.section-h1 h1 {
+    font-size: 4em;
+    font-weight: 800;
+    padding-left: 1em;
+}
+
+.p-intro {
+    font-size: 1.3em;
+    margin: 0;
+}
+
+/*------------ Boutons ------------*/
+.btn-primary {
+    --bs-btn-color: var(--darker-green);
+    --bs-btn-border-color: var(--clearer-green);
+    --bs-btn-hover-bg: var(--clearer-green);
+    --bs-btn-hover-border-color: var(--clearer-green);
+    --bs-btn-active-bg: var(--clearer-green);
+    --bs-btn-active-border-color: var(--clearer-green);
+    --bs-btn-bg: var(--clearer-green);
+    --bs-btn-hover-color: var(--darker-green);
+    --bs-btn-hover-bg: #C5E37E;
+}
+
+.btn-outline-secondary {
+    --bs-btn-color: var(--dark-green);
+    --bs-btn-border-color: var(--dark-green);
+    --bs-btn-hover-bg: var(--dark-green);
+    --bs-btn-hover-border-color: var(--dark-green);
+    --bs-btn-active-bg: var(--dark-green);
+    --bs-btn-active-border-color: var(--dark-green);
+}
+
+.btn {
+    --bs-btn-padding-x: 0.6em;
+    --bs-btn-padding-y: 0.3em;
+    --bs-btn-font-size: 1.1em;
+    --bs-btn-font-weight: 500;
+    --bs-btn-border-radius: 50px;
+    width: fit-content;
+}
+.btn svg {
+    margin-left: 0.5em;
+}
+
+
+/*------------ MENU NAVBAR ------------*/
+.navbar {
+    padding: 0.7em 3em;
+    display: flex;
+    justify-content: space-between;
+    background-color: white;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.10);
+    position: sticky;
+    top: 0;
+}
+.navbar ul {
+    display: flex;
+    column-gap: 3em;
+}
+.navbar-nav .nav-link.active, .navbar-nav .show>.nav-link {
+    color: var(--darker-green);
+    font-weight: 500;
+}
+
+.nav-item {
+    color: rgb(47, 66, 47, 0.8)
+}
+
+
+/*------------ ELEMENTS ESPACES FICHES ET FORUMS ------------*/
+
+/*------------ Poster forum/fiche ------------*/
+.cta-post {
+    background: var(--dark-green);
+    padding: 1em 2em 1em 6em;
+    color: white;
+    display: flex;
+    column-gap: 2em;
+    width: fit-content;
+    border-radius: 0 20px 20px 0;
+    align-items: center;
+    position: fixed;
+    bottom: 2em;
+    filter: drop-shadow(2px 4px 10px rgba(0, 0, 0, 0.3));
+}
+.cta-post p {
+    font: 1.1em 500;
+    margin: 0;
+}
+
+/*------------ Element des listes forum/fiche ------------*/
+/* div */
 .div-list.forum {
     border-radius: 20px;
     row-gap: 0.5em;
@@ -108,11 +181,30 @@ body {
     border: solid 1px var(--clear-green);
 }
 
+.div-head-list-cards {
+    display: flex;
+    column-gap: 2em;
+}
+
+.div-tags-button {
+    display: flex;
+    justify-content: space-between;
+    align-items: end;
+}
+
+/* titre et p */
 .div-list.forum p {
     font-style: italic;
     font-size: 16px;
 }
 
+.title-list-item {
+    font-weight: 700;
+    font-size: 20px;
+    color: var(--darker-green);
+}
+
+/* tags */
 .div-tags {
     display: flex;
     column-gap: 0.3em;
@@ -140,6 +232,7 @@ body {
     background-color: rgba(188, 71, 73, 0.6);
 }
 
+/* type des fiches (conseil/témoignage/pratique) */
 .type-card {
     border-radius: 50px;
     padding: 0.2em 0.7em;
@@ -165,33 +258,267 @@ body {
     background-color: #63B831;
 }
 
-.title-list-item {
-    font-weight: 700;
-    font-size: 20px;
+
+/*------------ ELEMENTS FORM DE RECHERCHE ESPACE FICHES ------------*/
+
+/*------------ Div ------------*/
+.div-form-cards {
+    background-color: rgba(0, 77, 0, 0.9);
+}
+
+.div-form-button {
+    display: flex;
+    justify-content: end;
+    margin-top: 1em;
+}
+
+/*------------ Checkboxes avec image ------------*/
+/* div et img */
+.div-room-checkbox {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: var(--clearer-green);
+    border-radius: 20px;
+    padding: 0.5em;
     color: var(--darker-green);
+    font-weight: bold;
+    font-size: 1em;
+    margin: 1.5em 1.5em;
+}
+.div-room-checkbox img {
+    width: 63%;
+}
+.div-room-checkbox div {
+    margin-top: 0.3em;
 }
 
-.div-head-list-cards {
+.col-2 {
+    width: 15%;
+}
+
+/* case à cocher */
+.form-check .form-check-input {
+    margin-left: 0;
+    margin-right: 0.3em;
+}
+.form-check-input:checked {
+    background-color: var(--darker-green);
+    border-color: var(--darker-green);
+}
+.form-check-input:focus {
+    box-shadow: 0 1px 1px rgba(0, 0, 0, 0.075) inset, 0 0 8px rgba(0, 77, 0, 0.6);
+    border-color: var(--dark-green);
+}
+
+/*------------ Champs type de contenu et recherche ------------*/
+.form-group {
     display: flex;
-    column-gap: 2em;
+    flex-direction: column;
 }
 
-.button-secondary {
-    padding: 0.3em 0.6em;
-    width: fit-content;
-    border: 1px solid var(--dark-green);
+/* select type de contenu */
+.form-select {
     border-radius: 50px;
-    background-color: white;
-    color: var(--dark-green);
-    font-weight: 500;
-    font-size: 22px;
+    border-color: var(--darker-green);
+}
+
+.select-content-type {
+    width: 25%;
+    color: white;
+}
+.select-content-type select:focus{
+    box-shadow: 0 1px 1px rgba(0, 0, 0, 0.075) inset, 0 0 8px rgba(167, 201, 87, 0.6);
+    border-color: var(--dark-green);
+}
+
+/* input recherche */
+.input-content-research input {
+    width: 65%;
+    border-radius: 50px;
+    border: 1px solid var(--darker-green);
+    padding: .375rem 2.25rem .375rem .75rem;
+}
+.input-content-research input:focus {
+    box-shadow: 0 1px 1px rgba(0, 0, 0, 0.075) inset, 0 0 8px rgba(167, 201, 87, 0.6);
+    border: 1px solid var(--dark-green);
+}
+.input-content-research label {
+    color: white;
+}
+
+
+/*------------ ELEMENTS FORM DE RECHERCHE ESPACE FORUMS ------------*/
+
+.div-form-forums {
+    width: 30%;
+    padding: 2em;
+    align-self: center;
+    background-color: var(--dark-green);
+    border-radius: 20px;
+    margin-bottom: 2em;
+}
+.div-form-forums .form-control{
+    width: 100%;
+}
+
+
+/*------------ ACCUEIL ------------*/
+
+.h1-home {
+    font-size: 6em;
+    font-weight: 800;
+    margin-bottom: 0.2em;
+}
+
+.header-home {
+    justify-content: space-between;
+    align-items: center;
+}
+.header-home p {
+    font-size: 1.7em;
+}
+.header-home .col {
     display: flex;
-    column-gap: 0.5em;
+    justify-content: end;
+}
+
+.div-research-home {
+    border-radius: 20px;
+    background-color: var(--dark-green);
+    color: white;
+    padding: 2em 3em;
+}
+.div-research-home h2 {
+    font-size: 1.2em;
+    font-weight: 400;
+    margin-bottom: 0.7em;
+}
+.div-research-home .row {
+    padding-left: 3em;
+    display: flex;
+    align-items: end;
+}
+.div-research-home .row .col {
+    display: flex;
+    justify-content: end;
+}
+
+.div-impact-home {
+    align-items: center;
+    margin: 4em 0 2em 0;
+}
+.div-impact-home p {
+    font-size: 1.2em;
+}
+.div-impact-home span {
+    font-size: 1.5em;
+    font-weight: 600;
+    color: var(--dark-green)
+}
+
+.div-forums-articles-home .col-5 {
+    padding: 2em;
+}
+.div-forums-articles-home h2 {
+    font-size: 1.4em;
+    font-weight: 500;
+    display: flex;
+    column-gap: 1em;
+    align-items: center;
+}
+.div-forums-articles-home p {
+    font-size: 1.2em;
+}
+.div-forums-articles-home a {
+    align-self: flex-end;
+}
+.div-forums-articles-home h2 svg {
+    color: var(--dark-green);
+    font-size: 1.5em;
+}
+
+.div-games-home {
+    background-color: rgba(242, 120, 31, 0.8);
+    color:#000000;
+    margin: 2em 0;
+}
+.div-games-home h2 {
+    font-size: 1.4em;
+    font-weight: 500;
+    margin-bottom: 2em;
+}
+.div-games-home img {
+    width: 100%;
+    border-radius: 20px;
+}
+.div-games-home .col-3 {
+    position: relative;
+}
+.div-games-home .col-3 .fa-circle-play {
+    position: absolute; 
+    bottom: 45%; 
+    left: 45%;
+    font-size: 2em;
+    color: #000000;
+}
+
+
+/*------------ CONNEXION ------------*/
+.div-bg-login {
+    background: repeat url("Images/background-cacti.png");
+    height: 90vh;
+    display: flex;
+    justify-content: center;
     align-items: center;
 }
 
-.div-tags-button {
+.div-form-login {
+    background-color: white;
+    border-radius: 20px;
+    border: 1px solid var(--dark-green);
+    width: 35%;
+    height: 70%;
+    padding: 3em;
     display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+.div-form-login form {
+    width: 80%;
+}
+.div-form-login .form-control {
+    margin-bottom: 2em;
+    border-radius: 20px;
+}
+.div-form-login .form-control:focus {
+    margin-bottom: 2em;
+    box-shadow: 0 1px 1px rgba(0, 0, 0, 0.075) inset, 0 0 8px rgba(167, 201, 87, 0.6);
+    border: 1px solid rgba(167, 201, 87, 0.6);
+}
+.div-form-login h1 {
+    font-size: 2.5em;
+    font-weight: 800;
+    margin-bottom: 2em;
+}
+.div-form-login .div-form-button {
     justify-content: space-between;
-    align-items: end;
+    margin-top: 3em;
+}
+
+
+/*------------ PAGES EN CONSTRUCTION ------------*/
+.div-wip {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    row-gap: 1em;
+}
+.div-wip img {
+    width: 20%;
+}
+.div-wip p {
+    font-size: 1.5em;
+    font-weight: 600;
 }

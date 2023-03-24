@@ -1,64 +1,93 @@
-{% extends 'layout.html' %} {% block content %}
+{% extends 'layout.html' %}
+{% block content %}
 
-
-<h1>Cactus</h1>
-<p>Rejoins une communauté active et engagée à créer un monde plus vert en commençant par son foyer !</p>
 
 <div>
-    <h2>Sur Cactus, recherche tuto, forum, article et bien plus autour de l'écologie !</h2>
-    <form>
-        <div class="mb-3">
-            <label for="inputKeyWord" class="form-label">Mots clés</label>
-            <input type="text" class="form-control" id="inputKeyWord">
-        </div>
-        <div class="mb-3">
-            <select class="form-select" aria-label="Type de contenu à afficher">
-                <option selected>Tous</option>
-                <option value="1">Fiche témoignage</option>
-                <option value="2">Fiche pratique</option>
-                <option value="3">Fiche conseil</option>
-                <option value="4">Forum</option>
-                <option value="5">Article scientifique</option>
-            </select>
-        </div>
-        <div class="mb-3">
-            <select class="form-select" aria-label="Pièce de la maison">
-                <option selected>Toutes</option>
-                <option value="1">Cuisine</option>
-                <option value="2">Salle de bain</option>
-                <option value="3">Chambre</option>
-                <option value="4">Salon</option>
-                <option value="5">Garage</option>
-                <option value="6">Jardin</option>
-            </select>
-        </div>
-        <button class="btn btn-primary">Voir les articles</button>
-    </form>
-</div>
 
-<div>
-    <p>Aujourd'hui c'est plus de <span> {{ data['impact'] }} </span> tonnes de CO2 émises en moins grâce à la communauté Cactus !</p>
-    <p>Dont <span> {{ data['impact_now'] }} </span> depuis le 01/01/2023</p>
-</div>
-
-<div class="row">
-    <div class="col">
-        <h2>Forums</h2>
-        <p>C'est dans cet espace que toute la communauté de Cactus s'entraide et s'échange ses conseils pour aller plus loin dans la vie en vert !
-        </p>
-        <button class="btn btn-primary">Voir les forums</button>
+    <div class="container-fluid row header-home">
+        <div class="col-8">
+            <h1 class="h1-home">Cactus</h1>
+            <p>Rejoins une communauté active et engagée à créer un monde plus vert en commençant par son foyer !</p>
+        </div>
+        <div class="col">
+            <img src="./static/Images/maison-cactus.png" alt="illustration maison avec cactus à la fenêtre">
+        </div>
     </div>
-    <div class="col">
-        <h2>Articles scientifiques</h2>
-        <p>Place aux faits ! Tu trouveras dans cet espace toutes les sources scientifiques utilisées pour justifier les indicateurs d'impact et enrichir tes connaissances.
-        </p>
-        <button class="btn btn-primary">Rechercher</button>
-    </div>
-</div>
 
-<div>
-    <h2>Les mini-jeux de Pousspousse</h2>
-</div>
+    <div class="container div-research-home">
+        <h2>Sur Cactus, recherche tuto, forum, article et bien plus autour de l'écologie !</h2>
+        <div class="row">
+            <form method="GET" action="{{ url_for('research_accueil') }}">
+                <div class="form-group input-content-research">
+                    <label for="content_research">Mots clés</label>
+                    <input class="form-control" type="text" name="content_research" id="content_research">
+                    <button type="submit">Rechercher</button>
+                </div>
+            </form>
+            <div class="col form-group select-content-type">
+                <label>Type de contenu à afficher</label>
+                <select class="form-select" aria-label="Type de contenu à afficher">
+                    <option selected>Tous</option>
+                    <option value="1">Fiche témoignage</option>
+                    <option value="2">Fiche pratique</option>
+                    <option value="3">Fiche conseil</option>
+                    <option value="4">Forum</option>
+                    <option value="5">Article scientifique</option>
+                </select>
+            </div>
+            <div class="col form-group select-content-type">
+                <label>Pièce de la maison</label>
+                <select class="form-select" aria-label="Pièce de la maison">
+                    <option selected>Toutes</option>
+                    <option value="1">Cuisine</option>
+                    <option value="2">Salle de bain</option>
+                    <option value="3">Chambre</option>
+                    <option value="4">Salon</option>
+                    <option value="5">Garage</option>
+                    <option value="6">Jardin</option>
+                </select>
+            </div>
+            <div class="col">
+                <a role="button" href="" class="icon icon-solid icon-chevron-right btn btn-primary">Rechercher</a>
+            </div>
+        </div>
+    </div>
+
+    <div class="container-fluid row div-impact-home">
+        <div class="col-2">
+            <img src="./static/Images/logo-cactus-transparent.png">
+        </div>
+        <div class="col">
+            <p>Aujourd'hui c'est plus de <span> {{ data['impact'] }} tonnes de CO2 émises en moins </span> grâce à la
+                communauté Cactus !</p>
+            <div class="row">
+                <div class="col">
+                    <p>Dont <span> {{ data['impact_now'] }} tonnes</span> depuis le <span>01/01/2023</span></p>
+                </div>
+                <div class="col">
+                    <a role="button" href="" class="icon icon-solid icon-chevron-right btn btn-primary">S'inscrire</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="container-fluid div-games-home">
+        <h2>Les mini-jeux de Pousspousse</h2>
+        <div class="row justify-content-around">
+            <div class="col-3">
+                <img src="./static/Images/pousspousse1.png">               
+                <a href=""><i class="fa-regular fa-circle-play"></i></a>
+            </div>
+            <div class="col-3">
+                <img src="./static/Images/pousspousse2.png">               
+                <a href=""><i class="fa-regular fa-circle-play"></i></a>
+            </div>
+            <div class="col-3">
+                <img src="./static/Images/pousspousse3.png">               
+                <a href=""><i class="fa-regular fa-circle-play"></i></a>
+            </div>
+        </div>        
+    </div>
 
 </div>
 

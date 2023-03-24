@@ -5,7 +5,7 @@
         max-height: 100px;
         margin-left: 10px;
     }
-    
+
     #tagId {
         display: none;
     }
@@ -28,7 +28,8 @@
             </div>
             <div>
                 <li>Pour commencer, renseigne ton e-mail comme identifiant,</li>
-                <li> crée un mot de passe et enfin décide du pseudo et de l’avatar par lequel tu souhaite que les autres membres t’identifie. </li>
+                <li> crée un mot de passe et enfin décide du pseudo et de l’avatar par lequel tu souhaite que les autres
+                    membres t’identifie. </li>
             </div>
             <form id="register-form" enctype="multipart/form-data" method="POST" action="{{ url_for('register') }}">
                 <label for="email">E-mail *</label>
@@ -48,11 +49,11 @@
                 <label for="avatar">Avatar :</label>
 
                 <input type="file" id="avatar" name="avatar" onchange="loadAvatar(event)"><br>
-                <img id="avatar-preview" class="avatar-preview" src="#" alt="Aperçu de l'avatar" style="display: none;"><br><br>
-
-
-                <button type="submit" id="inscription" class="btn btn-primary">S'inscrire</button>
+                <img id="avatar-preview" class="avatar-preview" src="#" alt="Aperçu de l'avatar"
+                    style="display: none;"><br><br>
+                <button type="submit" id="connexion" class="btn btn-primary">S'inscrire</button>
             </form>
+
         </div>
 
         <div class="tab-pane" id="tab2">
@@ -63,24 +64,28 @@
 
                 </div>
                 <div>
-                    <h3>Paramètre tes notifictions et clique sur les tags ci-dessous pour renseigner tes centres d'intérêts.</h3>
+                    <h3>Paramètre tes notifictions et clique sur les tags ci-dessous pour renseigner tes centres
+                        d'intérêts.</h3>
 
                 </div>
                 <form>
                     <div class="form-check form-switch">
                         <input class="form-check-input" type="checkbox" id="friendficheToggle">
-                        <label class="form-check-label" for="friendficheToggle">Recevoir des notifications des fiches de pratiques publiées par ses ami·es.</label>
+                        <label class="form-check-label" for="friendficheToggle">Recevoir des notifications des fiches de
+                            pratiques publiées par ses ami·es.</label>
                     </div>
 
                     <div class="form-check form-switch">
 
                         <input class="form-check-input" type="checkbox" id="newficheToggle">
-                        <label class="form-check-label" for="newficheToggle">Recevoir des notifications lorsqu’un nouvel article est publié.</label>
+                        <label class="form-check-label" for="newficheToggle">Recevoir des notifications lorsqu’un nouvel
+                            article est publié.</label>
                     </div>
 
                     <div class="form-check form-switch">
                         <input class="form-check-input" type="checkbox" id="newforumToggle">
-                        <label class="form-check-label" for="newforumToggle">Recevoir des notifications lorsqu’un nouveau forum est publié.</label>
+                        <label class="form-check-label" for="newforumToggle">Recevoir des notifications lorsqu’un
+                            nouveau forum est publié.</label>
                     </div>
 
                 </form>
@@ -103,7 +108,8 @@
 
                 </div>
                 <div>
-                    <li>Pour commencer dans l’application, renseigne les alternatives que tu as adoptées. Si tu ne trouve pas une alternative, pas de panique, tu pourras créer sa fiche plus tard...</li>
+                    <li>Pour commencer dans l’application, renseigne les alternatives que tu as adoptées. Si tu ne
+                        trouve pas une alternative, pas de panique, tu pourras créer sa fiche plus tard...</li>
 
                 </div>
                 <form>
@@ -125,16 +131,6 @@
 
 
 <script>
-    //"<form>
-    //    {% for i in data %}
-
-    //    <label>
-    //        <input type="checkbox" name="tag">
-    //       {{ i['tag_name'] }}
-
-    //  </label> {% endfor %}
-    //</form>
-
 
     // Sélectionnez les éléments d'entrée et le bouton suivant
     const email = document.getElementById('email');
@@ -144,7 +140,7 @@
     const checkpsw = document.getElementById('error-message');
     var passwOK = 0;
     var user_id = session.get('user_id')
-        // Récupérer les éléments HTML pour chaque bouton basculant
+    // Récupérer les éléments HTML pour chaque bouton basculant
     var friendficheToggle = document.getElementById("friendficheToggle");
     //var newficheToggle = document.getElementById("newficheToggle");
     //var newforumToggle = document.getElementById("newforumToggle");
