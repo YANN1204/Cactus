@@ -66,7 +66,7 @@ def button_click_adopt(idFiche):
     
     if (session.get("logged", False)==False):
         metadata = {"title":"Fiches", "pagename": "fiches"}
-        return render_template('login.html', metadata=metadata)
+        return render_template('login.html', metadata=metadata, provide=True)
     
     idFiche = request.args.get('idFiche')
     idUser = session.get("userId", None)

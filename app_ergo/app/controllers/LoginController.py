@@ -20,6 +20,7 @@ def reqlogged(f):
 @app.route('/login', methods = ['GET', 'POST'])
 def login():
     msg_error = None
+    
     data = dd.get_data('users')
     if request.method == 'POST':
         for i in data:
@@ -27,12 +28,15 @@ def login():
                 session['logged'] = True
                 session['username'] = request.form['username']
                 session['userId'] = i["id"]
-                return redirect(url_for('accueil_connected'))
+                if request.form.get('provide'):
+                    return redirect(request.referrer)
+                else :
+                    return redirect(url_for('accueil_connected'))              
         else: 
             msg_error = "identifiants incorrects"
 
     metadata = {"title":"Login", "pagename": "login"}
-    return render_template('login.html', metadata=metadata, msg_error=msg_error)
+    return render_template('login.html', metadata=metadata, msg_error=msg_error, provide=False)
 
 
 @app.route('/logout')
