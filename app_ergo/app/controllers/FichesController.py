@@ -147,8 +147,6 @@ def com_card():
     return render_template('fiche.html', metadata=metadata, data=data)
 
 
-
-
 @app.route('/fiches', methods=['GET', 'POST'])
 def handle_button_click():
     # Appel de votre fonction Python
