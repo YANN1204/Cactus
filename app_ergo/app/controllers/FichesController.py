@@ -92,7 +92,7 @@ def button_click_adopt(idFiche):
     print(idFiche)
     print(session.get("userId","0"))
     # Ajoutez une variable de contexte pour indiquer que la fiche a été adoptée
-    data = gds.display_instance(idFiche, url_item, urlu, urlt, urlact, urlr, urlc)
+    data = gds.display_instance(idFiche, url_item, urlu, urlt, urlact, urlr, urlc, urli)
     logged = session.get("logged", False)
     username = session.get("username", None)
     return render_template('fiche.html', metadata=metadata, adopted=adopted, data=data, logged=logged ,username=username, idFiche=idFiche)
