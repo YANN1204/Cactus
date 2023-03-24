@@ -4,9 +4,11 @@ from app import app
 from app.services.servicesPOSTData import PostDataServices
 from app.services.servicesGETData import GetDataServices
 from app.controllers.LoginController import reqlogged
+from app.models.dataDAO import DataDAO 
 
 gds = GetDataServices()
 pds = PostDataServices()
+dd = DataDAO()
 
 
 basepath = '/'
@@ -18,6 +20,7 @@ urlt = "tags"
 urlft = "forums_tags"
 urlr = "rooms"
 urlc = "comments"
+urli = "impacts"
 
 
 @app.route(basepath + 'forums', methods = ['GET'])
@@ -46,7 +49,7 @@ def forum():
     logged = session.get("logged", False)
     username = session.get("username", None)
     idForum = request.args.get('idForum', None)
-    data = gds.display_instance(idForum, url_item, urlu, urlt, urlft, urlr, urlc)
+    data = gds.display_instance(idForum, url_item, urlu, urlt, urlft, urlr, urlc, urli)
     metadata = {"title":"Forum", "pagename": "forum"}
     return render_template('forum.html', data = data, metadata=metadata, logged=logged, username=username)
 
@@ -67,6 +70,11 @@ def com_forum():
         "comment_subject": id_com
     }
     metadata = {"title":"Forum", "pagename": "Forum"}
-    data = pds.post_data('comments', data=newData)
+    pds.post_data('comments', data=newData)
+    # on retélécharge le json pour voir le nouveau commentaire
+    list_item = ['alternative_cards', 'alternative_cards_tags', 'comments', 'forums', 'forums_tags', 'impacts',
+             'rooms', 'tags', 'users', 'users_alternative_cards', 'users_tags']
+    dd.save_all_items(list_item)
     # ça marche pas de re afficher la page du forum ou la page forums.html --> à corriger
-    return render_template('accueil.html', metadata=metadata, data=data)
+    data = gds.display_instance(id_forum, url_item, urlu, urlt, urlft, urlr, urlc, urli)
+    return render_template('forum.html', metadata=metadata, data=data)

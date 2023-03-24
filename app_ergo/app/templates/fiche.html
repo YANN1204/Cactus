@@ -37,6 +37,7 @@
                 <a class="nav-link" id="avis-tab" data-toggle="tab" href="#avis" role="tab" aria-controls="avis" aria-selected="false">Avis</a>
             </li>
         </ul>
+
         <div class="tab-content" id="tabContent-pratique">
             <div class="tab-pane fade show active" id="description-pratique" role="tabpanel" aria-labelledby="description-tab">
                 <div class="row">
@@ -54,7 +55,8 @@
                                     <img src="./static/Images/love-earth.png" alt="planete terre avec coeur">
                                 </div>
                                 <div class="col">
-                                    <p>{{ data["impact"]}}</p>
+                                    <p>{{ data["impact_details"]["numerical_data"] }} {{ data["impact_details"]["unit"] }}</p>
+                                    <p>{{ data["impact_details"]["sentence_on_data"] }}</p>
                                 </div>
                             </div>
                         </div>
@@ -67,6 +69,7 @@
                     </div>
                 </div>
             </div>
+
             <div class="tab-pane fade" id="tuto" role="tabpanel" aria-labelledby="tuto-tab">
                 <div class="d-flex justify-content-between mb-4 mx-4">
                     <a role="button" href="" class="icon icon-regular icon-arrow-down-to-bracket btn btn-outline-secondary">Télécharger la fiche</a>
@@ -93,6 +96,7 @@
                     </form>
                 </div>
             </div>
+
             <div class="tab-pane fade" id="materiel" role="tabpanel" aria-labelledby="materiel-tab">
                 <div class="row mx-0">
                     <div class="col-4 mx-3">
@@ -110,24 +114,26 @@
                     </div>
                 </div>
             </div>
+
             <div class="tab-pane fade" id="impact-pratique" role="tabpanel" aria-labelledby="impact-tab">
-                <p>{{ data["impact"]}}</p>
+                <p>{{ data["impact_details"]}}</p>
             </div>
+
             <div class="tab-pane fade" id="avis" role="tabpanel" aria-labelledby="avis-tab">
                 <div>
                     <img src="{{ session['avatar'] }}" alt="votre avatar">
                     <p>{{ session["pseudo"] }}</p>
                     <form id="com-form" enctype="multipart/form-data" method="POST" action="{{ url_for('com_card') }}">
-                        <textarea id="com" name="com" class="form-control"> Ecris ta réponse ici... </textarea>
+                        <textarea id="com" name="com" class="form-control">Ecris ta réponse ici...</textarea>
                         <p>Mon avis est :</p>
                         <div class="form-check form-check-inline">
                             <input class="form-check-input" type="radio" name="comRadio" id="comRadio1" value="1" checked>
                             <label class="form-check-label" for="comRadio1">Commentaire</label>
-                          </div>
-                          <div class="form-check form-check-inline">
+                        </div>
+                        <div class="form-check form-check-inline">
                             <input class="form-check-input" type="radio" name="comRadio" id="comRadio2" value="2">
                             <label class="form-check-label" for="comRadio2">Suggestion</label>
-                          </div>
+                        </div>
                         <input id="id-card" name="id-card" type="hidden" value="{{ data['id'] }}">
                         <button type="submit" class="btn btn-primary btn-adopt">Publier</button>
                     </form>
@@ -191,7 +197,8 @@
                                     <img src="./static/Images/love-earth.png" alt="planete terre avec coeur">
                                 </div>
                                 <div class="col">
-                                    <p>{{ data["impact"]}}</p>
+                                    <p>{{ data["impact_details"]["numerical_data"] }} {{ data["impact_details"]["unit"] }}</p>
+                                    <p>{{ data["impact_details"]["sentence_on_data"] }}</p>
                                 </div>
                             </div>
                         </div>
@@ -215,7 +222,8 @@
                 </div>
             </div>
             <div class="tab-pane fade" id="impact-conseil" role="tabpanel" aria-labelledby="impact-tab">
-                <p>{{ data["impact"]}}</p>
+                <p>{{ data["impact_details"]["numerical_data"] }} {{ data["impact_details"]["unit"] }}</p>
+                <p>{{ data["impact_details"]["sentence_on_data"] }}</p>
             </div>
         </div>
     </div>
@@ -262,7 +270,7 @@
                 </div>
             </div>
             <div class="tab-pane fade" id="impact-temoignage" role="tabpanel" aria-labelledby="impact-tab">
-                <p>{{ data["impact"]}}</p>
+                <p>{{ data["impact_details"]}}</p>
             </div>
         </div>
     </div>

@@ -126,7 +126,7 @@ class GetDataServices():
         return date
 
 
-    def display_instance(self, idInstance: str, url_item: str, urlu: str, urlt: str, urlft: str, urlr: str, urlc: str):
+    def display_instance(self, idInstance: str, url_item: str, urlu: str, urlt: str, urlft: str, urlr: str, urlc: str, urli: str):
         # pas fini
         data = self.instance_by_id(url_item, idInstance)
         data['date_created'] = self.convert_date(data['date_created'])
@@ -143,6 +143,8 @@ class GetDataServices():
         room = self.instance_by_id(urlr, data['room_id'])
         data['room_name'] = room['room_name']
         data['comments'] = self.find_comments(idInstance, urlc, urlu)
+        if url_item == 'alternative_cards':
+            data['impact_details'] = self.instance_by_id(urli, data['impact'])
         return data
 
     def find_comments(self, idInstance: str, urlc: str, urlu: str):

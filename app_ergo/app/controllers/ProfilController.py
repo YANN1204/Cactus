@@ -13,7 +13,7 @@ def profil():
     logged = session.get("logged", False)
     username = session.get("username", None)
     data = {}
-    data['cards_adopted'] = gds.cards_adopted(session['id'])
-    data['cards_suggested'] = gds.cards_suggested(session['id'])
+    data['cards_adopted'] = gds.cards_adopted(session['userId'])
+    data['cards_suggested'] = gds.cards_suggested(session['userId'])
     metadata = {"title":"Profil", "pagename": "profil"}
     return render_template('profil.html', metadata=metadata, data=data, logged=logged, username=username)

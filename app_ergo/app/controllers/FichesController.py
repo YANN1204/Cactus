@@ -5,6 +5,7 @@ from app.services.servicesPOSTData import PostDataServices
 from app.services.servicesDELETEData import DeleteDataServices
 from app.services.servicesSETData import SetDataServices
 from app.models.dataDAO import DataDAO 
+from app.controllers.LoginController import reqlogged
 
 dd = DataDAO()
 gds = GetDataServices()
@@ -22,6 +23,7 @@ urlt = "tags"
 urlact = "alternative_cards_tags"
 urlr = "rooms"
 urlc = "comments"
+urli = "impacts"
 
 @app.route(basepath + 'fiches', methods = ['GET'])
 def fiches():
@@ -41,14 +43,12 @@ def research_in_cards():
     metadata = {"title":"Fiches", "pagename":"fiches"}
     return render_template('fiches.html', metadata=metadata, data=data_filter, logged=logged, username=username)
 
-
 @app.route('/fiche')
 def fiche():
     logged = session.get("logged", False)
     username = session.get("username", None)
     idFiche = request.args.get('idFiche', None)
-    data = gds.display_instance(idFiche, url_item, urlu, urlt, urlact, urlr, urlc)
-    
+    data = gds.display_instance(idFiche, url_item, urlu, urlt, urlact, urlr, urlc, urli)
     metadata = {"title":"Fiche", "pagename": "fiche"}
     return render_template('fiche.html', data = data, metadata=metadata, logged=logged, username=username)
 
@@ -58,7 +58,7 @@ def button_click_adopt():
     #il manque a réussir a recupérer l'id courant de la fiche qui est deja dans l'url mais je sais pas comment faire ..
     #et aussi recuperer l'id de l'user mais ca on va bientot le terminer
     idFiche = request.args.get('idFiche', None)
-    idUsers = session['id']
+    idUsers = session['userId']
     #Ajout de l'id de l'user dans la table users_alternative_cards 
     pds.post_data("users_alternative_cards/",{"users_id": idUsers})    
     #récupération du nb d'element dans la table users_alternative_cards
@@ -75,19 +75,28 @@ def button_click_adopt():
 
 
 @app.route(basepath + 'postCard', methods=['POST'])
+@reqlogged
 def com_card():
     text_com = request.form.get("com")
     id_card = request.form.get("id-card")
+    com_radio = request.form.get("comRadio")
     newData = {
         "text": text_com,
         "user_id": session["id"],
-        "text": text_com,
+        "comment_type": com_radio,
         "alternative_card_id": id_card,
     }
     metadata = {"title":"Fiche", "pagename": "Fiche"}
     data = pds.post_data('comments', data=newData)
+    # on retélécharge le json pour voir le nouveau commentaire
+    list_item = ['alternative_cards', 'alternative_cards_tags', 'comments', 'forums', 'forums_tags', 'impacts',
+             'rooms', 'tags', 'users', 'users_alternative_cards', 'users_tags']
+    dd.save_all_items(list_item)
     # afficher fiche avec nouveau com --> à corriger
-    return render_template('accueil.html', metadata=metadata, data=data)
+    data = gds.display_instance(id_card, url_item, urlu, urlt, urlact, urlr, urlc)
+    return render_template('fiche.html', metadata=metadata, data=data)
+
+
 
 
 @app.route('/fiches', methods=['GET', 'POST'])
