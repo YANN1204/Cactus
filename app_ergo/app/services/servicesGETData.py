@@ -123,6 +123,28 @@ class GetDataServices():
                 c['avatar'] = user['avatar']
         return comments
 
+    def card_adopted(self, idFiche : str, idUser : str):
+        data = self.pdao.get_data("users_alternative_cards")
+        found = False
+        for d in data:
+            #if d['users_id'] == type(None) or d['alternative_cards_id'] == type(None):
+            #    found = False
+            
+            if d['users_id'] == idUser and d['alternative_cards_id'] == idFiche:                
+                found = True
+                
+
+
+        return found
+    
+    def index_users_alternative_cards(self, idFiche : str, idUser : str):
+        data = self.pdao.get_data("users_alternative_cards")
+        found = "null"
+        for d in data:
+            if (d['users_id'] == idUser and d['alternative_cards_id'] == idFiche):
+                found = d["id"]
+                break
+        return found
 
     def display_title(self, url: str):
         """Retourne tout les titre des éléments
