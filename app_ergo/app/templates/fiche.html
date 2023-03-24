@@ -3,14 +3,16 @@
 <link rel="stylesheet" type="text/css" href="/static/fiches.css">
 <!-- Inclure jQuery et Bootstrap -->
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.1/css/bootstrap.min.css" integrity="sha512-e+I5q3MP5WzzXd+nLJ/PFzgIlpUNr47avdRRDhxYv1c2QF0xfxLlCfZEDlKPTe5CpP9r8nLdEZDvYwON2QeBxw==" crossorigin="anonymous" referrerpolicy="no-referrer"
-/>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.1/css/bootstrap.min.css"
+    integrity="sha512-e+I5q3MP5WzzXd+nLJ/PFzgIlpUNr47avdRRDhxYv1c2QF0xfxLlCfZEDlKPTe5CpP9r8nLdEZDvYwON2QeBxw=="
+    crossorigin="anonymous" referrerpolicy="no-referrer" />
 
 
 
 
 <div class="section-h1">
-    <h1>Fiches {% if data["type_of_card"] == "1" %} pratique {% elif data["type_of_card"] == "3" %} conseil {% else %} témoignage {% endif %}</h1>
+    <h1>Fiches {% if data["type_of_card"] == "1" %} pratique {% elif data["type_of_card"] == "3" %} conseil {% else %}
+        témoignage {% endif %}</h1>
 </div>
 
 <div class="container-fluid">
@@ -29,29 +31,37 @@
     <div>
         <ul class="nav nav-tabs" id="myTab" role="tablist">
             <li class="nav-item">
-                <a class="nav-link active" id="description-tab" data-toggle="tab" href="#description-pratique" role="tab" aria-controls="description-pratique" aria-selected="true">Description</a>
+                <a class="nav-link active" id="description-tab" data-toggle="tab" href="#description-pratique"
+                    role="tab" aria-controls="description-pratique" aria-selected="true">Description</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" id="tuto-tab" data-toggle="tab" href="#tuto" role="tab" aria-controls="tuto" aria-selected="false">Tuto</a>
+                <a class="nav-link" id="tuto-tab" data-toggle="tab" href="#tuto" role="tab" aria-controls="tuto"
+                    aria-selected="false">Tuto</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" id="materiel-tab" data-toggle="tab" href="#materiel" role="tab" aria-controls="materiel" aria-selected="false">Materiel</a>
+                <a class="nav-link" id="materiel-tab" data-toggle="tab" href="#materiel" role="tab"
+                    aria-controls="materiel" aria-selected="false">Materiel</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" id="impact-tab" data-toggle="tab" href="#impact-pratique" role="tab" aria-controls="impact-pratique" aria-selected="false">Impact</a></li>
+                <a class="nav-link" id="impact-tab" data-toggle="tab" href="#impact-pratique" role="tab"
+                    aria-controls="impact-pratique" aria-selected="false">Impact</a>
+            </li>
             <li class="nav-item">
-                <a class="nav-link" id="avis-tab" data-toggle="tab" href="#avis" role="tab" aria-controls="avis" aria-selected="false">Avis</a>
+                <a class="nav-link" id="avis-tab" data-toggle="tab" href="#avis" role="tab" aria-controls="avis"
+                    aria-selected="false">Avis</a>
             </li>
         </ul>
 
         <div class="tab-content" id="tabContent-pratique">
-            <div class="tab-pane fade show active" id="description-pratique" role="tabpanel" aria-labelledby="description-tab">
+            <div class="tab-pane fade show active" id="description-pratique" role="tabpanel"
+                aria-labelledby="description-tab">
                 <div class="row">
                     <div class="col-5">
                         <div class="div-pin dark">
                             <img src="./static/Images/left-clear-clip.png" alt="trombone">
                             <p><i class="fa-regular fa-clock"></i>{{ data["duration_exact"]}}minutes</p>
-                            <p>{% for i in range(data["cost"]|int) %} <i class="fa-solid fa-euro-sign"></i> {% endfor %}</p>
+                            <p>{% for i in range(data["cost"]|int) %} <i class="fa-solid fa-euro-sign"></i> {% endfor %}
+                            </p>
                             <p>Ce qu'il faut savoir : {{ data["what_we_need_to_know"]}}</p>
                         </div>
                         <div class="div-pin clear">
@@ -61,13 +71,13 @@
                                     <img src="./static/Images/love-earth.png" alt="planete terre avec coeur">
                                 </div>
                                 <div class="col">
-                                    <p>{{ data["impact_details"]["numerical_data"] }} {{ data["impact_details"]["unit"] }}</p>
+                                    <p>{{ data["impact_details"]["numerical_data"] }} {{ data["impact_details"]["unit"]
+                                        }}</p>
                                     <p>{{ data["impact_details"]["sentence_on_data"] }}</p>
                                 </div>
                             </div>
                         </div>
                     </div>
-<<<<<<< HEAD
                     <div class="modal fade" id="mod">
                         <div class="modal-dialog">
                             <div class="modal-content">
@@ -84,97 +94,105 @@
                         </div>
                     </div>
                     <div class="col">
-=======
-                    <div class="col div-description">
->>>>>>> origin/style-lea
-                        <p>{{ data["description"]}}</p>
-                        {% if adopted == false%}
-                        <form method="GET" data-bs-toggle="modal" data-bs-target="#mod" action="{{ url_for('button_click_adopt',idFiche=idFiche) }}">
-                            <button type="submit" class="btn btn-primary btn-adopt">J'adopte cette pratique !</button>
-                            <input type="hidden" name="idFiche" value="{{ idFiche }}">
-                        </form>
-                        {% endif %} {% if adopted == true %}
-                        <form method="GET" data-bs-toggle="modal" data-bs-target="#mod" action="{{ url_for('button_click_unadopt',idFiche=idFiche) }}">
-                            <button type="submit" class="btn btn-primary btn-adopt">Je n'adopte plus cette pratique</button>
-                            <input type="hidden" name="idFiche" value="{{ idFiche }}">
-                        </form>
-                        {% endif %}
+                        <div class="col div-description">
+                            <p>{{ data["description"]}}</p>
+                            {% if adopted == false%}
+                            <form method="GET" data-bs-toggle="modal" data-bs-target="#mod"
+                                action="{{ url_for('button_click_adopt',idFiche=idFiche) }}">
+                                <button type="submit" class="btn btn-primary btn-adopt">J'adopte cette pratique
+                                    !</button>
+                                <input type="hidden" name="idFiche" value="{{ idFiche }}">
+                            </form>
+                            {% endif %} {% if adopted == true %}
+                            <form method="GET" data-bs-toggle="modal" data-bs-target="#mod"
+                                action="{{ url_for('button_click_unadopt',idFiche=idFiche) }}">
+                                <button type="submit" class="btn btn-primary btn-adopt">Je n'adopte plus cette
+                                    pratique</button>
+                                <input type="hidden" name="idFiche" value="{{ idFiche }}">
+                            </form>
+                            {% endif %}
 
+                        </div>
                     </div>
                 </div>
-            </div>
 
-            <div class="tab-pane fade" id="tuto" role="tabpanel" aria-labelledby="tuto-tab">
-                <div class="d-flex justify-content-between mb-4 mx-4">
-                    <a role="button" href="" class="icon icon-regular icon-arrow-down-to-bracket btn btn-outline-secondary">Télécharger la fiche</a>
-                    <a role="button" href="" class="icon icon-regular icon-share-nodes btn btn-outline-secondary">Partager la fiche</a>
-                </div>
-                {% set steps = data["astuce_or_step_tuto"].split(";") %}
-                {% for s in range(steps|length - 1) %}
+                <div class="tab-pane fade" id="tuto" role="tabpanel" aria-labelledby="tuto-tab">
+                    <div class="d-flex justify-content-between mb-4 mx-4">
+                        <a role="button" href=""
+                            class="icon icon-regular icon-arrow-down-to-bracket btn btn-outline-secondary">Télécharger
+                            la fiche</a>
+                        <a role="button" href=""
+                            class="icon icon-regular icon-share-nodes btn btn-outline-secondary">Partager la fiche</a>
+                    </div>
+                    {% set steps = data["astuce_or_step_tuto"].split(";") %}
+                    {% for s in range(steps|length - 1) %}
                     {% if s % 2 == 0 %}
-                        <div class="col-10 div-pin dark">
-                            <img src="./static/Images/left-clear-clip.png" alt="trombone">
-                            <p> Etape {{ s + 1 }} :</p>
-                            <p>{{ steps[s] }}</p>
-                        </div>
-                        <div class="col-10 div-pin clear">
-                            <img src="./static/Images/left-dark-clip.png" alt="trombone">
-                            <p> Etape {{ s + 1 }} :</p>
-                            <p>{{ steps[s+1] }}</p>
-                        </div>
+                    <div class="col-10 div-pin dark">
+                        <img src="./static/Images/left-clear-clip.png" alt="trombone">
+                        <p> Etape {{ s + 1 }} :</p>
+                        <p>{{ steps[s] }}</p>
+                    </div>
+                    <div class="col-10 div-pin clear">
+                        <img src="./static/Images/left-dark-clip.png" alt="trombone">
+                        <p> Etape {{ s + 1 }} :</p>
+                        <p>{{ steps[s+1] }}</p>
+                    </div>
                     {% endif %}
-                {% endfor %}
-                <div class="d-flex justify-content-center mt-5">
-                    <form method="SET" action="{{ url_for('button_click_adopt') }}">
-                        <button type="submit" class="btn btn-primary btn-adopt">J'adopte cette pratique !</button>
-                    </form>
+                    {% endfor %}
+                    <div class="d-flex justify-content-center mt-5">
+                        <form method="SET" action="{{ url_for('button_click_adopt') }}">
+                            <button type="submit" class="btn btn-primary btn-adopt">J'adopte cette pratique !</button>
+                        </form>
+                    </div>
                 </div>
-            </div>
 
-            <div class="tab-pane fade" id="materiel" role="tabpanel" aria-labelledby="materiel-tab">
-                <div class="row mx-0">
-                    <div class="col-4 mx-3">
-                        <p><i class="fa-regular fa-screwdriver-wrench"></i> Ce qu'il vous faudra :</p>
-                        {% set materials = data["material"].split(",") %}
-                        <ul>
-                            {% for m in materials %}
+                <div class="tab-pane fade" id="materiel" role="tabpanel" aria-labelledby="materiel-tab">
+                    <div class="row mx-0">
+                        <div class="col-4 mx-3">
+                            <p><i class="fa-regular fa-screwdriver-wrench"></i> Ce qu'il vous faudra :</p>
+                            {% set materials = data["material"].split(",") %}
+                            <ul>
+                                {% for m in materials %}
                                 <li>{{ m }}</li>
-                            {% endfor %}
-                        </ul>
-                    </div>
-                    <div class="col div-pin clear right">
-                        <p><i class="fa-regular fa-map-location-dot"></i> Où trouver le matériel ?</p>
-                        <p>Vous verrez ici une carte avec les magasins autour de vous qui vendent le matériel si vous activez votre géolocalisation...</p>
+                                {% endfor %}
+                            </ul>
+                        </div>
+                        <div class="col div-pin clear right">
+                            <p><i class="fa-regular fa-map-location-dot"></i> Où trouver le matériel ?</p>
+                            <p>Vous verrez ici une carte avec les magasins autour de vous qui vendent le matériel si
+                                vous activez votre géolocalisation...</p>
+                        </div>
                     </div>
                 </div>
-            </div>
 
-            <div class="tab-pane fade" id="impact-pratique" role="tabpanel" aria-labelledby="impact-tab">
-                <p>{{ data["impact_details"]}}</p>
-            </div>
-
-            <div class="tab-pane fade" id="avis" role="tabpanel" aria-labelledby="avis-tab">
-                <div>
-                    <img src="{{ session['avatar'] }}" alt="votre avatar">
-                    <p>{{ session["pseudo"] }}</p>
-                    <form id="com-form" enctype="multipart/form-data" method="POST" action="{{ url_for('com_card') }}">
-                        <textarea id="com" name="com" class="form-control">Ecris ta réponse ici...</textarea>
-                        <p>Mon avis est :</p>
-                        <div class="form-check form-check-inline">
-                            <input class="form-check-input" type="radio" name="comRadio" id="comRadio1" value="1" checked>
-                            <label class="form-check-label" for="comRadio1">Commentaire</label>
-                        </div>
-                        <div class="form-check form-check-inline">
-                            <input class="form-check-input" type="radio" name="comRadio" id="comRadio2" value="2">
-                            <label class="form-check-label" for="comRadio2">Suggestion</label>
-                        </div>
-                        <input id="id-card" name="id-card" type="hidden" value="{{ data['id'] }}">
-                        <button type="submit" class="btn btn-primary btn-adopt">Publier</button>
-                    </form>
+                <div class="tab-pane fade" id="impact-pratique" role="tabpanel" aria-labelledby="impact-tab">
+                    <p>{{ data["impact_details"]}}</p>
                 </div>
 
-                <p>Les avis de la communauté</p>
-                {% for c in range(data["comments"]|length) %}
+                <div class="tab-pane fade" id="avis" role="tabpanel" aria-labelledby="avis-tab">
+                    <div>
+                        <img src="{{ session['avatar'] }}" alt="votre avatar">
+                        <p>{{ session["pseudo"] }}</p>
+                        <form id="com-form" enctype="multipart/form-data" method="POST"
+                            action="{{ url_for('com_card') }}">
+                            <textarea id="com" name="com" class="form-control">Ecris ta réponse ici...</textarea>
+                            <p>Mon avis est :</p>
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="radio" name="comRadio" id="comRadio1" value="1"
+                                    checked>
+                                <label class="form-check-label" for="comRadio1">Commentaire</label>
+                            </div>
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="radio" name="comRadio" id="comRadio2" value="2">
+                                <label class="form-check-label" for="comRadio2">Suggestion</label>
+                            </div>
+                            <input id="id-card" name="id-card" type="hidden" value="{{ data['id'] }}">
+                            <button type="submit" class="btn btn-primary btn-adopt">Publier</button>
+                        </form>
+                    </div>
+
+                    <p>Les avis de la communauté</p>
+                    {% for c in range(data["comments"]|length) %}
                     <div class="row comment mx-3">
                         <div class="col-1">
                             <img src=' {{ data["comments"][c]["avatar"] }} ' alt="avatar">
@@ -187,9 +205,9 @@
                                 </div>
                                 <div class="d-flex">
                                     {% if data["comments"][c]["comment_type"] == "Commentaire" %}
-                                        <i class="fa-regular fa-thought-bubble"></i>
+                                    <i class="fa-regular fa-thought-bubble"></i>
                                     {% else %}
-                                        <i class="fa-regular fa-gears"></i>
+                                    <i class="fa-regular fa-gears"></i>
                                     {% endif %}
                                     {{ data["comments"][c]["comment_type"] }}
                                 </div>
@@ -197,130 +215,143 @@
                             {{ data["comments"][c]["text"] }}
                         </div>
                     </div>
-                {% endfor %}
+                    {% endfor %}
+                </div>
             </div>
         </div>
-    </div>
 
-    <!--- conseil -->
-    {% elif data["type_of_card"] == "3" %}
-    <div>
-        <ul class="nav nav-tabs" id="myTab" role="tablist">
-            <li class="nav-item">
-                <a class="nav-link active" id="description-tab" data-toggle="tab" href="#description-conseil" role="tab" aria-controls="description-conseil" aria-selected="true">Description</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" id="astuce-tab" data-toggle="tab" href="#astuce" role="tab" aria-controls="tuto" aria-selected="false">Astuce</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" id="impact-tab" data-toggle="tab" href="#impact-conseil" role="tab" aria-controls="impact-conseil" aria-selected="false">Impact</a></li>
+        <!--- conseil -->
+        {% elif data["type_of_card"] == "3" %}
+        <div>
+            <ul class="nav nav-tabs" id="myTab" role="tablist">
+                <li class="nav-item">
+                    <a class="nav-link active" id="description-tab" data-toggle="tab" href="#description-conseil"
+                        role="tab" aria-controls="description-conseil" aria-selected="true">Description</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" id="astuce-tab" data-toggle="tab" href="#astuce" role="tab" aria-controls="tuto"
+                        aria-selected="false">Astuce</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" id="impact-tab" data-toggle="tab" href="#impact-conseil" role="tab"
+                        aria-controls="impact-conseil" aria-selected="false">Impact</a>
+                </li>
 
-        </ul>
-        <div class="tab-content" id="tabContent-conseil">
-            <div class="tab-pane fade show active" id="description-conseil" role="tabpanel" aria-labelledby="description-tab">
-                <div class="row">
-                    <div class="col-5">
-                        <div class="div-pin dark">
-                            <img src="./static/Images/left-clear-clip.png" alt="trombone">
-                            <p>Ce qu'il faut savoir : {{ data["what_we_need_to_know"]}}</p>
-                        </div>
-                        <div class="div-pin clear">
-                            <img src="./static/Images/left-dark-clip.png" alt="trombone">
-                            <div class="row">
-                                <div class="col-3">
-                                    <img src="./static/Images/love-earth.png" alt="planete terre avec coeur">
-                                </div>
-                                <div class="col">
-                                    <p>{{ data["impact_details"]["numerical_data"] }} {{ data["impact_details"]["unit"] }}</p>
-                                    <p>{{ data["impact_details"]["sentence_on_data"] }}</p>
+            </ul>
+            <div class="tab-content" id="tabContent-conseil">
+                <div class="tab-pane fade show active" id="description-conseil" role="tabpanel"
+                    aria-labelledby="description-tab">
+                    <div class="row">
+                        <div class="col-5">
+                            <div class="div-pin dark">
+                                <img src="./static/Images/left-clear-clip.png" alt="trombone">
+                                <p>Ce qu'il faut savoir : {{ data["what_we_need_to_know"]}}</p>
+                            </div>
+                            <div class="div-pin clear">
+                                <img src="./static/Images/left-dark-clip.png" alt="trombone">
+                                <div class="row">
+                                    <div class="col-3">
+                                        <img src="./static/Images/love-earth.png" alt="planete terre avec coeur">
+                                    </div>
+                                    <div class="col">
+                                        <p>{{ data["impact_details"]["numerical_data"] }} {{
+                                            data["impact_details"]["unit"] }}</p>
+                                        <p>{{ data["impact_details"]["sentence_on_data"] }}</p>
+                                    </div>
                                 </div>
                             </div>
                         </div>
+                        <div class="col div-description justify-content-center">
+                            <p>{{ data["description"]}}</p>
+                        </div>
+                        <div class="d-flex justify-content-center mt-5">
+                            <form method="SET" action="{{ url_for('button_click_adopt') }}">
+                                <button type="submit" class="btn btn-primary btn-adopt">J'adopte ce conseil !</button>
+                            </form>
+                        </div>
                     </div>
-                    <div class="col div-description justify-content-center">
-                        <p>{{ data["description"]}}</p>
-                    </div>
+                </div>
+                <div class="tab-pane fade" id="astuce" role="tabpanel" aria-labelledby="astuce-tab">
+                    <p>{{ data["astuce_or_step_tuto"]}}</p>
                     <div class="d-flex justify-content-center mt-5">
                         <form method="SET" action="{{ url_for('button_click_adopt') }}">
                             <button type="submit" class="btn btn-primary btn-adopt">J'adopte ce conseil !</button>
                         </form>
                     </div>
                 </div>
-            </div>
-            <div class="tab-pane fade" id="astuce" role="tabpanel" aria-labelledby="astuce-tab">
-                <p>{{ data["astuce_or_step_tuto"]}}</p>
-                <div class="d-flex justify-content-center mt-5">
-                    <form method="SET" action="{{ url_for('button_click_adopt') }}">
-                        <button type="submit" class="btn btn-primary btn-adopt">J'adopte ce conseil !</button>
-                    </form>
+                <div class="tab-pane fade" id="impact-conseil" role="tabpanel" aria-labelledby="impact-tab">
+                    <p>{{ data["impact_details"]["numerical_data"] }} {{ data["impact_details"]["unit"] }}</p>
+                    <p>{{ data["impact_details"]["sentence_on_data"] }}</p>
                 </div>
             </div>
-            <div class="tab-pane fade" id="impact-conseil" role="tabpanel" aria-labelledby="impact-tab">
-                <p>{{ data["impact_details"]["numerical_data"] }} {{ data["impact_details"]["unit"] }}</p>
-                <p>{{ data["impact_details"]["sentence_on_data"] }}</p>
+        </div>
+
+        <!--- témoignage -->
+        {% else %}
+        <div>
+            <ul class="nav nav-tabs" id="myTab" role="tablist">
+                <li class="nav-item">
+                    <a class="nav-link active" id="description-tab" data-toggle="tab" href="#description-temoignage"
+                        role="tab" aria-controls="description-temoignage" aria-selected="true">Description</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" id="temoignage-tab" data-toggle="tab" href="#temoignage" role="tab"
+                        aria-controls="temoignage" aria-selected="false">Témoignage</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" id="impact-tab" data-toggle="tab" href="#impact-temoignage" role="tab"
+                        aria-controls="impact-temoignage" aria-selected="false">Impact</a>
+                </li>
+            </ul>
+            <div class="tab-content" id="tabContent-temoignage">
+                <div class="tab-pane fade show active" id="description-temoignage" role="tabpanel"
+                    aria-labelledby="description-tab">
+                    <div class="row">
+                        <div class="col-2">
+                            <div class="">
+                                <img src="" alt="avatar">
+                                <p>Pseudo</p>
+                            </div>
+                        </div>
+                        <div class="col div-description justify-content-center">
+                            <p>{{ data["description"] }}</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="tab-pane fade" id="temoignage" role="tabpanel" aria-labelledby="temoignage-tab">
+                    <div class="row">
+                        <div class="col-2">
+                            <div class="">
+                                <img src=" {{ data['avatar'] }} " alt="avatar">
+                                <p>{{ data["pseudo"] }}</p>
+                            </div>
+                        </div>
+                        <div class="col div-description justify-content-center">
+                            <p><i class="fa-solid fa-quote-left"></i> {{ data["shared_experience"] }} <br> <i
+                                    class="fa-solid fa-quote-right"></i></p>
+                        </div>
+                    </div>
+                </div>
+                <div class="tab-pane fade" id="impact-temoignage" role="tabpanel" aria-labelledby="impact-tab">
+                    <p>{{ data["impact_details"]}}</p>
+                </div>
             </div>
         </div>
+        {% endif %}
+
     </div>
 
-    <!--- témoignage -->
-    {% else %}
-    <div>
-        <ul class="nav nav-tabs" id="myTab" role="tablist">
-            <li class="nav-item">
-                <a class="nav-link active" id="description-tab" data-toggle="tab" href="#description-temoignage" role="tab" aria-controls="description-temoignage" aria-selected="true">Description</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" id="temoignage-tab" data-toggle="tab" href="#temoignage" role="tab" aria-controls="temoignage" aria-selected="false">Témoignage</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" id="impact-tab" data-toggle="tab" href="#impact-temoignage" role="tab" aria-controls="impact-temoignage" aria-selected="false">Impact</a>
-            </li>
-        </ul>
-        <div class="tab-content" id="tabContent-temoignage">
-            <div class="tab-pane fade show active" id="description-temoignage" role="tabpanel" aria-labelledby="description-tab">
-                <div class="row">
-                    <div class="col-2">
-                        <div class="">
-                            <img src="" alt="avatar">
-                            <p>Pseudo</p>
-                        </div>
-                    </div>
-                    <div class="col div-description justify-content-center">
-                        <p>{{ data["description"] }}</p>
-                    </div>
-                </div>
-            </div>
-            <div class="tab-pane fade" id="temoignage" role="tabpanel" aria-labelledby="temoignage-tab">
-                <div class="row">
-                    <div class="col-2">
-                        <div class="">
-                            <img src=" {{ data['avatar'] }} " alt="avatar">
-                            <p>{{ data["pseudo"] }}</p>
-                        </div>
-                    </div>
-                    <div class="col div-description justify-content-center">
-                        <p><i class="fa-solid fa-quote-left"></i> {{ data["shared_experience"] }} <br> <i class="fa-solid fa-quote-right"></i></p>
-                    </div>
-                </div>
-            </div>
-            <div class="tab-pane fade" id="impact-temoignage" role="tabpanel" aria-labelledby="impact-tab">
-                <p>{{ data["impact_details"]}}</p>
-            </div>
-        </div>
-    </div>
+    <!-- Vérifier la valeur de la variable Flask et afficher la modale en conséquence -->
+    {% if adopte %}
+    <script>
+        $(document).ready(function () {
+            $('#mod').modal('show');
+        });
+    </script>
     {% endif %}
 
-</div>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-fQybjgWLrvvRgtW6bFlB7jaZrFsaBXjsOMm/tB9LTS58ONXgqbR9W8oWht/amnpF"
+        crossorigin="anonymous"></script>
 
-<!-- Vérifier la valeur de la variable Flask et afficher la modale en conséquence -->
-{% if adopte %}
-<script>
-    $(document).ready(function() {
-        $('#mod').modal('show');
-    });
-</script>
-{% endif %}
-
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-fQybjgWLrvvRgtW6bFlB7jaZrFsaBXjsOMm/tB9LTS58ONXgqbR9W8oWht/amnpF" crossorigin="anonymous"></script>
-
-{% endblock %}
+    {% endblock %}
