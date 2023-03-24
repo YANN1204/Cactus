@@ -87,10 +87,21 @@ def button_click_adopt(idFiche):
     dd.save_all_items(list_item)
 
     adopted=gds.card_adopted(idFiche,session.get("userId","0"))
-    print(idFiche)
-    print(session.get("userId","0"))
-    # Ajoutez une variable de contexte pour indiquer que la fiche a été adoptée
+
+    #recupération des informations de l'impact
     data = gds.display_instance(idFiche, url_item, urlu, urlt, urlact, urlr, urlc)
+    impact_card=dd.get_dataInDirectus("impacts/"+data["impact"])['data']
+
+    impact_card['impact_type']='use'
+    impact_card['user_id']= idUser
+    
+    #ajout de l'impact dans la table impacts
+    pds.post_data("impacts/",{'user_id' : impact_card['user_id'], 'impact_type': impact_card['impact_type'], 'impact_topic': impact_card['impact_topic'], 'sentence_on_data': impact_card['sentence_on_data'], 'numerical_data': impact_card['numerical_data'], 'unit':impact_card['unit']})
+    
+    
+
+    # Ajoutez une variable de contexte pour indiquer que la fiche a été adoptée
+    
     logged = session.get("logged", False)
     username = session.get("username", None)
     return render_template('fiche.html', metadata=metadata, adopted=adopted, data=data, logged=logged ,username=username, idFiche=idFiche)

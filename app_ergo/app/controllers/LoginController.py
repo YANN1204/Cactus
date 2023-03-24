@@ -19,8 +19,7 @@ def reqlogged(f):
 
 @app.route('/login', methods = ['GET', 'POST'])
 def login():
-    msg_error = None
-    
+    msg_error = None    
     data = dd.get_data('users')
     if request.method == 'POST':
         for i in data:
@@ -28,7 +27,7 @@ def login():
                 session['logged'] = True
                 session['username'] = request.form['username']
                 session['userId'] = i["id"]
-                if request.form.get('provide'):
+                if request.form.get('provide')=="True":
                     return redirect(request.referrer)
                 else :
                     return redirect(url_for('accueil_connected'))              
