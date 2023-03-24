@@ -23,7 +23,6 @@ class DataDAO():
             de dictionnaire
         """
         response = requests.get(self.path + url)
-        print(self.path + url)
         data = json.loads(response.text)
 
         return data

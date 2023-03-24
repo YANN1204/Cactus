@@ -71,6 +71,7 @@ def button_click_adopt(idFiche):
         return render_template('login.html', metadata=metadata, provide=True)
     
     idFiche = request.args.get('idFiche')
+    print(idFiche)
     idUser = session.get("userId", None)
     #Ajout de l'id de l'user dans la table users_alternative_cards 
     pds.post_data("users_alternative_cards/",{"users_id": idUser})    
@@ -89,8 +90,6 @@ def button_click_adopt(idFiche):
     dd.save_all_items(list_item)
 
     adopted=gds.card_adopted(idFiche,session.get("userId","0"))
-    print(idFiche)
-    print(session.get("userId","0"))
     # Ajoutez une variable de contexte pour indiquer que la fiche a été adoptée
     data = gds.display_instance(idFiche, url_item, urlu, urlt, urlact, urlr, urlc, urli)
     logged = session.get("logged", False)
@@ -117,7 +116,7 @@ def button_click_unadopt(idFiche):
     list_item = ['alternative_cards', 'alternative_cards_tags', 'comments', 'forums', 'forums_tags', 'impacts','rooms', 'tags', 'users', 'users_alternative_cards', 'users_tags']
     dd = DataDAO()
     dd.save_all_items(list_item)
-    data = gds.display_instance(idFiche, url_item, urlu, urlt, urlact, urlr, urlc)
+    data = gds.display_instance(idFiche, url_item, urlu, urlt, urlact, urlr, urlc, urli)
     logged = session.get("logged", False)
     username = session.get("username", None)
     adopted=gds.card_adopted(idFiche,session.get("userId","0"))
@@ -143,7 +142,7 @@ def com_card():
              'rooms', 'tags', 'users', 'users_alternative_cards', 'users_tags']
     dd.save_all_items(list_item)
     # afficher fiche avec nouveau com --> à corriger
-    data = gds.display_instance(id_card, url_item, urlu, urlt, urlact, urlr, urlc)
+    data = gds.display_instance(id_card, url_item, urlu, urlt, urlact, urlr, urlc, urli)
     return render_template('fiche.html', metadata=metadata, data=data)
 
 

@@ -31,7 +31,7 @@ def login():
                 session['pseudo'] = i['pseudo']
                 session['avatar'] = "https://d10b6z4v.directus.app/assets/" + i['avatar']
                 session['alternative_card_adopted'] = i['alternative_card_adopted']
-                if request.form.get('provide'):
+                if request.form.get('provide') == 'True':
                     return redirect(request.referrer)
                 else :
                     return redirect(url_for('accueil_connected'))              
