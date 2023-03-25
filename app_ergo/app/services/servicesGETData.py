@@ -335,7 +335,7 @@ class GetDataServices():
                 return i
 
 
-    def filter(self, data_item, research_data):
+    def filter(self, data_item, research_data, type_of_data, room):
         """_summary_
 
         Args:
@@ -343,15 +343,21 @@ class GetDataServices():
             de l'API Directus
             research_data (str): données de recherche qui vont servir pour
             le filtre de ce qui sera retourné
+            type_of_data (str): type de données pour les fiche d'alternative : pratique, conseil ou 
+            témoignage, forums, articles scientifiques ou tous en même temps
 
         Returns:
             dict: données filtrées de l'item 
         """
 
-        if research_data[0].isupper():
-            new_research = research_data[0].lower() + research_data[1:]
+        if len(research_data) != 0:
+            if research_data[0].isupper():
+                new_research = research_data[0].lower() + research_data[1:]
+            else:
+                new_research = research_data[0].upper() + research_data[1:]
         else:
-            new_research = research_data[0].upper() + research_data[1:]
+            research_data = ""
+            new_research = ""
 
         data_item_filter = []
         for i in data_item:
@@ -359,19 +365,31 @@ class GetDataServices():
             title = i['title']
             list_tags = i['tags_name']
             room_name = i['room_name']
+            if type_of_data == "forum":
+                id_type_of_cards = None
+            else:
+                id_type_of_cards = i['type_of_card']
+
             if research_data in title or new_research in title:
                 if added == 0:
                     data_item_filter.append(i)
                     added += 1
             for tag in list_tags:
-                if tag in research_data or tag in new_research:
+                if tag in research_data or tag in new_research or research_data in tag or new_research in tag:
                     if added == 0:
                         data_item_filter.append(i)
                         added += 1
-            if room_name in research_data or room_name in new_research:
+            if room_name in research_data or room_name in new_research or research_data in room_name or new_research in room_name:
                 if added == 0:
                     data_item_filter.append(i)
                     added += 1
+            if id_type_of_cards != type_of_data and type_of_data != "Tous" and type_of_data != "forum":
+                if added == 1:
+                    data_item_filter.pop()
+                    added = 0
+            if room_name != room and "maison entiere" != room and None != room:
+                if added == 1:
+                    data_item_filter.pop()
 
         return data_item_filter
 

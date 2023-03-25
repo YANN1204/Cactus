@@ -6,7 +6,6 @@ from app.services.servicesPOSTData import PostDataServices
 from app.services.servicesGETData import GetDataServices
 from app.services.servicesSETData import SetDataServices
 from app.models.dataDAO import DataDAO
-from PIL import Image
 
 pds = PostDataServices()
 gds = GetDataServices()
