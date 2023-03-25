@@ -42,7 +42,7 @@ def register():
     if avatar_number=="2.png":
         id_avatar="bfbee79a-e1f2-48f3-865e-71c53c2a6650"
     if avatar_number=="3.png":
-        id_avatar="04bbc5e6-d05d-4376-bbd1-1e5d0afae53e"
+        id_avatar="75b54802-d999-43d9-9468-d791126d5cd9"
     if avatar_number=="4.png":
         id_avatar="e6dad96c-4d70-43ba-98b4-4ae5d6dec8b6"
     # Créer un nouvel utilisateur dans Directus avec ces valeurs
