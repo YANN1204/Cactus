@@ -7,6 +7,8 @@ from app.services.servicesDELETEData import DeleteDataServices
 from app.services.servicesSETData import SetDataServices
 from app.models.dataDAO import DataDAO 
 from app.controllers.LoginController import reqlogged
+import datetime
+from datetime import datetime
 
 
 dd = DataDAO()
@@ -94,9 +96,13 @@ def button_click_adopt(idFiche):
 
     impact_card['impact_type']='use'
     impact_card['user_id']= idUser
+
+    #recupération de la date courante au format iso8601
+    now = datetime.now()
+    impact_card['date_created']=now.date().isoformat()
     
     #ajout de l'impact dans la table impacts
-    pds.post_data("impacts/",{'user_id' : impact_card['user_id'], 'impact_type': impact_card['impact_type'], 'impact_topic': impact_card['impact_topic'], 'sentence_on_data': impact_card['sentence_on_data'], 'numerical_data': impact_card['numerical_data'], 'unit':impact_card['unit']})
+    pds.post_data("impacts/",{'user_id' : impact_card['user_id'], 'impact_type': impact_card['impact_type'], 'impact_topic': impact_card['impact_topic'], 'sentence_on_data': impact_card['sentence_on_data'], 'numerical_data': impact_card['numerical_data'], 'unit':impact_card['unit'], 'date_created':impact_card['date_created']})
     # Ajoutez une variable de contexte pour indiquer que la fiche a été adoptée    
     logged = session.get("logged", False)
     username = session.get("username", None)
