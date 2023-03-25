@@ -19,6 +19,7 @@ urlft = "forums_tags"
 urlact = "alternative_cards_tags"
 urlr = "rooms"
 urlc = "comments"
+urli = "impacts"
 
 
 @app.route(basepath, methods = ['GET'])

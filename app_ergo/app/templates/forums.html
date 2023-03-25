@@ -37,8 +37,7 @@
         <div class="div-list forum">
             <h3 class="title-list-item">{{ forum['title'] }}</h3>
             <!-- Pour la date créer notre propre filtre sera plus efficace -->
-            <p>Publié par {{ forum['pseudo'] }} le {{ forum['date_created']|string|truncate(10,True,'')|replace("-","/")
-                }}</p>
+            <p>Publié par {{ forum['pseudo'] }} le {{ forum['date_created'] }}</p>
 
             <div class="div-tags-button">
                 <div class="div-tags forum">

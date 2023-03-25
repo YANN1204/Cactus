@@ -11,6 +11,23 @@ class DataDAO():
         self.path = "https://d10b6z4v.directus.app/items/"
 
 
+    def get_data2(self, url: str):
+        """Retourne les informations sous la forme d'un 
+        fichier dictionnaire à partir d'une requête GET 
+        envoyé à Directus qui retourne un fichier json
+        Args:
+            url (str): url de la collection dont l'on
+            veut récupérer les données
+        Returns:
+            dict: données de la collection sous forme
+            de dictionnaire
+        """
+        response = requests.get(self.path + url)
+        data = json.loads(response.text)
+
+        return data
+
+
     def get_data(self, url: str):
         """Retourne les informations sous la forme d'un 
         fichier dictionnaire à partir d'une requête GET 
@@ -53,7 +70,7 @@ class DataDAO():
 
     def get_instance(self, url: str):
         """Retourne les informations sous la forme d'un
-        dictionnaire d'une seul instance d'un item (ou collection)
+        dictionnaire d'une seule instance d'un item (ou collection)
         sur Directus avec son id
 
         Args:
@@ -97,4 +114,7 @@ class DataDAO():
             print("Erreur: impossible de créer ou d'écrire dans le fichier 'database.json'")
 
         return all_items
+    
+
+
             
