@@ -1,4 +1,4 @@
-from flask import render_template, session
+from flask import render_template, session, url_for
 from app import app
 
 basepath = '/'
@@ -8,4 +8,5 @@ def jeux():
     logged = session.get("logged", False)
     username = session.get("username", None)
     metadata = {"title":"Jeux", "pagename": "jeux"}
-    return render_template('jeux.html', metadata=metadata, logged=logged, username=username)
+    images = {'logo-cactus':url_for('static', filename="/Images/logo-cactus.png")}
+    return render_template('jeux.html', metadata=metadata, logged=logged, username=username, images=images)

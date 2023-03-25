@@ -30,8 +30,9 @@ def accueil():
     metadata = {"title": "Accueil", "pagename": "accueil_guest"}
     data["impact"] = int(gds.display_impact(url=urlimp,impacttype="1"))
     data["impact_now"] = gds.display_impact_now()
+    images = {'logo-cactus':url_for('static', filename="/Images/logo-cactus.png")}
         
-    return render_template('accueil_guest.html', metadata=metadata, data=data, logged=logged, username=username)
+    return render_template('accueil_guest.html', metadata=metadata, data=data, logged=logged, username=username, images=images)
 
 
 @app.route(basepath + 'accueil', methods = ['GET'])
@@ -45,8 +46,9 @@ def accueil_connected():
     metadata = {"title": "Accueil", "pagename": "accueil"}
     data["impact"] = int(gds.display_impact(url=urlimp,impacttype="1"))
     data["impact_now"] = gds.display_impact_now()
+    images = {'logo-cactus':url_for('static', filename="/Images/logo-cactus.png")}
         
-    return render_template('accueil.html', metadata=metadata, data=data, logged=logged, username=username)
+    return render_template('accueil.html', metadata=metadata, data=data, logged=logged, username=username, images=images)
 
 
 @app.route(basepath + 'research_accueil', methods=['GET'])

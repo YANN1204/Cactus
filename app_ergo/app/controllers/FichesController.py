@@ -1,4 +1,4 @@
-from flask import flash, render_template, request, session
+from flask import flash, render_template, request, session, url_for
 from flask import request
 from app import app
 from app.services.servicesGETData import GetDataServices
@@ -35,7 +35,8 @@ def fiches():
     username = session.get("username", None)
     data = gds.display_places(url_item, urlu, urlact, urlt, urlr)
     metadata = {"title":"Fiches", "pagename": "fiches"}
-    return render_template('fiches.html', metadata=metadata, data=data, logged=logged, username=username)
+    images = {'logo-cactus':url_for('static', filename="/Images/logo-cactus.png")}
+    return render_template('fiches.html', metadata=metadata, data=data, logged=logged, username=username, images=images)
 
 @app.route(basepath + 'research', methods=['GET'])
 def research_in_cards():
@@ -62,7 +63,9 @@ def fiche():
     
     data = gds.display_instance(idFiche, url_item, urlu, urlt, urlact, urlr, urlc, urli)
     metadata = {"title":"Fiche", "pagename": "fiche"}
-    return render_template('fiche.html', data = data, metadata=metadata, logged=logged, username=username, idFiche=idFiche, adopted=adopted)
+    images = { 'left-clear-clip':url_for('static', filename="/Images/left-clear-clip.png"), 'left-dark-clip':url_for('static', filename="/Images/left-dark-clip.png"), 
+              'logo-cactus':url_for('static', filename="/Images/logo-cactus.png"), 'love-earth':url_for('static', filename="/Images/love-earth.png")}
+    return render_template('fiche.html', data = data, metadata=metadata, logged=logged, username=username, idFiche=idFiche, adopted=adopted, images=images)
 
 
 
@@ -106,7 +109,9 @@ def button_click_adopt(idFiche):
     # Ajoutez une variable de contexte pour indiquer que la fiche a été adoptée    
     logged = session.get("logged", False)
     username = session.get("username", None)
-    return render_template('fiche.html', metadata=metadata, adopted=adopted, data=data, logged=logged ,username=username, idFiche=idFiche)
+    images = { 'left-clear-clip':url_for('static', filename="/Images/left-clear-clip.png"), 'left-dark-clip':url_for('static', filename="/Images/left-dark-clip.png"), 
+              'logo-cactus':url_for('static', filename="/Images/logo-cactus.png"), 'love-earth':url_for('static', filename="/Images/love-earth.png")}
+    return render_template('fiche.html', metadata=metadata, adopted=adopted, data=data, logged=logged ,username=username, idFiche=idFiche, images=images)
 
 @app.route('/button_click_unadopt/<idFiche>')
 def button_click_unadopt(idFiche):
@@ -134,7 +139,9 @@ def button_click_unadopt(idFiche):
     logged = session.get("logged", False)
     username = session.get("username", None)
     adopted=gds.card_adopted(idFiche,session.get("userId","0"))
-    return render_template('fiche.html',  metadata=metadata, adopted=adopted, data=data, logged=logged ,username=username, idFiche=idFiche)
+    images = { 'left-clear-clip':url_for('static', filename="/Images/left-clear-clip.png"), 'left-dark-clip':url_for('static', filename="/Images/left-dark-clip.png"), 
+              'logo-cactus':url_for('static', filename="/Images/logo-cactus.png"), 'love-earth':url_for('static', filename="/Images/love-earth.png")}
+    return render_template('fiche.html',  metadata=metadata, adopted=adopted, data=data, logged=logged ,username=username, idFiche=idFiche, images=images)
 
 
 @app.route(basepath + 'postCard', methods=['POST'])

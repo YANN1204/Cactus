@@ -37,7 +37,8 @@ def login():
             msg_error = "identifiants incorrects"
 
     metadata = {"title":"Login", "pagename": "login"}
-    return render_template('login.html', metadata=metadata, msg_error=msg_error, provide=False)
+    images = {'logo-cactus':url_for('static', filename="/Images/logo-cactus.png")}
+    return render_template('login.html', metadata=metadata, msg_error=msg_error, provide=False, images=images)
 
 
 @app.route('/logout')

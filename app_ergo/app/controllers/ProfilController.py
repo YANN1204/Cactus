@@ -1,4 +1,4 @@
-from flask import render_template, session
+from flask import render_template, session, url_for
 from app import app
 from app.controllers.LoginController import reqlogged
 from app.services.servicesGETData import GetDataServices
@@ -17,4 +17,5 @@ def profil():
     data['cards_suggested'] = gds.cards_suggested(session['userId'])
     data['impact'] = []
     metadata = {"title":"Profil", "pagename": "profil"}
-    return render_template('profil.html', metadata=metadata, data=data, logged=logged, username=username)
+    images = {'logo-cactus':url_for('static', filename="/Images/logo-cactus.png")}
+    return render_template('profil.html', metadata=metadata, data=data, logged=logged, username=username, images=images)

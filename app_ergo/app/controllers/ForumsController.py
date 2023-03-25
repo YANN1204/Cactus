@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, session
+from flask import Flask, render_template, request, session, url_for
 from app import app
 
 from app.services.servicesPOSTData import PostDataServices
@@ -30,7 +30,8 @@ def forums():
     username = session.get("username", None)
     data = gds.display_places(url_item, urlu, urlft, urlt, urlr)
     metadata = {"title":"Forums", "pagename": "forums"}
-    return render_template('forums.html', data=data, metadata=metadata, logged=logged, username=username)
+    images = {'logo-cactus':url_for('static', filename="/Images/logo-cactus.png")}
+    return render_template('forums.html', data=data, metadata=metadata, logged=logged, username=username, images=images)
 
 
 @app.route(basepath + 'research_forums', methods=['GET'])
@@ -51,7 +52,8 @@ def forum():
     idForum = request.args.get('idForum', None)
     data = gds.display_instance(idForum, url_item, urlu, urlt, urlft, urlr, urlc, urli)
     metadata = {"title":"Forum", "pagename": "forum"}
-    return render_template('forum.html', data = data, metadata=metadata, logged=logged, username=username)
+    images = {'logo-cactus':url_for('static', filename="/Images/logo-cactus.png")}
+    return render_template('forum.html', data = data, metadata=metadata, logged=logged, username=username, images=images)
 
 
 @app.route(basepath + 'postForum', methods=['POST'])
@@ -77,4 +79,5 @@ def com_forum():
     dd.save_all_items(list_item)
     # ça marche pas de re afficher la page du forum ou la page forums.html --> à corriger
     data = gds.display_instance(id_forum, url_item, urlu, urlt, urlft, urlr, urlc, urli)
-    return render_template('forum.html', metadata=metadata, data=data)
+    images = {'logo-cactus':url_for('static', filename="/Images/logo-cactus.png")}
+    return render_template('forum.html', metadata=metadata, data=data, images=images)

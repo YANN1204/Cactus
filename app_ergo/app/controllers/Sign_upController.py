@@ -1,4 +1,4 @@
-from flask import render_template, session, request
+from flask import render_template, session, request, url_for
 import requests
 import os
 from app import app
@@ -23,7 +23,8 @@ def sign_up():
     data=dd.get_data(url=urlt)
     
     metadata = {"title":"Sign_up", "pagename": "sign_up"}
-    return render_template('sign_up.html',data=data, metadata=metadata)
+    images = {'logo-cactus':url_for('static', filename="/Images/logo-cactus.png")}
+    return render_template('sign_up.html',data=data, metadata=metadata, images=images)
 
 
 @app.route(basepath + 'register', methods=['POST'])
@@ -61,5 +62,6 @@ def register():
     list_item = ['alternative_cards', 'alternative_cards_tags', 'comments', 'forums', 'forums_tags', 'impacts','rooms', 'tags', 'users', 'users_alternative_cards', 'users_tags']
     dd = DataDAO()
     dd.save_all_items(list_item)
-    return render_template('login.html', metadata=metadata, data=data)
+    images = {'logo-cactus':url_for('static', filename="/Images/logo-cactus.png")}
+    return render_template('login.html', metadata=metadata, data=data, images=images)
 
