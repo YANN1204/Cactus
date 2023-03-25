@@ -26,6 +26,7 @@ class GetDataServices():
         return data
    
 
+
     def display_places(self, url_item: str, urlu: str, urlft: str, urlt: str, urlr: str):
         """Affiche les données sous la forme d'un dictionnaire python
            # impact à rajouter
@@ -47,16 +48,14 @@ class GetDataServices():
 
         # parcourt la liste d'items du dictionnaire data
         for item in data :
-            print(item)
+            #print(item)
+            item['date_created'] = self.convert_date(item['date_created'])
             # récupère les infos du user avec l'id correspondant au champ user_id du forum/fiche
             user = self.instance_by_id(urlu, item['user_id'])
-
             # crée une nouvelle key pseudo au dict du forum/fiche avec comme valeur le pseudo correspondant à l'user
             item['pseudo'] = user['pseudo']
-
             # on récupère la liste de noms de tags
             tags_name = self.find_tag(urlft, urlt, item["tag"])
-
             # on ajoute la liste de noms de tags à une nouvelle entrée du dict forum/fiche
             item['tags_name'] = tags_name
             # même chose pour avoir le room_name
@@ -64,6 +63,26 @@ class GetDataServices():
             item['room_name'] = room['room_name']
 
         return data
+    
+    """ A VOIR SI MIEUX CAR UTILISE LA METHODE DONNEE PAR LE PROF """
+    def display_places2(self, url_item: str, urlu: str, urlft: str, urlt: str, urlr: str):
+        data = self.pdao.get_data2(url_item + "?fields=*.*")
+        # parcourt la liste d'items du dictionnaire data
+        list_dic = []
+        for i in data["data"] :
+            #print(item)
+            item = {}
+            item['id'] = i['id']
+            item['title'] = i['title']
+            item['date_created'] = self.convert_date(i['date_created'])
+            item['pseudo'] = i['user_id']['pseudo']
+            tags_id = []
+            for t in i['tag'] :
+                tags_id.append(t['tags_id'])
+            item['tags'] = tags_id
+            item['room_name'] = i['room_id']['room_name']
+            list_dic.append(item)
+        return list_dic
     
 
     def find_tag(self, urlft: str, urlt: str, list_tag: list):
@@ -92,14 +111,30 @@ class GetDataServices():
         return tags_name
 
 
-    def display_instance(self, idInstance: str, url_item: str, urlu: str, urlt: str, urlft: str, urlr: str, urlc: str):
+    def convert_date(self, date: str) :
+        """Convertit la date au format jj/mm/aaaa
+
+        Args:
+            date (str) : la date à convertir
+
+        Returns:
+            date : string de la date convertie
+        """
+        timestamp = date[0:19]
+        timestamp = datetime.strptime((timestamp), "%Y-%m-%dT%H:%M:%S")
+        date = timestamp.strftime("%d/%m/%Y")
+        return date
+
+
+    def display_instance(self, idInstance: str, url_item: str, urlu: str, urlt: str, urlft: str, urlr: str, urlc: str, urli: str):
         # pas fini
         data = self.instance_by_id(url_item, idInstance)
+        data['date_created'] = self.convert_date(data['date_created'])
         # récupère les infos du user avec l'id correspondant au champ user_id du forum/fiche
         user = self.instance_by_id(urlu, data['user_id'])
         # crée une nouvelle key pseudo au dict du forum/fiche avec comme valeur le pseudo correspondant à l'user
         data['pseudo'] = user['pseudo']
-        data['avatar'] = user['avatar']
+        data['avatar'] = "https://d10b6z4v.directus.app/assets/" + user['avatar']
         # on récupère la liste de noms de tags
         tags_name = self.find_tag(urlft, urlt, data["tag"])
         # on ajoute la liste de noms de tags à une nouvelle entrée du dict forum/fiche
@@ -108,19 +143,39 @@ class GetDataServices():
         room = self.instance_by_id(urlr, data['room_id'])
         data['room_name'] = room['room_name']
         data['comments'] = self.find_comments(idInstance, urlc, urlu)
+        if url_item == 'alternative_cards':
+            data['impact_details'] = self.instance_by_id(urli, data['impact'])
         return data
-    
 
-    def find_comments(self, idForum: str, urlc: str, urlu: str):
-        # pas fini
+    def find_comments(self, idInstance: str, urlc: str, urlu: str):
+        """Retourne tous les commentaires d'une fiche ou d'un forum 
+
+        Args:
+            urlc (str): url de la collection comments
+            urlu (str): url de la collection users
+
+        Returns:
+            comments: la liste des commentaires avec pseudo et avatr des users qui l'ont posté
+        """
         data = self.pdao.get_data(urlc)
         comments = []
         for c in data:
-            if c['forum_id'] == idForum:
+            if c['forum_id'] == idInstance:
                 comments.append(c)
                 user = self.instance_by_id(urlu, c['user_id'])
                 c['pseudo'] = user['pseudo']
-                c['avatar'] = user['avatar']
+                c['avatar'] = "https://d10b6z4v.directus.app/assets/" + user['avatar']
+                c['date_created'] = self.convert_date(c['date_created'])
+            elif  c['alternative_card_id'] == idInstance:
+                comments.append(c)
+                user = self.instance_by_id(urlu, c['user_id'])
+                c['pseudo'] = user['pseudo']
+                c['avatar'] = "https://d10b6z4v.directus.app/assets/" + user['avatar']
+                c['date_created'] = self.convert_date(c['date_created'])
+                if c['comment_type'] == "1" :
+                    c['comment_type'] = "Commentaire"
+                elif c['comment_type'] == "2" :
+                    c['comment_type'] = "Suggestion"
         return comments
 
     def card_adopted(self, idFiche : str, idUser : str):
@@ -326,4 +381,35 @@ class GetDataServices():
         return difference.days
     
 
+
+    def cards_adopted(self, id: str):
+        data = self.pdao.get_data2("users_alternative_cards" + "?fields=*.*")
+        list_dic = []
+        for i in data["data"] :
+            if i['users_id'] and i['users_id']['id'] == id : 
+                item = {}
+                item['id'] = i['alternative_cards_id']['id']
+                item['title'] = i['alternative_cards_id']['title']
+                item['room_name'] = self.instance_by_id('rooms', i['alternative_cards_id']['room_id'])['room_name']
+                item['tags'] = self.find_tag('alternative_cards_tags', 'tags', i['alternative_cards_id']['tag'])
+                if i['alternative_cards_id']['impact'] :
+                    item['impact'] = i['alternative_cards_id']['impact']
+                list_dic.append(item)
+        return list_dic
     
+    def cards_suggested(self, id: str):
+        data = self.pdao.get_data2("alternative_cards" + "?fields=*.*")
+        list_dic = []
+        for i in data["data"] :
+            if i['user_id'] and i['user_id']['id'] == id : 
+                item = {}
+                item['id'] = i['id']
+                item['title'] = i['title']
+                item['room_name'] = i['room_id']['room_name']
+                item['date_created'] = self.convert_date(i['date_created'])
+                tags_id = []
+                for t in i['tag'] :
+                    tags_id.append(t['id'])
+                item['tags'] = self.find_tag('alternative_cards_tags', 'tags', tags_id)
+                list_dic.append(item)
+        return list_dic
