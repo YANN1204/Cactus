@@ -186,11 +186,10 @@ class GetDataServices():
             #    found = False
             
             if d['users_id'] == idUser and d['alternative_cards_id'] == idFiche:                
-                found = True
-                
-
-
+                found = True      
         return found
+    
+    
     
     def index_users_alternative_cards(self, idFiche : str, idUser : str):
         data = self.pdao.get_data("users_alternative_cards")

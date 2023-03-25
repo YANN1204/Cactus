@@ -15,5 +15,6 @@ def profil():
     data = {}
     data['cards_adopted'] = gds.cards_adopted(session['userId'])
     data['cards_suggested'] = gds.cards_suggested(session['userId'])
+    data['impact'] = []
     metadata = {"title":"Profil", "pagename": "profil"}
     return render_template('profil.html', metadata=metadata, data=data, logged=logged, username=username)
