@@ -52,9 +52,7 @@ def fiche():
     logged = session.get("logged", False)
     username = session.get("username", None)
     idFiche = request.args.get('idFiche', None)
-       
-    data = gds.display_instance(idFiche, url_item, urlu, urlt, urlact, urlr, urlc, urli)
-    # import de la base de donnée
+    # import de la base de donnée mise a jour du json
     list_item = ['alternative_cards', 'alternative_cards_tags', 'comments', 'forums', 'forums_tags', 'impacts','rooms', 'tags', 'users', 'users_alternative_cards', 'users_tags']
     dd = DataDAO()
     dd.save_all_items(list_item)
