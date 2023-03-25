@@ -27,6 +27,8 @@ def login():
                 session['logged'] = True
                 session['username'] = request.form['username']
                 session['userId'] = i["id"]
+                session['pseudo'] = i['pseudo']
+                session['avatar'] = "https://d10b6z4v.directus.app/assets/" + i['avatar']
                 if request.form.get('provide')=="True":
                     return redirect(request.referrer)
                 else :
