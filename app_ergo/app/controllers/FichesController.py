@@ -1,10 +1,13 @@
-from flask import render_template, request, session
+from flask import flash, render_template, request, session
+from flask import request
 from app import app
 from app.services.servicesGETData import GetDataServices
 from app.services.servicesPOSTData import PostDataServices
 from app.services.servicesDELETEData import DeleteDataServices
 from app.services.servicesSETData import SetDataServices
 from app.models.dataDAO import DataDAO 
+from app.controllers.LoginController import reqlogged
+
 
 dd = DataDAO()
 gds = GetDataServices()
@@ -22,6 +25,7 @@ urlt = "tags"
 urlact = "alternative_cards_tags"
 urlr = "rooms"
 urlc = "comments"
+urli = "impacts"
 
 @app.route(basepath + 'fiches', methods = ['GET'])
 def fiches():
@@ -41,37 +45,107 @@ def research_in_cards():
     metadata = {"title":"Fiches", "pagename":"fiches"}
     return render_template('fiches.html', metadata=metadata, data=data_filter, logged=logged, username=username)
 
-
 @app.route('/fiche')
 def fiche():
     logged = session.get("logged", False)
     username = session.get("username", None)
     idFiche = request.args.get('idFiche', None)
-    data = gds.display_instance(idFiche, url_item, urlu, urlt, urlact, urlr, urlc)
+       
+    data = gds.display_instance(idFiche, url_item, urlu, urlt, urlact, urlr, urlc, urli)
+    # import de la base de donnée
+    list_item = ['alternative_cards', 'alternative_cards_tags', 'comments', 'forums', 'forums_tags', 'impacts','rooms', 'tags', 'users', 'users_alternative_cards', 'users_tags']
+    dd = DataDAO()
+    dd.save_all_items(list_item)
+    adopted=gds.card_adopted(idFiche,session.get("userId","0"))
     
+    data = gds.display_instance(idFiche, url_item, urlu, urlt, urlact, urlr, urlc, urli)
     metadata = {"title":"Fiche", "pagename": "fiche"}
-    return render_template('fiche.html', data = data, metadata=metadata, logged=logged, username=username)
+    return render_template('fiche.html', data = data, metadata=metadata, logged=logged, username=username, idFiche=idFiche, adopted=adopted)
 
 
-@app.route('/ficheAdopt')
-def button_click_adopt():
-    #il manque a réussir a recupérer l'id courant de la diche qui est deja dans l'url mais je sais pas comment faire ..
-    #et aussi recuperer l'id de l'user mais ca on va bientot le terminer
-    idFiche = request.args.get('idFiche', None)
-    idUsers = "eca95393-2325-45e5-bacb-bf0c59285fad"  ##
+
+@app.route('/button_click_adopt/<idFiche>')
+def button_click_adopt(idFiche):
+    
+    if (session.get("logged", False)==False):
+        metadata = {"title":"Fiches", "pagename": "fiches"}
+        return render_template('login.html', metadata=metadata, provide=True)
+    
+    idFiche = request.args.get('idFiche')
+    print(idFiche)
+    idUser = session.get("userId", None)
     #Ajout de l'id de l'user dans la table users_alternative_cards 
-    pds.post_data("users_alternative_cards/",{"users_id": idUsers})    
-    #récupération du nb d'element dans la table users_alternative_cards
-    ###remplacer get data par get instance pour modifier les alternative adopter à la ligne 59 de servicesGETData.py
-    cardsAdoptedList=dd.get_data("users_alternative_cards")
+    pds.post_data("users_alternative_cards/",{"users_id": idUser})    
+    dd = DataDAO()
+    cardsAdoptedList=dd.get_dataInDirectus("users_alternative_cards")
     #obtention de l'id de l'element de la table users_alternative_cards à modifier
-    idcard=str(cardsAdoptedList[-1]["id"])
+    idcard=str(cardsAdoptedList["data"][-1]["id"])    
     #ajout de l'id de la card
-    sds.update_smt(path="users_alternative_cards",id=idcard,new_data={"alternative_cards_id":idFiche})
-
+    sds.update_smt(path="users_alternative_cards",id=idcard,new_data={"alternative_cards_id":idFiche})    
     metadata = {"title":"Fiches", "pagename": "fiches"}
-    #retourn un pop up "c'est ok"
-    return render_template('fiches.html', metadata=metadata)
+    # import de la base de donnée
+    list_item = ['alternative_cards', 'alternative_cards_tags', 'comments', 'forums', 'forums_tags', 'impacts','rooms', 'tags', 'users', 'users_alternative_cards', 'users_tags']
+    dd = DataDAO()
+    dd.save_all_items(list_item)
+    adopted=gds.card_adopted(idFiche,session.get("userId","0"))
+    #recupération des informations de l'impact
+    data = gds.display_instance(idFiche, url_item, urlu, urlt, urlact, urlr, urlc, urli)
+    impact_card=dd.get_dataInDirectus("impacts/"+data["impact"])['data']
+
+    impact_card['impact_type']='use'
+    impact_card['user_id']= idUser
+    
+    #ajout de l'impact dans la table impacts
+    pds.post_data("impacts/",{'user_id' : impact_card['user_id'], 'impact_type': impact_card['impact_type'], 'impact_topic': impact_card['impact_topic'], 'sentence_on_data': impact_card['sentence_on_data'], 'numerical_data': impact_card['numerical_data'], 'unit':impact_card['unit']})
+    # Ajoutez une variable de contexte pour indiquer que la fiche a été adoptée    
+    logged = session.get("logged", False)
+    username = session.get("username", None)
+    return render_template('fiche.html', metadata=metadata, adopted=adopted, data=data, logged=logged ,username=username, idFiche=idFiche)
+
+@app.route('/button_click_unadopt/<idFiche>')
+def button_click_unadopt(idFiche):
+    if (session.get("logged", False)==False):
+        metadata = {"title":"Fiches", "pagename": "fiches"}
+        return render_template('login.html', metadata=metadata)    
+    idFiche = request.args.get('idFiche')
+    idUser = session.get("userId", "0")
+    index = gds.index_users_alternative_cards(idFiche=idFiche,idUser=idUser)
+    index= str(index)
+    dds.unadopt_card(index=index)
+    metadata = {"title":"Fiches", "pagename": "fiches"}
+    # import de la base de donnée
+    list_item = ['alternative_cards', 'alternative_cards_tags', 'comments', 'forums', 'forums_tags', 'impacts','rooms', 'tags', 'users', 'users_alternative_cards', 'users_tags']
+    dd = DataDAO()
+    dd.save_all_items(list_item)
+    data = gds.display_instance(idFiche, url_item, urlu, urlt, urlact, urlr, urlc, urli)
+    logged = session.get("logged", False)
+    username = session.get("username", None)
+    adopted=gds.card_adopted(idFiche,session.get("userId","0"))
+    return render_template('fiche.html',  metadata=metadata, adopted=adopted, data=data, logged=logged ,username=username, idFiche=idFiche)
+
+
+@app.route(basepath + 'postCard', methods=['POST'])
+@reqlogged
+def com_card():
+    text_com = request.form.get("com")
+    id_card = request.form.get("id-card")
+    com_radio = request.form.get("comRadio")
+    newData = {
+        "text": text_com,
+        "user_id": session["id"],
+        "comment_type": com_radio,
+        "alternative_card_id": id_card,
+    }
+    metadata = {"title":"Fiche", "pagename": "Fiche"}
+    data = pds.post_data('comments', data=newData)
+    # on retélécharge le json pour voir le nouveau commentaire
+    list_item = ['alternative_cards', 'alternative_cards_tags', 'comments', 'forums', 'forums_tags', 'impacts',
+             'rooms', 'tags', 'users', 'users_alternative_cards', 'users_tags']
+    dd.save_all_items(list_item)
+    # afficher fiche avec nouveau com --> à corriger
+    data = gds.display_instance(id_card, url_item, urlu, urlt, urlact, urlr, urlc, urli)
+    return render_template('fiche.html', metadata=metadata, data=data)
+
 
 @app.route('/fiches', methods=['GET', 'POST'])
 def handle_button_click():

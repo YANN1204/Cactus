@@ -42,6 +42,14 @@ body {
     content: '\e59e';
 }
 
+.icon-arrow-down-to-bracket::after {
+    content: '\e094';
+}
+
+.icon-share-nodes::after {
+    content: '\f1e0';
+}
+
 .icon-solid::after {
     font: var(--fa-font-solid);
 }
@@ -67,6 +75,7 @@ body {
     padding: 1em 1.5em;
     display: flex;
     flex-direction: column;
+    background-color: white;
 }
 
 /*------------ Titres et textes ------------*/
@@ -107,6 +116,7 @@ body {
     --bs-btn-hover-border-color: var(--dark-green);
     --bs-btn-active-bg: var(--dark-green);
     --bs-btn-active-border-color: var(--dark-green);
+    --bs-btn-bg: white;
 }
 
 .btn {
@@ -175,7 +185,7 @@ body {
     border: solid 1px var(--burgundy);
 }
 
-.div-list.card {
+.div-list.acard {
     border-radius: 20px;
     row-gap: 1em;
     border: solid 1px var(--clear-green);
@@ -438,24 +448,26 @@ body {
     font-size: 1.5em;
 }
 
-.div-games-home {
-    background-color: rgba(242, 120, 31, 0.8);
+.div-bg {
     color:#000000;
     margin: 2em 0;
 }
-.div-games-home h2 {
+.div-bg.orange{
+    background-color: rgba(242, 120, 31, 0.8);
+}
+.div-bg h2 {
     font-size: 1.4em;
     font-weight: 500;
     margin-bottom: 2em;
 }
-.div-games-home img {
+.div-bg img {
     width: 100%;
     border-radius: 20px;
 }
-.div-games-home .col-3 {
+.div-bg .col-3 {
     position: relative;
 }
-.div-games-home .col-3 .fa-circle-play {
+.div-bg .col-3 .fa-circle-play {
     position: absolute; 
     bottom: 45%; 
     left: 45%;
@@ -521,4 +533,44 @@ body {
 .div-wip p {
     font-size: 1.5em;
     font-weight: 600;
+}
+
+
+/*------------ INSCRIPTION ------------*/
+.sign-up {
+    margin-bottom: 1.5em;
+}
+.sign-up .form-control {
+    border-radius: 50px;
+    border: 1px solid var(--clearer-green);
+}
+.sign-up .form-control:focus {
+    box-shadow: 0 1px 1px rgba(0, 0, 0, 0.075) inset, 0 0 8px rgba(167, 201, 87, 0.6);
+    border: 1px solid var(--clear-green);
+}
+
+.div-room-checkbox.sign-up {
+    flex-direction: row;
+    width: 24%;
+}
+.div-room-checkbox.sign-up label {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-around;
+}
+
+
+/*------------ PROFIL ------------*/
+#avatar-profile {
+    border-radius: 50%;
+}
+.div-bg.green{
+    background-color: var(--clear-green);
+}
+
+
+/*------------ FORUM ------------*/
+
+.hidden-div {
+    display: none;
 }

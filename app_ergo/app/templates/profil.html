@@ -2,35 +2,134 @@
 
 {% block content %}
 
-<div class="section-h1">
-    <h1>Profil de ##pseudo user##</h1>
+<div class="section-h1 d-flex">
+    <h1>
+        <img id="avatar-profile" src=" {{ session['avatar'] }} " alt="votre avatar">
+        Profil de {{ session['pseudo'] }}
+    </h1>
 </div>
 
-<div class="row">
-    <div class="col">
-        <p>
-            Tu peux gérer tous les paramètres de ton compte et consulter et
+<div class="container-fluid row justify-content-around div-forums-articles-home">
+    <div class="col-5 justify-content-between div-list acard">
+        <p>Tu peux gérer tous les paramètres de ton compte et consulter et
             modifier les informations de ton profil à tout moment.
         </p>
-        <button class="btn btn-primary">Informations du profil</button>
+        <a role="button" href="" class="icon icon-solid icon-chevron-right btn btn-primary">Informations du profil</a>
     </div>
-
-    <div class="col">
-        <p>
-            Tu retrouveras ici tous les didacticiels que tu as déjà suivis et tous les autres.
+    <div class="col-5 justify-content-between div-list acard">
+        <p>Tu retrouveras ici tous les didacticiels que tu as déjà suivis et tous les autres.
         </p>
-        <button class="btn btn-primary">Didacticiel</button>
+        <a role="button" href="" class="icon icon-solid icon-chevron-right btn btn-primary">Didacticiel</a>
     </div>
+</div>
+
+<div class="container-fluid div-bg orange">
+    <h2>Tes pratiques adoptées</h2>
+
+    {% for card in data['cards_adopted'][0:2] %}
+     <div class="div-list acard">
+        <div class="div-head-list-cards">
+            <h3 class="title-list-item">{{ card['title'] }}</h3>
+        </div>
+        <div class="div-tags-button">
+            <div class="div-tags pratique">
+                <span> {{ card['room_name'] }} </span>
+                {% for tag in card['tags'] %}
+                    <span> {{ tag }} </span>
+                {% endfor %}
+            </div>
+            {% set idFiche = card['id'] %}
+            <a role="button" href="{{ url_for('fiche', idFiche=card['id']) }}"
+                class="icon icon-solid icon-chevron-right btn btn-outline-secondary">Voir plus</a>
+        </div>
+    </div>
+    {% endfor %}
+    <div class="hidden-div" id="next_cards2">
+        {% for card in data['cards_adopted'][2:] %}
+        <div class="div-list acard">
+            <div class="div-head-list-cards">
+                <h3 class="title-list-item">{{ card['title'] }}</h3>
+            </div>
+            <div class="div-tags-button">
+                <div class="div-tags pratique">
+                    <span> {{ card['room_name'] }} </span>
+                    {% for tag in card['tags'] %}
+                        <span> {{ tag }} </span>
+                    {% endfor %}
+                </div>
+                {% set idFiche = card['id'] %}
+                <a role="button" href="{{ url_for('fiche', idFiche=card['id']) }}"
+                    class="icon icon-solid icon-chevron-right btn btn-outline-secondary">Voir plus</a>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+    {% if data['cards_adopted']|length > 2 %}
+        <button class="btn btn-outline-secondary" onclick="toggle_visibility('next_cards2');">Voir plus</button>
+    {% endif %}
 </div>
 
 <div>
     <h2>L'impact de tes pratiques par thématique</h2>
 </div>
 
-<div>
+<div class="container-fluid div-bg green">
     <h2>Les fiches postées</h2>
+    {% for card in data['cards_suggested'][0:2] %}
+    <div class="div-list acard">
+        <div><i class="fa-solid fa-check"></i> Publiée</div>
+        <div class="div-head-list-cards">
+            <p>Publiée le : {{ card['date_created'] }}</p>
+            <h3 class="title-list-item">{{ card['title'] }}</h3>
+        </div>
+        <div class="div-tags-button">
+            <div class="div-tags pratique">
+                <span> {{ card['room_name'] }} </span>
+                {% for tag in card['tags'] %}
+                    <span> {{ tag }} </span>
+                {% endfor %}
+            </div>
+            {% set idFiche = card['id'] %}
+            <a role="button" href="{{ url_for('fiche', idFiche=card['id']) }}"
+                class="icon icon-solid icon-chevron-right btn btn-outline-secondary">Voir plus</a>
+        </div>
+    </div>
+    {% endfor %}
+    <div class="hidden-div" id="next_cards2">
+        {% for card in data['cards_suggested'][2:] %}
+        <div class="div-list acard">
+            <div><i class="fa-solid fa-check"></i> Publiée</div>
+            <div class="div-head-list-cards">
+                <p>Publiée le : {{ card['date_created'] }}</p>
+                <h3 class="title-list-item">{{ card['title'] }}</h3>
+            </div>
+            <div class="div-tags-button">
+                <div class="div-tags pratique">
+                    <span> {{ card['room_name'] }} </span>
+                    {% for tag in card['tags'] %}
+                        <span> {{ tag }} </span>
+                    {% endfor %}
+                </div>
+                {% set idFiche = card['id'] %}
+                <a role="button" href="{{ url_for('fiche', idFiche=card['id']) }}"
+                    class="icon icon-solid icon-chevron-right btn btn-outline-secondary">Voir plus</a>
+            </div>
+        </div>
+        {% endfor %}
+    </div> 
+    {% if data['cards_suggested']|length > 2 %}
+        <button class="btn btn-outline-secondary" onclick="toggle_visibility('next_cards2');">Voir plus</button>
+    {% endif %}
 </div>
 
-<li>test</li>
+<script type="text/javascript">
+    function toggle_visibility(id) {
+        var e = document.getElementById(id);
+        if(e.style.display == 'block')
+           e.style.display = 'none';
+        else
+           e.style.display = 'block';
+    }
+ </script>
 
 {% endblock %}
