@@ -1,6 +1,7 @@
 from app.models.dataDAO import DataDAO
 import datetime
-from datetime import datetime
+from datetime import datetime, timedelta
+from calendar import monthrange
 
 
 
@@ -127,7 +128,6 @@ class GetDataServices():
 
 
     def display_instance(self, idInstance: str, url_item: str, urlu: str, urlt: str, urlft: str, urlr: str, urlc: str, urli: str):
-        # pas fini
         data = self.instance_by_id(url_item, idInstance)
         data['date_created'] = self.convert_date(data['date_created'])
         # récupère les infos du user avec l'id correspondant au champ user_id du forum/fiche
@@ -441,3 +441,103 @@ class GetDataServices():
                 item['tags'] = self.find_tag('alternative_cards_tags', 'tags', tags_id)
                 list_dic.append(item)
         return list_dic
+    
+    def user_impacts(self, id: str):
+        data = self.pdao.get_data("impacts")
+        impacts = []
+        for d in data:
+            if d['user_id'] == id :
+                if d['date_created'] :
+                    d['date_created'] = self.convert_date(d['date_created'])
+                if d['date_end'] :
+                    d['date_end'] = self.convert_date(d['date_end'])
+                impacts.append(d)
+        return impacts
+    
+    def impact_total_sum(self, id:str):
+        impacts = self.user_impacts(id)
+        today = datetime.now()
+        tot_eau = 0
+        tot_plastique = 0
+        tot_co2 = 0
+        for i in impacts :
+            if i['date_created'] :
+                if i['date_end'] :
+                    time = (datetime.strptime(i['date_end'], "%d/%m/%Y") - datetime.strptime(i['date_created'], "%d/%m/%Y")).days
+                else :
+                    time = (today - datetime.strptime(i['date_created'], "%d/%m/%Y")).days
+            tot = time * (i['numerical_data']/30.5)
+            if i['impact_topic'] == '1' :
+                tot_eau += tot
+            elif i['impact_topic'] == '2' :
+                tot_plastique += tot
+            elif i['impact_topic'] == '3' :
+                tot_co2 += tot
+        tot_impacts = { 'eau': tot_eau, 'plastique': tot_plastique, 'co2': tot_co2}
+        return tot_impacts
+    
+    def impact_per_month(self, id:str):
+        impacts = self.user_impacts(id)
+        now = datetime.now()
+        today = now.strftime("%d/%m/%Y")
+        result = {'0': {'eau':0, 'plastique':0, 'co2':0},
+                  '1': {'eau':0, 'plastique':0, 'co2':0},
+                  '2': {'eau':0, 'plastique':0, 'co2':0},
+                  '3': {'eau':0, 'plastique':0, 'co2':0},
+                  '4': {'eau':0, 'plastique':0, 'co2':0}, }
+
+        last_months = [datetime.strptime(now.strftime("%m/%Y"), "%m/%Y")]
+        months = [now.strftime("%B")]
+        for _ in range(0, 4) :
+            now = now.replace(day=1) - timedelta(days=1)
+            last_months.append(datetime.strptime(now.strftime("%m/%Y"), "%m/%Y"))
+            months.append(now.strftime("%B"))
+
+        for i in impacts :
+            debut = datetime.strptime(i['date_created'], "%d/%m/%Y")
+            if not i['date_end'] :
+                i['date_end'] = today
+            fin = datetime.strptime(i['date_end'], "%d/%m/%Y")
+            month_debut = (datetime.strptime(debut.strftime("%m/%Y"), "%m/%Y"))
+            month_fin = (datetime.strptime(fin.strftime("%m/%Y"), "%m/%Y"))
+        
+            for m in range(len(last_months)) :
+                if month_debut == last_months[m] and month_fin == last_months[m] :
+                    tot = (fin - debut).days * (i['numerical_data']/30.5)
+
+                elif month_debut == last_months[m] and month_fin >= last_months[m] :
+                    last_day = monthrange(month_debut.year, month_debut.month)[1]
+                    last_day = str(last_day) + '/' + debut.strftime("%m/%Y")
+                    last_day = (datetime.strptime(last_day, "%d/%m/%Y"))
+                    tot = (last_day - debut).days * (i['numerical_data']/30.5)
+
+                elif month_debut <= last_months[m] and month_fin == last_months[m] :
+                    first_day = last_months[m]
+                    tot = (fin - first_day).days * (i['numerical_data']/30.5)
+
+                elif month_debut <= last_months[m] and month_fin >= last_months[m] :
+                    first_day = last_months[m]
+                    last_day = monthrange(month_debut.year, month_debut.month)[1]
+                    last_day = str(last_day) + '/' + debut.strftime("%m/%Y")
+                    last_day = (datetime.strptime(last_day, "%d/%m/%Y"))
+                    tot = (last_day - first_day).days * (i['numerical_data']/30.5)
+
+                else :
+                    tot = 0
+ 
+                if i['impact_topic'] == '1' :
+                    result[str(m)]['eau'] = result[str(m)]['eau'] + tot
+                elif i['impact_topic'] == '2' :
+                    result[str(m)]['plastique'] = result[str(m)]['plastique'] + tot
+                elif i['impact_topic'] == '3' :
+                    result[str(m)]['co2'] = result[str(m)]['co2'] + tot
+
+        result['months'] = months
+
+        return result
+            
+
+
+
+            
+                
