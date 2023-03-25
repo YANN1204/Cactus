@@ -103,7 +103,8 @@
                                 !</button>
                             <input type="hidden" name="idFiche" value="{{ idFiche }}">
                         </form>
-                        {% endif %} {% if adopted == true %}
+                        {% endif %}
+                        {% if adopted == true %}
                         <form method="GET" data-bs-toggle="modal" data-bs-target="#mod"
                             action="{{ url_for('button_click_unadopt',idFiche=idFiche) }}">
                             <button type="submit" class="btn btn-primary btn-adopt">Je n'adopte plus cette
@@ -126,18 +127,18 @@
                 </div>
                 {% set steps = data["astuce_or_step_tuto"].split(";") %}
                 {% for s in range(steps|length - 1) %}
-                {% if s % 2 == 0 %}
-                <div class="col-10 div-pin dark">
-                    <img src="./static/Images/left-clear-clip.png" alt="trombone">
-                    <p> Etape {{ s + 1 }} :</p>
-                    <p>{{ steps[s] }}</p>
-                </div>
-                <div class="col-10 div-pin clear">
-                    <img src="./static/Images/left-dark-clip.png" alt="trombone">
-                    <p> Etape {{ s + 1 }} :</p>
-                    <p>{{ steps[s+1] }}</p>
-                </div>
-                {% endif %}
+                    {% if s % 2 == 0 %}
+                    <div class="col-10 div-pin dark">
+                        <img src="./static/Images/left-clear-clip.png" alt="trombone">
+                        <p> Etape {{ s + 1 }} :</p>
+                        <p>{{ steps[s] }}</p>
+                    </div>
+                    <div class="col-10 div-pin clear">
+                        <img src="./static/Images/left-dark-clip.png" alt="trombone">
+                        <p> Etape {{ s + 2 }} :</p>
+                        <p>{{ steps[s+1] }}</p>
+                    </div>
+                    {% endif %}
                 {% endfor %}
                 <div class="d-flex justify-content-center mt-5">
                     {% if adopted == false%}
@@ -147,7 +148,8 @@
                             !</button>
                         <input type="hidden" name="idFiche" value="{{ idFiche }}">
                     </form>
-                    {% endif %} {% if adopted == true %}
+                    {% endif %} 
+                    {% if adopted == true %}
                     <form method="GET" data-bs-toggle="modal" data-bs-target="#mod"
                         action="{{ url_for('button_click_unadopt',idFiche=idFiche) }}">
                         <button type="submit" class="btn btn-primary btn-adopt">Je n'adopte plus cette
