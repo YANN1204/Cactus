@@ -103,8 +103,7 @@
                                 !</button>
                             <input type="hidden" name="idFiche" value="{{ idFiche }}">
                         </form>
-                        {% endif %}
-                        {% if adopted == true %}
+                        {% elif adopted == true %}
                         <form method="GET" data-bs-toggle="modal" data-bs-target="#mod"
                             action="{{ url_for('button_click_unadopt',idFiche=idFiche) }}">
                             <button type="submit" class="btn btn-primary btn-adopt">Je n'adopte plus cette
@@ -148,8 +147,7 @@
                             !</button>
                         <input type="hidden" name="idFiche" value="{{ idFiche }}">
                     </form>
-                    {% endif %} 
-                    {% if adopted == true %}
+                    {% elif adopted == true %}
                     <form method="GET" data-bs-toggle="modal" data-bs-target="#mod"
                         action="{{ url_for('button_click_unadopt',idFiche=idFiche) }}">
                         <button type="submit" class="btn btn-primary btn-adopt">Je n'adopte plus cette
@@ -180,7 +178,17 @@
             </div>
 
             <div class="tab-pane fade" id="impact-pratique" role="tabpanel" aria-labelledby="impact-tab">
-                <p>{{ data["impact_details"]}}</p>
+                <div>
+                    {% set impact = data["impact_details"]['numerical_data'] * 12 * 100 %}
+                    {% if data["impact_details"]['impact_topic'] == '1' %}
+                        {% set type_phrase = "d'eau seront économisés en 1 an." %}
+                    {% elif data["impact_details"]['impact_topic'] == '2' %}
+                        {% set type_phrase = "de plastique ne seront pas jetés en 1 an." %}
+                    {% elif data["impact_details"]['impact_topic'] == '3' %}
+                        {% set type_phrase = "de CO2 ne seront pas émis en 1 an." %}
+                    {% endif %}
+                    <p> Si 100 personnes suivent cette alternative, {{ impact }} {{ data["impact_details"]['unit'] }} {{ type_phrase }}</p>
+                </div>
             </div>
 
             <div class="tab-pane fade" id="avis" role="tabpanel" aria-labelledby="avis-tab">
@@ -285,7 +293,7 @@
                                 !</button>
                             <input type="hidden" name="idFiche" value="{{ idFiche }}">
                         </form>
-                        {% endif %} {% if adopted == true %}
+                        {% elif adopted == true %}
                         <form method="GET" data-bs-toggle="modal" data-bs-target="#mod"
                             action="{{ url_for('button_click_unadopt',idFiche=idFiche) }}">
                             <button type="submit" class="btn btn-primary btn-adopt">Je n'adopte plus ce conseil
@@ -306,7 +314,7 @@
                             !</button>
                         <input type="hidden" name="idFiche" value="{{ idFiche }}">
                     </form>
-                    {% endif %} {% if adopted == true %}
+                    {% elif adopted == true %}
                     <form method="GET" data-bs-toggle="modal" data-bs-target="#mod"
                         action="{{ url_for('button_click_unadopt',idFiche=idFiche) }}">
                         <button type="submit" class="btn btn-primary btn-adopt">Je n'adopte plus ce conseil
@@ -317,8 +325,32 @@
                 </div>
             </div>
             <div class="tab-pane fade" id="impact-conseil" role="tabpanel" aria-labelledby="impact-tab">
-                <p>{{ data["impact_details"]["numerical_data"] }} {{ data["impact_details"]["unit"] }}</p>
-                <p>{{ data["impact_details"]["sentence_on_data"] }}</p>
+                {% set impact = data["impact_details"]['numerical_data'] * 12 * 100 %}
+                {% if data["impact_details"]['impact_topic'] == '1' %}
+                    {% set type_phrase = "d'eau seront économisés en 1 an." %}
+                    {% set extract = "Qu’est-ce que l’empreinte-eau?
+                    “Elle correspond au volume d’eau nécessaire à la production de produits alimentaires et industriels et de services, 
+                    y compris l’eau utilisée dans les chaînes d’approvisionnement.” Nous consommons de l’eau sans toujours nous en rendre 
+                    compte. En effet, selon notre alimentation (quantité de viande, céréales, légumes, fruits…) et notre consommation 
+                    domestique d’eau (nombre de douches, lavages de dents et de mains par jour, durée moyenne d’une douche, nombre de 
+                    lessives et de bains par semaine, etc.), nous consommons plus ou moins d’eau. Il peut être difficile de se réaliser 
+                    notre consommation effective, ainsi l’empreinte eau peut nous y aider!" %}
+                {% elif data["impact_details"]['impact_topic'] == '2' %}
+                    {% set type_phrase = "de plastique ne seront pas jetés en 1 an." %}
+                    {% set extract = "Le Principe des 5R
+                    Cette pratique peut être appréhendée par le principe des 5R de Béa Johnson (refuser, réduire, réutiliser, recycler, 
+                    rendre à la Terre). Le gel d’Aloe Vera est utile à plusieurs fins (refuser et réduire) et sa fabrication maison 
+                    permet de réutiliser un même récipient. L’écorce de la feuille étant le seul déchet, il peut être facilement recyclé/
+                    composté (les deux derniers R)." %}
+                {% elif data["impact_details"]['impact_topic'] == '3' %}
+                    {% set type_phrase = "de CO2 ne seront pas émis en 1 an." %}
+                {% endif %}
+                <div>
+                    <p> Si 100 personnes suivent cette alternative, {{ impact }} {{ data["impact_details"]['unit'] }} {{ type_phrase }}</p>
+                </div>
+                <div>
+                    <p> {{ extract }} </p>
+                </div>
             </div>
         </div>
     </div>
@@ -335,10 +367,11 @@
                 <a class="nav-link" id="temoignage-tab" data-toggle="tab" href="#temoignage" role="tab"
                     aria-controls="temoignage" aria-selected="false">Témoignage</a>
             </li>
-            <li class="nav-item">
+            <!-- On a pas gérer les données contenues dans cet onglet, peut-être l'enlever pour l'instant
+                <li class="nav-item">
                 <a class="nav-link" id="impact-tab" data-toggle="tab" href="#impact-temoignage" role="tab"
                     aria-controls="impact-temoignage" aria-selected="false">Impact</a>
-            </li>
+            </li> -->
         </ul>
         <div class="tab-content" id="tabContent-temoignage">
             <div class="tab-pane fade show active" id="description-temoignage" role="tabpanel"
@@ -369,9 +402,20 @@
                     </div>
                 </div>
             </div>
-            <div class="tab-pane fade" id="impact-temoignage" role="tabpanel" aria-labelledby="impact-tab">
-                <p>{{ data["impact_details"]}}</p>
-            </div>
+            <!-- Peut-être retirer cet onglet pour l'instant ?
+                <div class="tab-pane fade" id="impact-temoignage" role="tabpanel" aria-labelledby="impact-tab">
+                {% if data["impact_details"]['impact_topic'] == '1' %}
+                    {% set type = "d'eau." %}
+                    {% set verb = "économisé " %}
+                {% elif data["impact_details"]['impact_topic'] == '2' %}
+                    {% set type = "de plastique." %}
+                    {% set verb = "évité de jeter " %}
+                {% elif data["impact_details"]['impact_topic'] == '3' %}
+                    {% set type = "de CO2." %}
+                    {% set verb = "éviter l'émission de " %}
+                {% endif %}
+                <p>{{ data["pseudo"] }} indique avoir {{ verb }}{{ data["impact_details"]['numerical_data'] }} {{ data["impact_details"]['unit'] }} {{ type }}</p>
+            </div> -->
         </div>
     </div>
     {% endif %}
@@ -380,11 +424,11 @@
 
 <!-- Vérifier la valeur de la variable Flask et afficher la modale en conséquence -->
 {% if adopted == True%}
-<script>
-    $(document).ready(function () {
-        $('#mod').modal('show');
-    });
-</script>
+    <script>
+        $(document).ready(function () {
+            $('#mod').modal('show');
+        });
+    </script>
 {% endif %}
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/js/bootstrap.bundle.min.js"
