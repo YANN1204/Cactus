@@ -199,6 +199,33 @@ class GetDataServices():
                 found = d["id"]
                 break
         return found
+    
+    def index_impact(self, idFiche : str, idUser : str):
+        #récupération de l'id de l'impact dans la fiche de l'alternative
+        data = self.pdao.get_data("alternative_cards")
+        idImpact = ""
+        for d in data:
+            if (d['id'] == idFiche):
+                idImpact = d['impact']
+                break
+        
+        #recherche de "sentence_on_data" et "numerical_data" de l'impact dans la table impact
+        data = self.pdao.get_data("impacts")
+        sentence_on_data = ""
+        numerical_data = ""
+        for d in data:
+            if (d['id'] == idImpact):
+                sentence_on_data = d["sentence_on_data"]
+                numerical_data = d["numerical_data"]
+                break
+        #recherche de l'id de l'impact qui posséde user_id , sentence_on_data et nulerical_data dans la table impact
+        id_impact_user = ""
+        for d in data:
+            if (d['user_id'] == idUser and d['sentence_on_data'] == sentence_on_data and d["numerical_data"] ==numerical_data ):
+                id_impact_user = d['id']
+                break
+        
+        return id_impact_user
 
     def display_title(self, url: str):
         """Retourne tout les titre des éléments
@@ -215,6 +242,7 @@ class GetDataServices():
         for i in data:
             title.append(i['title'])
         return title
+    
 
 
     def room_by_alternative(self, url: str):

@@ -29,7 +29,7 @@ class DeleteDataServices():
             return response.content
     
     def unadopt_card(self, index : str):
-        """upprime l'index id de la table "users_alternative_cards"
+        """Supprime l'index id de la table "users_alternative_cards"
 
         Args:
             index (str): id de l'element a supprimer dans la table "users_alternative_cards"
