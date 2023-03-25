@@ -58,11 +58,13 @@ def research_accueil():
     data_forums = gds.display_places(urlf, urlu, urlft, urlt, urlr)
     content_research = request.args.get('content_research')
     cards_and_forums['cards'] = data_cards
-    cards_and_forums['forums'] = data_forums
-
-    cards_and_forums['cards'] = gds.filter(data_cards, content_research)
-    cards_and_forums['forums'] = gds.filter(data_forums, content_research)
-
+    type_of_data = request.args.get('type_of_data')
+    room = request.args.get('room')
+    cards_and_forums['cards'] = gds.filter(data_cards, content_research, type_of_data, room)
+    if type_of_data == '4' or type_of_data == "Tous":
+        cards_and_forums['forums'] = data_forums
+        type_of_data = "forum"
+        cards_and_forums['forums'] = gds.filter(data_forums, content_research,type_of_data, room)
     metadata = {"title":"Accueil", "pagename":"accueil"}
     return render_template('accueil_research.html', metadata=metadata, data=cards_and_forums, logged=logged, username=username)
 

@@ -41,7 +41,9 @@ def research_in_cards():
     username = session.get("username", None)
     data = gds.display_places(url_item, urlu, urlact, urlt, urlr)
     content_research = request.args.get('content_research')
-    data_filter = gds.filter(data, content_research)
+    type_of_cards = request.args.get('type_of_cards')
+    room = request.args.get('choice_room')
+    data_filter = gds.filter(data, content_research, type_of_cards, room)
     metadata = {"title":"Fiches", "pagename":"fiches"}
     return render_template('fiches.html', metadata=metadata, data=data_filter, logged=logged, username=username)
 

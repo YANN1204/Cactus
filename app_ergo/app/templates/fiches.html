@@ -15,99 +15,99 @@
 
     <div class="container-fluid div-form-cards">
         <form method="GET" action="{{ url_for('research_in_cards') }}">
-            <div class="form-group input-content-research">
+            <div class="form-group">
                 <label for="content_research">Mots clés</label>
                 <input class="form-control" type="text" name="content_research" id="content_research">
-                <button type="submit">Rechercher</button>
-            </div>
-        </form>
 
-        <form>
-            <div class="form-group select-content-type">
                 <label>Type de contenu à afficher</label>
-                <select class="form-control form-select" aria-label="Type de contenu à afficher">
-                    <option selected>Tous</option>
-                    <option value="1">Fiche témoignage</option>
-                    <option value="2">Fiche pratique</option>
+                <select class="form-control form-select" aria-label="Type de contenu à afficher" name="type_of_cards"
+                    id="type_of_cards">
+                    <option value="Tous" selected>Tous</option>
+                    <option value="1">Fiche pratique</option>
+                    <option value="2">Fiche témoignage</option>
                     <option value="3">Fiche conseil</option>
                 </select>
-            </div>
 
-        
-            <div class="row justify-content-center">
-                <div class="form-check div-room-checkbox col-2">
-                    <img src="./static/Images/cutting-board.png" alt="illustration pelle et rateau dans un jardin">
-                    <div>
-                        <input class="form-check-input" type="checkbox" value="" id="checkKitchen">
-                        <label class="form-check-label" for="checkKitchen">
-                            Cuisine
-                        </label>
+                <div class="row justify-content-center">
+                    <div class="form-check div-room-checkbox col-2">
+                        <img src="./static/Images/cutting-board.png" alt="illustration pelle et rateau dans un jardin">
+                        <div>
+                            <input class="form-check-input" type="checkbox" value="cuisine" id="checkKitchen"
+                                name="choice_room">
+                            <label class="form-check-label" for="checkKitchen">
+                                Cuisine
+                            </label>
+                        </div>
                     </div>
-                </div>
-                <div class="form-check div-room-checkbox col-2">
-                    <img src="./static/Images/bath.png" alt="illustration pelle et rateau dans un jardin">
-                    <div>
-                        <input class="form-check-input" type="checkbox" value="" id="checkBathroom">
-                        <label class="form-check-label" for="checkBathroom">
-                            Salle de bain
-                        </label>
+                    <div class="form-check div-room-checkbox col-2">
+                        <img src="./static/Images/bath.png" alt="illustration pelle et rateau dans un jardin">
+                        <div>
+                            <input class="form-check-input" type="checkbox" value="salle de bain" id="checkBathroom"
+                                name="choice_room">
+                            <label class="form-check-label" for="checkBathroom">
+                                Salle de bain
+                            </label>
+                        </div>
                     </div>
-                </div>
-                <div class="form-check div-room-checkbox col-2">
-                    <img src="./static/Images/garage.png" alt="illustration pelle et rateau dans un jardin">
-                    <div>
-                        <input class="form-check-input" type="checkbox" value="" id="checkGarage">
-                        <label class="form-check-label" for="checkGarage">
-                            Garage
-                        </label>
+                    <div class="form-check div-room-checkbox col-2">
+                        <img src="./static/Images/garage.png" alt="illustration pelle et rateau dans un jardin">
+                        <div>
+                            <input class="form-check-input" type="checkbox" value="garage" id="checkGarage"
+                                name="choice_room">
+                            <label class="form-check-label" for="checkGarage">
+                                Garage
+                            </label>
+                        </div>
                     </div>
-                </div>
-                <div class="form-check div-room-checkbox col-2">
-                    <img src="./static/Images/couch.png" alt="illustration pelle et rateau dans un jardin">
-                    <div>
-                        <input class="form-check-input" type="checkbox" value="" id="checkLivingRoom">
-                        <label class="form-check-label" for="checkLivingRoom">
-                            Salon
-                        </label>
+                    <div class="form-check div-room-checkbox col-2">
+                        <img src="./static/Images/couch.png" alt="illustration pelle et rateau dans un jardin">
+                        <div>
+                            <input class="form-check-input" type="checkbox" value="salon" id="checkLivingRoom"
+                                name="choice_room">
+                            <label class="form-check-label" for="checkLivingRoom">
+                                Salon
+                            </label>
+                        </div>
                     </div>
-                </div>
-            </div>
 
-            <div class="row justify-content-center">
-                <div class="form-check div-room-checkbox col-2">
-                    <img src="./static/Images/bed.png" alt="illustration pelle et rateau dans un jardin">
-                    <div>
-                        <input class="form-check-input" type="checkbox" value="" id="checkBedroom">
-                        <label class="form-check-label" for="checkBedroom">
-                            Chambre
-                        </label>
+                    <div class="form-check div-room-checkbox col-2">
+                        <img src="./static/Images/bed.png" alt="illustration pelle et rateau dans un jardin">
+                        <div>
+                            <input class="form-check-input" type="checkbox" value="chambre" id="checkBedroom"
+                                name="choice_room">
+                            <label class="form-check-label" for="checkBedroom">
+                                Chambre
+                            </label>
+                        </div>
+                    </div>
+                    <div class="form-check div-room-checkbox col-2">
+                        <img src="./static/Images/gardening.png" alt="illustration pelle et rateau dans un jardin">
+                        <div>
+                            <input class="form-check-input" type="checkbox" value="jardin" id="checkGarden"
+                                name="choice_room">
+                            <label class="form-check-label" for="checkGarden">
+                                Jardin
+                            </label>
+                        </div>
+                    </div>
+                    <div class="form-check div-room-checkbox col-2">
+                        <img src="./static/Images/house.png" alt="illustration pelle et rateau dans un jardin">
+                        <div>
+                            <input class="form-check-input" type="checkbox" value="maison entiere" id="checkAllRooms"
+                                name="choice_room">
+                            <label class="form-check-label" for="checkAllRooms">
+                                Maison entière
+                            </label>
+                        </div>
                     </div>
                 </div>
-                <div class="form-check div-room-checkbox col-2">
-                    <img src="./static/Images/gardening.png" alt="illustration pelle et rateau dans un jardin">
-                    <div>
-                        <input class="form-check-input" type="checkbox" value="" id="checkGarden">
-                        <label class="form-check-label" for="checkGarden">
-                            Jardin
-                        </label>
-                    </div>
+                <div class="div-form-button">
+                    <button type="submit" role="button" href=""
+                        class="icon icon-solid icon-chevron-right btn btn-primary">Rechercher</button>
                 </div>
-                <div class="form-check div-room-checkbox col-2">
-                    <img src="./static/Images/house.png" alt="illustration pelle et rateau dans un jardin">
-                    <div>
-                        <input class="form-check-input" type="checkbox" value="" id="checkAllRooms">
-                        <label class="form-check-label" for="checkAllRooms">
-                            Maison entière
-                        </label>
-                    </div>
-                </div>
-            </div>
-            <div class="div-form-button">
-                <a role="button" href="" class="icon icon-solid icon-chevron-right btn btn-primary">Rechercher</a>
-            </div>
         </form>
-    
     </div>
+</div>
 </div>
 
 <div class="container-fluid">
@@ -179,14 +179,6 @@
         <a role="button" class="icon icon-solid icon-plus btn btn-primary">Poster une fiche</a>
     </form>
 </div>
-
-<form method="DELETE" action="{{ url_for('button_click_delete') }}">
-    <button type="submit">Supprimer une fiche</button>
-</form>
-
-<form method="SET" action="{{ url_for('button_click_set') }}">
-    <button type="submit">Modifier une fiche</button>
-</form>
 
 </div>
 
