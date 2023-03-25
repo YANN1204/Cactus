@@ -6,39 +6,38 @@
     <h1>Forums</h1>
 </div>
 
-<div class="container">
-    <div>
-        <p>
+<div class="d-flex flex-column">
+    <div class="container-fluid">
+        <p class="p-intro">
             C'est dans cet espace que toute la communauté de Cactus s'entraide et s'échange
             ses conseils pour aller plus loin dans la vie en vert !
         </p>
     </div>
 
-    <div>
+    <div class="div-form-forums">
         <form method="GET" action="{{ url_for('research_in_forums') }}">
-            <div class="mb-3">
-                <label for="content_research">Mots clés</label>
-                <input type="text" name="content_research" id="content_research">
+            <div class="input-content-research">
+                <label for="content_research">Rechercher un sujet de forum</label>
+                <input class="form-control" type="text" placeholder="Quel compost choisir ?..." name="content_research" id="content_research">
+                <button type="submit" class="btn btn-primary">Rechercher</button>
             </div>
-            <button type="submit" class="btn btn-primary">Rechercher un sujet de forum</button>
         </form>
     </div>
 
     <div class="cta-post">
         <p>Tu ne trouves pas de sujet correspondant à ta réflexion ? </p>
         <form method="POST" action="{{ url_for('handle_button_click') }}">
-            <button type="submit">Poster un sujet de forum</button>
+            <a role="button" class="icon icon-solid icon-chevron-right btn btn-primary">Poster un forum</a>
         </form>
     </div>
 
-    <div>
+    <div class="container-fluid">
         <!-- on parcourt la liste d qui contient autant de dict que de forums dans directus -->
         {% for forum in data %}
         <div class="div-list forum">
             <h3 class="title-list-item">{{ forum['title'] }}</h3>
             <!-- Pour la date créer notre propre filtre sera plus efficace -->
-            <p>Publié par {{ forum['pseudo'] }} le {{ forum['date_created']|string|truncate(10,True,'')|replace("-","/")
-                }}</p>
+            <p>Publié par {{ forum['pseudo'] }} le {{ forum['date_created'] }}</p>
 
             <div class="div-tags-button">
                 <div class="div-tags forum">
@@ -50,7 +49,7 @@
 
                 {% set idForum = forum['id']|string %}
                 <a href="{{ url_for('forum', idForum=forum['id']|string) }}"
-                    class="icon icon-solid icon-chevron-right button-secondary">Voir plus</a>
+                    class="icon icon-solid icon-chevron-right btn btn-outline-secondary">Voir plus</a>
 
             </div>
         </div>

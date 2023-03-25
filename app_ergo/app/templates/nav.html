@@ -7,11 +7,13 @@
                 href="{{ url_for(menu_item) }}">{{ menu_item|capitalize }}</a>
         </li>
         {% endfor %}
+    
+        {% if "logged" in session %}
+        <li><a href="{{ url_for('profil') }}" class="btn"><i class="fa-sharp fa-regular fa-circle-user"></i></a></li>
+        <li><a href="{{ url_for('logout') }}" class="btn">Déconnexion</a></li>
+        {% else %}
+        <li><a href="{{ url_for('login') }}" class="btn">Connexion</a></li>
+        {% endif %}
+
     </ul>
-    {% if "logged" in session %}
-    <a href="{{ url_for('profil') }}" class="btn">Profil</a>
-    <a href="{{ url_for('logout') }}" class="btn">Logout</a>
-    {% else %}
-    <a href="{{ url_for('login') }}" class="btn">Login</a>
-    {% endif %}
 </nav>

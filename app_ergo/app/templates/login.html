@@ -1,34 +1,32 @@
 {% extends 'layout.html' %} {% block content %}
-<div class="tab-content">
-    <div class="tab-pane active" id="tab1">
-        <div class="section-h1">
-            <h1>Connexion</h1>
-        </div>
-        <div class="row">
-            <div class="col">
+
+<div class="div-bg-login">
+    <div class="div-form-login">
+        <h1>Connexion</h1>
+        <form action="/login" method="POST">
+            <!-- <input type="text" placeholder="Username" name="username" value="{{
+                request.form.username }}">
+                <input type="password" placeholder="Password" name="password" value="{{
+                request.form.password }}"> -->
+            <div class="form-group">
+                <label>Adresse e-mail</label>
+                <input class="form-control" type="text" name="username">
             </div>
-            <form action="/login" method="POST">
-                <!-- <input type="text" placeholder="Username" name="username" value="{{
-                  request.form.username }}">
-                 <input type="password" placeholder="Password" name="password" value="{{
-                  request.form.password }}"> -->
-                <input type="text" placeholder="Username" name="username">
-                <input type="password" placeholder="Password" name="password">
-                <input class="btn btn-default" type="submit" value="Login">
-            </form>
+            <div class="form-group">
+                <label>Mot de passe</label>
+                <input class="form-control" type="password" name="password">
+            </div>
+            <div class="div-form-button">
+                <a href="{{ url_for('sign_up') }}" class="icon icon-solid icon-chevron-right btn btn-outline-secondary">S'inscrire</a>
+                <input class="btn btn-primary" type="submit" value="Se connecter">
+            </div>
+            <input type="hidden" id='provide' name="provide" value="{{ provide }}">
+        </form>
 
-            <a href="{{ url_for('sign_up') }}"
-                class="icon icon-solid icon-chevron-right button-secondary">S'inscrire</a>
-            {% if data %}
-            <a>{{ data }}</a>
-            {% endif %}
-            {% if msg_error %}
-            <p class="text-danger"> {{ msg_error }}
-                {% endif %}
-        </div>
-
+        {% if data %}
+        <a>{{ data }}</a> {% endif %} {% if msg_error %}
+        <p class="text-danger"> {{ msg_error }} {% endif %}
     </div>
+</div>
 
-    </body>
-
-    {% endblock %}
+{% endblock %}

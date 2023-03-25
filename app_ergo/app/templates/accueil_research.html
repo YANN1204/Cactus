@@ -78,7 +78,7 @@
     <!-- on parcourt la liste d qui contient autant de dict que de fiches, de forums et d'articles
         scientifiques dans directus -->
     {% for items in data.keys() %}
-    <div class="div-list card">
+    <div class="div-list acard">
         {% if items == "cards" %}
         {% for cards in data[items] %}
         {% if cards['type_of_card'] == "1" %}
