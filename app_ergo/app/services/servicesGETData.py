@@ -221,7 +221,7 @@ class GetDataServices():
         #recherche de l'id de l'impact qui posséde user_id , sentence_on_data et nulerical_data dans la table impact
         id_impact_user = ""
         for d in data:
-            if (d['user_id'] == idUser and d['sentence_on_data'] == sentence_on_data and d["numerical_data"] ==numerical_data ):
+            if (d['user_id'] == idUser and d['sentence_on_data'] == sentence_on_data and d["numerical_data"] ==numerical_data and d["date_end"] is None ):
                 id_impact_user = d['id']
                 break
         
