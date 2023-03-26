@@ -9,6 +9,7 @@ class SetDataServices():
 
 
     def update_card(self, collection: str, new_data: dict, id: str):
+
         """Modifie un élément d'une 'alternative_cards' spécifique
 
         ***Cette fonction doit être généralisé à n'importe quelle
@@ -22,6 +23,7 @@ class SetDataServices():
             id (str): str permettant de sélectionner l' 'alternative_cards'
             en question.
         """
+
         path = self.pdao.path + collection + '/' + id
         auth = ('yann.riopro@gmail.com', 'ACmerlu12')
         response = requests.patch(path,auth=auth, json=new_data)
@@ -31,8 +33,8 @@ class SetDataServices():
             print(response.content)
 
     def update_smt(self, path: str,  id: str,new_data: dict):
-        """Modifie un élément avec le path et l'id du l'item
 
+        """Modifie un élément avec le path et l'id du l'item
 
         Args:
             collection (str): indique la collection auquel appartient
@@ -42,6 +44,7 @@ class SetDataServices():
             id (str): str id de l'objet en question
             place_to_add (str) : str nom du champs à ajouter
         """
+
         path = self.pdao.path + path + '/' + id
         auth = ('yann.riopro@gmail.com', 'ACmerlu12')
         response = requests.patch(path,auth=auth, json=new_data)
