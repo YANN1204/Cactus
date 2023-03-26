@@ -56,8 +56,8 @@ def research_accueil():
     logged = session.get("logged", False)
     username = session.get("username", None)
     cards_and_forums = {}
-    data_cards = gds.display_places(urlac, urlu, urlact, urlt, urlr)
-    data_forums = gds.display_places(urlf, urlu, urlft, urlt, urlr)
+    data_cards = gds.display_places(urlac, urlu, urlact, urlt, urlr, urli, urlc)
+    data_forums = gds.display_places(urlf, urlu, urlft, urlt, urlr, urli, urlc)
     content_research = request.args.get('content_research')
     cards_and_forums['cards'] = data_cards
     cards_and_forums['forums'] = data_forums

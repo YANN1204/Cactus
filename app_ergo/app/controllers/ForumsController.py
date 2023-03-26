@@ -28,7 +28,7 @@ urli = "impacts"
 def forums():
     logged = session.get("logged", False)
     username = session.get("username", None)
-    data = gds.display_places(url_item, urlu, urlft, urlt, urlr)
+    data = gds.display_places(url_item, urlu, urlft, urlt, urlr, urli, urlc)
     metadata = {"title":"Forums", "pagename": "forums"}
     images = {'logo-cactus':url_for('static', filename="/Images/logo-cactus.png")}
     return render_template('forums.html', data=data, metadata=metadata, logged=logged, username=username, images=images)
@@ -38,7 +38,7 @@ def forums():
 def research_in_forums():
     logged = session.get("logged", False)
     username = session.get("username", None)
-    data = gds.display_places(url_item, urlu, urlft, urlt, urlr)
+    data = gds.display_places(url_item, urlu, urlft, urlt, urlr, urli, urlc)
     content_research = request.args.get('content_research')
     data_filter = gds.filter(data, content_research)
     metadata = {"title":"Fiches", "pagename":"fiches"}

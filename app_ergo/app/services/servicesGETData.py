@@ -28,7 +28,7 @@ class GetDataServices():
    
 
 
-    def display_places(self, url_item: str, urlu: str, urlft: str, urlt: str, urlr: str):
+    def display_places(self, url_item: str, urlu: str, urlft: str, urlt: str, urlr: str, urli: str, urlc: str):
         """Affiche les données sous la forme d'un dictionnaire python
            # impact à rajouter
            # doit certainement pouvoir être optimisé car chargement assez long... 
@@ -62,6 +62,10 @@ class GetDataServices():
             # même chose pour avoir le room_name
             room = self.instance_by_id(urlr, item['room_id'])
             item['room_name'] = room['room_name']
+            if url_item == 'alternative_cards':
+                item['impact_details'] = self.instance_by_id(urli, item['impact'])
+            else :
+                item['comments'] = self.find_comments(item['id'], urlc, urlu)
 
         return data
     

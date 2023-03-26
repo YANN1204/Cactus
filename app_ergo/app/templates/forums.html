@@ -44,13 +44,13 @@
         <div class="div-list forum">
             <h3 class="title-list-item">{{ forum['title'] }}</h3>
             <!-- Pour la date créer notre propre filtre sera plus efficace -->
-            <p>Publié par {{ forum['pseudo'] }} le {{ forum['date_created'] }}</p>
+            <p>Publié par {{ forum['pseudo'] }} le {{ forum['date_created'] }} <i class="fa-regular fa-comment-lines"></i>{{ forum['comments']|length }} posts</p>
 
             <div class="div-tags-button">
                 <div class="div-tags forum">
-                    <span> {{ forum['room_name'] }} </span>
+                    <span> #{{ forum['room_name'] }} </span>
                     {% for tag in forum['tags_name'] %}
-                    <span> {{ tag }} </span>
+                    <span> #{{ tag }} </span>
                     {% endfor %}
                 </div>
 

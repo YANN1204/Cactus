@@ -33,7 +33,7 @@ urli = "impacts"
 def fiches():
     logged = session.get("logged", False)
     username = session.get("username", None)
-    data = gds.display_places(url_item, urlu, urlact, urlt, urlr)
+    data = gds.display_places(url_item, urlu, urlact, urlt, urlr, urli, urlc)
     metadata = {"title":"Fiches", "pagename": "fiches"}
     images = {'logo-cactus':url_for('static', filename="/Images/logo-cactus.png")}
     return render_template('fiches.html', metadata=metadata, data=data, logged=logged, username=username, images=images)
@@ -42,7 +42,7 @@ def fiches():
 def research_in_cards():
     logged = session.get("logged", False)
     username = session.get("username", None)
-    data = gds.display_places(url_item, urlu, urlact, urlt, urlr)
+    data = gds.display_places(url_item, urlu, urlact, urlt, urlr, urli, urlc)
     content_research = request.args.get('content_research')
     data_filter = gds.filter(data, content_research)
     metadata = {"title":"Fiches", "pagename":"fiches"}
