@@ -1,4 +1,6 @@
-{% extends 'layout.html' %} {% block content %}
+{% extends 'layout.html' %} 
+
+{% block content %}
 
 <link rel="stylesheet" type="text/css" href="/static/fiches.css">
 <!-- Inclure jQuery et Bootstrap -->
@@ -6,6 +8,13 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.1/css/bootstrap.min.css" integrity="sha512-e+I5q3MP5WzzXd+nLJ/PFzgIlpUNr47avdRRDhxYv1c2QF0xfxLlCfZEDlKPTe5CpP9r8nLdEZDvYwON2QeBxw==" crossorigin="anonymous" referrerpolicy="no-referrer"
 />
 
+<nav style="--bs-breadcrumb-divider: '>';" aria-label="breadcrumb" class="breadcrumb">
+    <ol class="breadcrumb">
+      <li class="breadcrumb-item"><a href="accueil">Accueil</a></li>
+      <li class="breadcrumb-item"><a href="fiches">Fiches</a></li>
+      <li class="breadcrumb-item active" aria-current="page">{{ data['title'] }}</li>
+    </ol>
+</nav>
 
 <div class="section-h1">
     <h1>Fiches {% if data["type_of_card"] == "1" %} pratique {% elif data["type_of_card"] == "3" %} conseil {% else %} témoignage {% endif %}</h1>
@@ -13,11 +22,13 @@
 
 <div class="container-fluid">
 
-    <h2>{{ data['title'] }} </h2>
+    <h2> {{ data['title'] }} </h2>
 
     <div class="div-tags pratique">
-        <span> {{ data['room_name'] }} </span> {% for tag in data['tags_name'] %}
-        <span> {{ tag }} </span> {% endfor %}
+        <span> #{{ data['room_name'] }} </span> 
+        {% for tag in data['tags_name'] %}
+        <span> #{{ tag }} </span> 
+        {% endfor %}
     </div>
 
     <!--- affichage des onglets et contenu -->
@@ -48,17 +59,17 @@
                 <div class="row">
                     <div class="col-5">
                         <div class="div-pin dark">
-                            <img src="./static/Images/left-clear-clip.png" alt="trombone">
+                            <img src="{{ images['left-clear-clip'] }}" alt="trombone">
                             <p><i class="fa-regular fa-clock"></i>{{ data["duration_exact"]}}minutes</p>
                             <p>{% for i in range(data["cost"]|int) %} <i class="fa-solid fa-euro-sign"></i> {% endfor %}
                             </p>
                             <p>Ce qu'il faut savoir : {{ data["what_we_need_to_know"]}}</p>
                         </div>
                         <div class="div-pin clear">
-                            <img src="./static/Images/left-dark-clip.png" alt="trombone">
+                            <img src="{{ images['left-dark-clip'] }}" alt="trombone">
                             <div class="row">
                                 <div class="col-3">
-                                    <img src="./static/Images/love-earth.png" alt="planete terre avec coeur">
+                                    <img src="{{ images['love-earth'] }}" alt="planete terre avec coeur">
                                 </div>
                                 <div class="col">
                                     <p>{{ data["impact_details"]["numerical_data"] }} {{ data["impact_details"]["unit"] }}
@@ -112,18 +123,21 @@
                         la fiche</a>
                     <a role="button" href="" class="icon icon-regular icon-share-nodes btn btn-outline-secondary">Partager la fiche</a>
                 </div>
-                {% set steps = data["astuce_or_step_tuto"].split(";") %} {% for s in range(steps|length - 1) %} {% if s % 2 == 0 %}
-                <div class="col-10 div-pin dark">
-                    <img src="./static/Images/left-clear-clip.png" alt="trombone">
-                    <p> Etape {{ s + 1 }} :</p>
-                    <p>{{ steps[s] }}</p>
-                </div>
-                <div class="col-10 div-pin clear">
-                    <img src="./static/Images/left-dark-clip.png" alt="trombone">
-                    <p> Etape {{ s + 2 }} :</p>
-                    <p>{{ steps[s+1] }}</p>
-                </div>
-                {% endif %} {% endfor %}
+                {% set steps = data["astuce_or_step_tuto"].split(";") %}
+                {% for s in range(steps|length - 1) %}
+                    {% if s % 2 == 0 %}
+                    <div class="col-10 div-pin dark">
+                        <img src="{{ images['left-clear-clip'] }}" alt="trombone">
+                        <p> Etape {{ s + 1 }} :</p>
+                        <p>{{ steps[s] }}</p>
+                    </div>
+                    <div class="col-10 div-pin clear">
+                        <img src="{{ images['left-dark-clip'] }}" alt="trombone">
+                        <p> Etape {{ s + 2 }} :</p>
+                        <p>{{ steps[s+1] }}</p>
+                    </div>
+                    {% endif %}
+                {% endfor %}
                 <div class="d-flex justify-content-center mt-5">
                     {% if adopted == false%}
                     <form method="GET" data-bs-toggle="modal" data-bs-target="#mod" action="{{ url_for('button_click_adopt',idFiche=idFiche) }}">
@@ -231,14 +245,14 @@
                 <div class="row">
                     <div class="col-5">
                         <div class="div-pin dark">
-                            <img src="./static/Images/left-clear-clip.png" alt="trombone">
+                            <img src="{{ images['left-clear-clip'] }}" alt="trombone">
                             <p>Ce qu'il faut savoir : {{ data["what_we_need_to_know"]}}</p>
                         </div>
                         <div class="div-pin clear">
-                            <img src="./static/Images/left-dark-clip.png" alt="trombone">
+                            <img src="{{ images['left-dark-clip'] }}" alt="trombone">
                             <div class="row">
                                 <div class="col-3">
-                                    <img src="./static/Images/love-earth.png" alt="planete terre avec coeur">
+                                    <img src="{{ images['love-earth'] }}" alt="planete terre avec coeur">
                                 </div>
                                 <div class="col">
                                     <p>{{ data["impact_details"]["numerical_data"] }} {{ data["impact_details"]["unit"] }}</p>
@@ -284,7 +298,21 @@
                 </div>
             </div>
             <div class="tab-pane fade" id="astuce" role="tabpanel" aria-labelledby="astuce-tab">
-                <p>{{ data["astuce_or_step_tuto"]}}</p>
+                {% set steps = data["astuce_or_step_tuto"].split(";") %}
+                {% for s in range(steps|length - 1) %}
+                    {% if s % 2 == 0 %}
+                    <div class="col-10 div-pin dark">
+                        <img src="{{ images['left-clear-clip'] }}" alt="trombone">
+                        <p>{{ steps[s] }}</p>
+                    </div>
+                        {% if steps[s+1] %}
+                        <div class="col-10 div-pin clear">
+                            <img src="{{ images['left-dark-clip'] }}" alt="trombone">
+                            <p>{{ steps[s+1] }}</p>
+                        </div>
+                        {% endif %}
+                    {% endif %}
+                {% endfor %}
                 <div class="d-flex justify-content-center mt-5">
                     {% if adopted == false%}
                     <form method="GET" data-bs-toggle="modal" data-bs-target="#mod" action="{{ url_for('button_click_adopt',idFiche=idFiche) }}">
@@ -340,7 +368,7 @@
                 <div class="row">
                     <div class="col-2">
                         <div class="">
-                            <img src="" alt="avatar">
+                            <img src="{{ data['avatar'] }}" alt="avatar">
                             <p>Pseudo</p>
                         </div>
                     </div>

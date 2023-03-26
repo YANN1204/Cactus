@@ -1,0 +1,34 @@
+{% extends 'layout.html' %}
+
+{% block content %}
+
+<nav style="--bs-breadcrumb-divider: '>';" aria-label="breadcrumb" class="breadcrumb">
+    <ol class="breadcrumb">
+      <li class="breadcrumb-item"><a href="accueil">Accueil</a></li>
+      <li class="breadcrumb-item active" aria-current="page">Impact communauté</li>
+    </ol>
+</nav>
+
+<div class="section-h1 d-flex">
+    <h1>Impact de la Communauté</h1>
+</div>
+
+<div>
+    <h2>L'impact</h2>
+    <p> Au total :
+        <ul>
+            <li>{{ data['tot_impacts']['eau'] }} l d'eau</li>
+            <li>{{ data['tot_impacts']['plastique'] }} kg de plastique</li>
+            <li>{{ data['tot_impacts']['co2'] }} kg de CO2</li>
+        </ul>
+    </p>
+    <p>
+        {{ data['impact_per_month'] }}
+    </p>
+    <div>
+        <img src="/plot_plastique_com.png" alt="my plot">
+        <img src="/plot_eau_com.png" alt="my plot">
+    </div>
+</div>
+
+{% endblock %}

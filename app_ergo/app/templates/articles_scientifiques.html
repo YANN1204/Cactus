@@ -2,6 +2,13 @@
 
 {% block content %}
 
+<nav style="--bs-breadcrumb-divider: '>';" aria-label="breadcrumb" class="breadcrumb">
+    <ol class="breadcrumb">
+      <li class="breadcrumb-item"><a href="accueil">Accueil</a></li>
+      <li class="breadcrumb-item active" aria-current="page">Articles scientifiques</li>
+    </ol>
+</nav>
+
 <div class="section-h1">
     <h1>Articles scientifiques</h1>
 </div>
@@ -9,7 +16,7 @@
 <div class="container div-wip">
     <img src="./static/Images/work-in-progress.png" alt="illustration chantier avec cône">
     <p>Page en construction, revenez plus tard !</p>
-    <a role="button" href="" class="icon icon-solid icon-chevron-right btn btn-primary">Retourner à l'accueil</a>
+    <a role="button" href="accueil" class="icon icon-solid icon-chevron-right btn btn-primary">Retourner à l'accueil</a>
 </div>
 
 {% endblock %}
