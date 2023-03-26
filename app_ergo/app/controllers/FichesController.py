@@ -112,7 +112,7 @@ def button_click_adopt(idFiche):
     pds.post_data("users_alternative_cards/",{"users_id": idUser})    
 
     #requête des fiches d'alternative adoptées
-    cardsAdoptedList = dd.get_dataInDirectus("users_alternative_cards")
+    cardsAdoptedList = dd.get_data_Directus("users_alternative_cards")
     #obtention de l'id de l'element de la table users_alternative_cards à modifier
     idcard = str(cardsAdoptedList["data"][-1]["id"])    
     #ajout de l'id de la card
@@ -128,7 +128,7 @@ def button_click_adopt(idFiche):
     data = gds.display_instance(idFiche, items_directus['urlac'], items_directus['urlu'], items_directus['urlt'], items_directus['urlact'], items_directus['urlr'], items_directus['urlc'], items_directus['urli'])
     
     #recupération des informations de l'impact
-    impact_card=dd.get_dataInDirectus("impacts/"+data["impact"])['data']
+    impact_card=dd.get_data_Directus("impacts/"+data["impact"])['data']
     impact_card['impact_type']='use'
     impact_card['user_id']= idUser
 
@@ -146,16 +146,26 @@ def button_click_adopt(idFiche):
     
     return render_template('fiche.html', metadata=metadata, adopted=adopted, data=data, logged=logged ,username=username, idFiche=idFiche, images=images)
 
+
 @app.route('/button_click_unadopt/<idFiche>')
 def button_click_unadopt(idFiche):
+
+    # vérification de la connexion si l'utilisateur ne veut plus adopter une fiche pratique ou conseil
     if (session.get("logged", False)==False):
         metadata = {"title":"Fiches", "pagename": "fiches"}
-        return render_template('login.html', metadata=metadata)    
+        return render_template('login.html', metadata=metadata)
+
+    # requête données de connexion et utilisateur
     idFiche = request.args.get('idFiche')
     idUser = session.get("userId", "0")
+    logged = session.get("logged", False)
+    username = session.get("username", None)
+
+    # désadopter la fiche dans la base de donnée pour l'utilisateur
     index = gds.index_users_alternative_cards(idFiche=idFiche,idUser=idUser)
     index= str(index)
     dds.unadopt_card(index=index)
+
     #suppression de l'impact
     #recupération de la date courante au format iso8601
     now = datetime.now()
@@ -163,23 +173,30 @@ def button_click_unadopt(idFiche):
     #récupération de l'id de l'impact dans la table impacts
     idImpact=gds.index_impact(idFiche=idFiche,idUser=idUser)
     sds.update_smt(path='impacts', id=idImpact, new_data={'date_end': date_end })
-    metadata = {"title":"Fiches", "pagename": "fiches"}
-    # import de la base de donnée
-    list_item = ['alternative_cards', 'alternative_cards_tags', 'comments', 'forums', 'forums_tags', 'impacts','rooms', 'tags', 'users', 'users_alternative_cards', 'users_tags']
-    dd = DataDAO()
+    
+    # mise à jour de la base de donnée
+    list_item = list(items_directus.values())
     dd.save_all_items(list_item)
+    
+    # requête des données de la fiche
     data = gds.display_instance(idFiche, items_directus['urlac'], items_directus['urlu'], items_directus['urlt'], items_directus['urlact'], items_directus['urlr'], items_directus['urlc'], items_directus['urli'])
-    logged = session.get("logged", False)
-    username = session.get("username", None)
+
+    # vérification que la fiche à été adopter
     adopted=gds.card_adopted(idFiche,session.get("userId","0"))
+
+    # données statique de la page
+    metadata = {"title":"Fiches", "pagename": "fiches"}
     images = { 'left-clear-clip':url_for('static', filename="/Images/left-clear-clip.png"), 'left-dark-clip':url_for('static', filename="/Images/left-dark-clip.png"), 
               'logo-cactus':url_for('static', filename="/Images/logo-cactus.png"), 'love-earth':url_for('static', filename="/Images/love-earth.png")}
+    
     return render_template('fiche.html',  metadata=metadata, adopted=adopted, data=data, logged=logged ,username=username, idFiche=idFiche, images=images)
 
 
 @app.route(basepath + 'postCard', methods=['POST'])
 @reqlogged
 def com_card():
+
+    # requête des données pour poster le commentaire
     text_com = request.form.get("com")
     id_card = request.form.get("id-card")
     com_radio = request.form.get("comRadio")
@@ -189,22 +206,30 @@ def com_card():
         "comment_type": com_radio,
         "alternative_card_id": id_card,
     }
-    metadata = {"title":"Fiche", "pagename": "Fiche"}
+
+    # Post du commentaire 
     data = pds.post_data('comments', data=newData)
-    # on retélécharge le json pour voir le nouveau commentaire
-    list_item = ['alternative_cards', 'alternative_cards_tags', 'comments', 'forums', 'forums_tags', 'impacts',
-             'rooms', 'tags', 'users', 'users_alternative_cards', 'users_tags']
+
+    # mise à jour de la base de donnée pour voir le nouveau commentaire
+    list_item = list(items_directus.values())
     dd.save_all_items(list_item)
-    # afficher fiche avec nouveau com --> à corriger
+
+    # requête des données de la fiche
     data = gds.display_instance(id_card, items_directus['urlac'], items_directus['urlu'], items_directus['urlt'], items_directus['urlact'], items_directus['urlr'], items_directus['urlc'], items_directus['urli'])
-    return render_template('fiche.html', metadata=metadata, data=data)
+    
+    metadata = {"title":"Fiche", "pagename": "Fiche"}
+    images = {'logo-cactus':url_for('static', filename="/Images/logo-cactus.png")}
+
+    return render_template('fiche.html', metadata=metadata, data=data, images=images)
 
 
 @app.route('/fiches', methods=['GET', 'POST'])
 def handle_button_click():
-    # Appel de votre fonction Python
+
+    # Fonctionnalité non généralisé
     data = {"status":"draft","title":"Test","room_id":"032160c4-caa2-451f-b3c8-72c53360345f"}
     collection = 'alternative_cards'
     pds.post_data(collection, data)
     metadata = {"title":"Fiches", "pagename": "fiches"}
+
     return render_template('fiches.html', metadata=metadata)
