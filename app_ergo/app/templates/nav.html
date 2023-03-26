@@ -1,7 +1,7 @@
 <nav class="navbar navbar-expand">
     <img src="{{ images['logo-cactus'] }}">
     <ul class="navbar-nav">
-        {% for menu_item in ["accueil", "qui sommes-nous?", "fiches", "forums", "articles scientifiques", "jeux"] %}
+        {% for menu_item in ["accueil", "cactus", "fiches", "forums", "articles_scientifiques", "jeux"] %}
         <li class="nav-item">
             <a class="nav-link {{ 'active' if menu_item==metadata.pagename else '' }}"
                 href="{{ url_for(menu_item) }}">{{ menu_item|capitalize }}</a>
