@@ -1,7 +1,7 @@
-from app.models.dataDAO import DataDAO
 import datetime
 from datetime import datetime
 
+from app.models.dataDAO import DataDAO
 
 
 class GetDataServices():
@@ -349,7 +349,6 @@ class GetDataServices():
         Returns:
             dict: données filtrées de l'item 
         """
-
         if len(research_data) != 0:
             if research_data[0].isupper():
                 new_research = research_data[0].lower() + research_data[1:]
@@ -390,6 +389,7 @@ class GetDataServices():
             if room_name != room and "maison entiere" != room and None != room:
                 if added == 1:
                     data_item_filter.pop()
+            print(data_item_filter)
 
         return data_item_filter
 

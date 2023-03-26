@@ -1,10 +1,10 @@
 from flask import render_template, redirect, url_for, request, session, flash
-from app import app
 from functools import wraps
+
+from app import app
 from app.models.dataDAO import DataDAO
 
 dd = DataDAO()
-urlu = "users"
 
 def reqlogged(f):
       @wraps(f)

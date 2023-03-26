@@ -1,4 +1,5 @@
 from flask import render_template, session, url_for
+
 from app import app
 from app.controllers.LoginController import reqlogged
 from app.services.servicesGETData import GetDataServices
