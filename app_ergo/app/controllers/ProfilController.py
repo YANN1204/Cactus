@@ -20,14 +20,19 @@ basepath = '/'
 @app.route(basepath + 'profil', methods = ['GET'])
 @reqlogged
 def profil():
+
+    # requête données de connexion et utilisateur
     logged = session.get("logged", False)
     username = session.get("username", None)
+
+    # requêtes des données d'impacts personnalisés de l'utilisateur
     data = {}
     data['cards_adopted'] = gds.cards_adopted(session['userId'])
     data['cards_suggested'] = gds.cards_suggested(session['userId'])
     data['tot_impacts'] = gds.impact_total_sum(items_directus['urli'], id = session['userId'])
     data['impact_per_month'] = gds.impact_per_month(items_directus['urli'], id = session['userId'])
 
+    # données statique de la page
     metadata = {"title":"Profil", "pagename": "profil"}
     images = {'logo-cactus':url_for('static', filename="/Images/logo-cactus.png")}
     return render_template('profil.html', metadata=metadata, data=data, logged=logged, username=username, images=images)
