@@ -447,6 +447,7 @@ class GetDataServices():
                 item = {}
                 item['id'] = i['id']
                 item['title'] = i['title']
+                item['publication_status'] = i['publication_status']
                 item['room_name'] = i['room_id']['room_name']
                 item['date_created'] = self.convert_date(i['date_created'])
                 tags_id = []

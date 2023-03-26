@@ -141,6 +141,7 @@ body {
     box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.10);
     position: sticky;
     top: 0;
+    z-index: 100;
 }
 .navbar ul {
     display: flex;
@@ -181,7 +182,6 @@ body {
 /* div */
 .div-list.forum {
     border-radius: 20px;
-    row-gap: 0.5em;
     border: solid 1px var(--burgundy);
 }
 
@@ -200,6 +200,14 @@ body {
     display: flex;
     justify-content: space-between;
     align-items: end;
+}
+
+.infos-forum {
+    margin-bottom: 1em;
+    column-gap: 2em;
+}
+.infos-forum svg{
+    padding-right: 0.5em;
 }
 
 /* titre et p */
@@ -566,8 +574,20 @@ body {
 #avatar-profile {
     border-radius: 50%;
 }
+
 .div-bg.green{
     background-color: var(--clear-green);
+}
+
+.div-bg .graph {
+    width: 47%;
+}
+
+.col-1.statut {
+    color: var(--dark-green)
+}
+.col-1.statut svg {
+    font-size: 3em;
 }
 
 
@@ -639,4 +659,26 @@ body {
 }
 .breadcrumb a {
     color: var(--dark-green)
+}
+
+
+/*------------ PAGE COMMUNAUTE ------------*/
+.div-bg.beige {
+    background-color: rgba(243, 222, 170, 0.6);
+}
+
+.div-impact-com div {
+    background-color: var(--clearer-green);
+    border-radius: 20px;
+    min-height: 7em;
+    font-size: 1.4em;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.2);
+}
+.div-impact-com span {
+    font-size: 2em;
+    font-weight: 700;
 }

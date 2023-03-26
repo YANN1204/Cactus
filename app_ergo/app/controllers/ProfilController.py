@@ -37,22 +37,28 @@ def profil():
     images = {'logo-cactus':url_for('static', filename="/Images/logo-cactus.png")}
     return render_template('profil.html', metadata=metadata, data=data, logged=logged, username=username, images=images)
 
+
 @app.route('/plot_plastique.png')
 def plot_plastique():
+    # graphe pour le topic plastique
     fig1 = gds.graph(items_directus['urli'], 'plastique', id=session['userId'])
     output = io.BytesIO()
     FigureCanvas(fig1).print_png(output)
     return Response(output.getvalue(), mimetype='image/png')
 
+
 @app.route('/plot_co2.png')
 def plot_co2():
+    # graphe pour le topic co2
     fig2 = gds.graph(items_directus['urli'], 'co2', id=session['userId'])
     output = io.BytesIO()
     FigureCanvas(fig2).print_png(output)
     return Response(output.getvalue(), mimetype='image/png')
 
+
 @app.route('/plot_eau.png')
 def plot_eau():
+    # graphe pour le topic eau
     fig3 = gds.graph(items_directus['urli'], 'eau', id=session['userId'])
     output = io.BytesIO()
     FigureCanvas(fig3).print_png(output)

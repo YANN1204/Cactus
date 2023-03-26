@@ -40,9 +40,9 @@
         </div>
         <div class="div-tags-button">
             <div class="div-tags pratique">
-                <span> {{ card['room_name'] }} </span>
+                <span> #{{ card['room_name'] }} </span>
                 {% for tag in card['tags'] %}
-                    <span> {{ tag }} </span>
+                    <span> #{{ tag }} </span>
                 {% endfor %}
             </div>
             {% set idFiche = card['id'] %}
@@ -59,9 +59,9 @@
             </div>
             <div class="div-tags-button">
                 <div class="div-tags pratique">
-                    <span> {{ card['room_name'] }} </span>
+                    <span> #{{ card['room_name'] }} </span>
                     {% for tag in card['tags'] %}
-                        <span> {{ tag }} </span>
+                        <span> #{{ tag }} </span>
                     {% endfor %}
                 </div>
                 {% set idFiche = card['id'] %}
@@ -76,65 +76,82 @@
     {% endif %}
 </div>
 
-<div>
+<div class="container-fluid div-bg d-flex flex-column">
     <h2>L'impact de tes pratiques par thématique</h2>
-    <p> Au total tu as économisé :
-        <ul>
-            <li>{{ data['tot_impacts']['eau'] }} l d'eau</li>
-            <li>{{ data['tot_impacts']['plastique'] }} kg de plastique</li>
-            <li>{{ data['tot_impacts']['co2'] }} kg de CO2</li>
-        </ul>
-    </p>
-    <p>
-        {{ data['impact_per_month'] }}
-    </p>
-    <div>
-        <img src="/plot_plastique.png" alt="my plot">
-        <img src="/plot_eau.png" alt="my plot">
+    <div class="d-flex flex-row justify-content-between my-5">
+        <img src="/plot_plastique.png" alt="graphique du plastique que tu n'as pas acheter pendant
+        les 5 mois derniers mois" class="graph">
+        <img src="/plot_eau.png" alt="graphique de l'eau que tu as économisée
+        les 5 mois derniers mois" class="graph">
     </div>
-    <a role="button" href="communaute" class="icon icon-solid icon-chevron-right btn btn-outline-secondary">Voir impact commu</a>
+    <a role="button" href="communaute" class="icon icon-solid icon-chevron-right btn btn-outline-secondary align-self-end">
+        Voir l’impact de la Communauté</a>
 </div>
 
 <div class="container-fluid div-bg green">
     <h2>Les fiches postées</h2>
     {% for card in data['cards_suggested'][0:2] %}
     <div class="div-list acard">
-        <div><i class="fa-solid fa-check"></i> Publiée</div>
-        <div class="div-head-list-cards">
-            <p>Publiée le : {{ card['date_created'] }}</p>
-            <h3 class="title-list-item">{{ card['title'] }}</h3>
-        </div>
-        <div class="div-tags-button">
-            <div class="div-tags pratique">
-                <span> {{ card['room_name'] }} </span>
-                {% for tag in card['tags'] %}
-                    <span> {{ tag }} </span>
-                {% endfor %}
+        <div class="row">
+            <div class="col-1 statut d-flex flex-column justify-content-center align-items-center">
+                {% if card['publication_status'] == "2" or card['publication_status'] == "3" %}
+                    <i class="fa-solid fa-check"></i> 
+                    <span>Publiée</span>
+                {% else %}
+                    <i class="fa-regular fa-clock"></i> 
+                    <span>En attente</span>
+                {% endif %}
             </div>
-            {% set idFiche = card['id'] %}
-            <a role="button" href="{{ url_for('fiche', idFiche=card['id']) }}"
-                class="icon icon-solid icon-chevron-right btn btn-outline-secondary">Voir plus</a>
+            <div class="col">
+                <div class="div-head-list-cards flex-column">
+                    <p>Publiée le : {{ card['date_created'] }}</p>
+                    <h3 class="title-list-item">{{ card['title'] }}</h3>
+                </div>
+                <div class="div-tags-button">
+                    <div class="div-tags pratique">
+                        <span> #{{ card['room_name'] }} </span>
+                        {% for tag in card['tags'] %}
+                            <span> #{{ tag }} </span>
+                        {% endfor %}
+                    </div>
+                    {% set idFiche = card['id'] %}
+                    <a role="button" href="{{ url_for('fiche', idFiche=card['id']) }}"
+                        class="icon icon-solid icon-chevron-right btn btn-outline-secondary">Voir plus</a>
+                </div>
+            </div>
         </div>
     </div>
     {% endfor %}
     <div class="hidden-div" id="next_cards2">
         {% for card in data['cards_suggested'][2:] %}
         <div class="div-list acard">
-            <div><i class="fa-solid fa-check"></i> Publiée</div>
-            <div class="div-head-list-cards">
-                <p>Publiée le : {{ card['date_created'] }}</p>
-                <h3 class="title-list-item">{{ card['title'] }}</h3>
-            </div>
-            <div class="div-tags-button">
-                <div class="div-tags pratique">
-                    <span> {{ card['room_name'] }} </span>
-                    {% for tag in card['tags'] %}
-                        <span> {{ tag }} </span>
-                    {% endfor %}
+            <div class="row">
+                <div class="col-1 statut d-flex flex-column justify-content-center align-items-center">
+                    {% if card['publication_status'] == "2" or card['publication_status'] == "3" %}
+                        <i class="fa-solid fa-check"></i> 
+                        <span>Publiée</span>
+                    {% else %}
+                        <i class="fa-regular fa-clock"></i> 
+                        <span>En attente</span>
+                    {% endif %}
                 </div>
-                {% set idFiche = card['id'] %}
-                <a role="button" href="{{ url_for('fiche', idFiche=card['id']) }}"
-                    class="icon icon-solid icon-chevron-right btn btn-outline-secondary">Voir plus</a>
+                <div class="col">
+                    <div class="div-head-list-cards flex-column">
+                        <p>Publiée le : {{ card['date_created'] }}</p>
+                        <h3 class="title-list-item">{{ card['title'] }}</h3>
+                    </div>
+                    <div class="div-tags-button">
+                        <div class="div-tags pratique">
+                            <span> #{{ card['room_name'] }} </span>
+                            {% for tag in card['tags'] %}
+                                <span> #{{ tag }} </span>
+                            {% endfor %}
+                        </div>
+                        {% set idFiche = card['id'] %}
+                        <a role="button" href="{{ url_for('fiche', idFiche=card['id']) }}"
+                            class="icon icon-solid icon-chevron-right btn btn-outline-secondary">Voir plus</a>
+                    </div>
+                </div>
             </div>
         </div>
         {% endfor %}
