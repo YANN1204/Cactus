@@ -16,7 +16,7 @@
 
 <div class="">
 
-    <div class="div-list forum">
+    <div id="subject" class="div-list forum d-flex">
         <h2>{{ data['title'] }}</h2>
 
         <div class="div-tags forum">
@@ -26,13 +26,17 @@
             {% endfor %}
         </div>
 
-        <div>
-            <img src=" {{ data['avatar'] }} ">
-            {{ data['pseudo'] }}
-            {{ data['date_created'] }}
-            {{ data['forum_subject'] }}
-            <button class="btn btn-primary" onclick="toggle_visibility('1');">Répondre</button>
+        <div class="row">
+            <div class="col-1">
+                <img class="avatar" src=" {{ data['avatar'] }} ">
+            </div>
+            <div class="col d-flex flex-column justify-content-center">
+                <span class="span-pseudo">{{ data['pseudo'] }}</span>
+                <span>{{ data['date_created'] }}</span>
+            </div>
         </div>
+        <p>{{ data['forum_subject'] }}</p>
+        <button class="btn btn-primary align-self-end" onclick="toggle_visibility('1');">Répondre</button>
     </div>
 
     <div class="hidden-div" id="1" >
@@ -47,13 +51,13 @@
     {% set i = namespace(value=1) %}
     {% for c in range(data["comments"]|length) %}
         {% set i.value = i.value + 1 %}
-    <div class="row comment mx-3 div-list forum">
+    <div class="row comment div-list forum com">
         <div class="col-1">
-            <img src=' {{ data["comments"][c]["avatar"] }} ' alt="avatar">
+            <img class="avatar" src=' {{ data["comments"][c]["avatar"] }} ' alt="avatar">
         </div>
         <div class="col">
             <div class="d-flex">
-                {{ data["comments"][c]["pseudo"] }}
+                <span class="span-pseudo"> {{ data["comments"][c]["pseudo"] }} </span>
                 {{ data["comments"][c]["date_created"] }}
             </div>
             {{ data["comments"][c]["text"] }}

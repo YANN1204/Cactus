@@ -218,6 +218,7 @@ body {
 .div-tags {
     display: flex;
     column-gap: 0.3em;
+    font-family: 'Open Sans';
 }
 
 .div-tags span {
@@ -576,6 +577,38 @@ body {
     display: none;
 }
 
+#subject {
+    margin: 2em 7em;
+    padding: 1.5em 2em;
+}
+#subject h2 {
+    font-weight: 600;
+    color: var(--dark-burgundy);
+    font-size: 2em;
+}
+#subject p {
+    font-size: 1.1em;
+    font-style: normal;
+}
+#subject > .div-tags.forum {
+    margin-bottom: 1.5em;
+}
+
+.div-list.forum.com {
+    margin: 1em 10em;
+}
+
+.avatar {
+    border-radius: 20px;
+    border: 1px solid var(--beige);;
+    width: 82px;
+    height: 82px;
+}
+
+.span-pseudo {
+    font-size: 1.5em;
+    font-weight: 1.4em;
+}
 
 /*------------ FIL D'ARIANNE ------------*/
 .breadcrumb {
