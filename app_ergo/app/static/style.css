@@ -610,6 +610,27 @@ body {
     font-weight: 1.4em;
 }
 
+.col.forum p {
+    font-size: 1.1em;
+    font-style: normal;
+}
+.col.forum span:last-child {
+    font-style: italic;
+}
+.col.forum div {
+    column-gap: 1em;
+    margin-bottom: 0.4em;
+}
+
+.form-com {
+    margin: 1em 10em;
+    background-color: rgba(0, 77, 0, 0.4);
+    border: 1px solid var(--dark-green);
+    border-radius: 20px;
+    padding: 1em 2em;
+}
+
+
 /*------------ FIL D'ARIANNE ------------*/
 .breadcrumb {
     padding: 0.5em 0 0.5em 4em;

@@ -543,7 +543,11 @@ class GetDataServices():
         
         return tot_impacts
     
-    
+    def date_today(self):
+        now = datetime.now()
+        today = now.strftime("%d/%m/%Y")
+        return today
+
     def impact_per_month(self, urli: str, id=""):
         """Renvoie un dictionnaire des dictionnaires des impacts d'un utilisateur pour chaque topic d'impact
            pour les 5 derniers mois, on a donc '0' la key du mois actuel, 'eau' la key pour accéder dans '0'

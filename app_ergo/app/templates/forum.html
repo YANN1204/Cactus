@@ -40,38 +40,60 @@
     </div>
 
     <div class="hidden-div" id="1" >
-        <p>{{ session["pseudo"] }}</p>
-        <form id="com-form" enctype="multipart/form-data" method="POST" action="{{ url_for('com_forum') }}">
-            <textarea id="com" name="com" class="form-control"> Ecris ta réponse ici... </textarea>
-            <input id="id-forum" name="id-forum" type="hidden" value="{{ data['id'] }}">
-            <button type="submit" class="btn btn-primary btn-adopt">Poster ma réponse</button>
-        </form>
+        <div class="d-flex flex-row">
+            <div class="col-1">
+                <img class="avatar" src="{{ session['avatar'] }}" alt="votre avatar">
+            </div>
+            <div class="col forum">
+                <div class="d-flex  align-items-baseline">
+                    <span class="span-pseudo">{{ session["pseudo"] }}</span>
+                    <span>- {{ today }}</span>
+                </div>
+                <form id="com-form" enctype="multipart/form-data" method="POST" action="{{ url_for('com_forum') }}" class="d-flex flex-column">
+                    <textarea id="com" name="com" class="form-control"> Ecris ta réponse ici... </textarea>
+                    <input id="id-forum" name="id-forum" type="hidden" value="{{ data['id'] }}">
+                    <button type="submit" class="btn btn-primary btn-adopt align-self-end mt-3">Poster ma réponse</button>
+                </form>
+            </div>
+        </div>
     </div>
 
     {% set i = namespace(value=1) %}
     {% for c in range(data["comments"]|length) %}
         {% set i.value = i.value + 1 %}
-    <div class="row comment div-list forum com">
-        <div class="col-1">
-            <img class="avatar" src=' {{ data["comments"][c]["avatar"] }} ' alt="avatar">
-        </div>
-        <div class="col">
-            <div class="d-flex">
-                <span class="span-pseudo"> {{ data["comments"][c]["pseudo"] }} </span>
-                {{ data["comments"][c]["date_created"] }}
+    <div class="div-list forum com d-flex">
+        <div class="d-flex flex-row">
+            <div class="col-1">
+                <img class="avatar" src=' {{ data["comments"][c]["avatar"] }} ' alt="avatar">
             </div>
-            {{ data["comments"][c]["text"] }}
+            <div class="col forum">
+                <div class="d-flex  align-items-baseline">
+                    <span class="span-pseudo"> {{ data["comments"][c]["pseudo"] }} </span>
+                    <span>- {{ data["comments"][c]["date_created"] }}</span>
+                </div>
+                <p class="mb-0">{{ data["comments"][c]["text"] }}</p>
+            </div>
         </div>
-        <button class="btn btn-outline-secondary" onclick="toggle_visibility('{{i.value}}');">Répondre</button>
+        <button class="btn btn-outline-secondary align-self-end" onclick="toggle_visibility('{{i.value}}');">Répondre</button>
     </div>
     <div class="hidden-div" id="{{i.value}}" >
-        <p>{{ session["pseudo"] }}</p>
-        <form id="com-form" enctype="multipart/form-data" method="POST" action="{{ url_for('com_forum') }}">
-            <textarea id="com" name="com" class="form-control"> Ecris ta réponse ici... </textarea>
-            <input id="id-forum" name="id-forum" type="hidden" value="{{ data['id'] }}">
-            <input id="id-com" name="id-com" type="hidden" value="{{ data['comments'][c]['id'] }}">
-            <button type="submit" class="btn btn-primary btn-adopt">Poster ma réponse</button>
-        </form>
+        <div class="d-flex flex-row">
+            <div class="col-1">
+                <img class="avatar" src="{{ session['avatar'] }}" alt="votre avatar">
+            </div>
+            <div class="col forum">
+                <div class="d-flex  align-items-baseline">
+                    <span class="span-pseudo">{{ session["pseudo"] }}</span>
+                    <span>- {{ today }}</span>
+                </div>
+                <form id="com-form" enctype="multipart/form-data" method="POST" action="{{ url_for('com_forum') }}" class="d-flex flex-column">
+                    <textarea id="com" name="com" class="form-control"> Ecris ta réponse ici... </textarea>
+                    <input id="id-forum" name="id-forum" type="hidden" value="{{ data['id'] }}">
+                    <input id="id-com" name="id-com" type="hidden" value="{{ data['comments'][c]['id'] }}">
+                    <button type="submit" class="btn btn-primary btn-adopt align-self-end mt-3">Poster ma réponse</button>
+                </form>
+            </div>
+        </div>
     </div>
     {% endfor %}
 
@@ -80,11 +102,14 @@
 <script type="text/javascript">
     // permet de faire apparaître/disparaître les formulaires de réponse
     function toggle_visibility(id) {
-        var e = document.getElementById(id);
-        if(e.style.display == 'block')
-           e.style.display = 'none';
-        else
-           e.style.display = 'block';
+        var div = document.getElementById(id);
+        if ( div.classList.contains('hidden-div') ) {
+            div.classList.remove('hidden-div');
+            div.classList.add('form-com');
+        } else {
+            div.classList.add('hidden-div');
+            div.classList.remove('form-com');
+        }
     }
 </script>
 

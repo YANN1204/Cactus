@@ -66,6 +66,9 @@ def forum():
     username = session.get("username", None)
     idForum = request.args.get('idForum', None)
 
+    # date du jour
+    today = gds.date_today()
+
     # requête des données du forum particulier
     data = gds.display_instance(idForum, items_directus['urlf'], items_directus['urlu'], items_directus['urlt'], items_directus['urlft'], items_directus['urlr'], items_directus['urlc'], items_directus['urli'])
     
@@ -73,7 +76,7 @@ def forum():
     metadata = {"title":"Forum", "pagename": "forum"}
     images = {'logo-cactus':url_for('static', filename="/Images/logo-cactus.png")}
 
-    return render_template('forum.html', data = data, metadata=metadata, logged=logged, username=username, images=images)
+    return render_template('forum.html', data = data, metadata=metadata, logged=logged, username=username, images=images, today=today)
 
 
 @app.route(basepath + 'postForum', methods=['POST'])
@@ -103,7 +106,7 @@ def com_forum():
     dd.save_all_items(list_item)
 
     # requête des données du forum
-    data = gds.display_instance(id_forum, items_directus['url_item'], items_directus['urlu'], items_directus['urlt'], items_directus['urlft'], items_directus['urlr'], items_directus['urlc'], items_directus['urli'])
+    data = gds.display_instance(id_forum, items_directus['urlf'], items_directus['urlu'], items_directus['urlt'], items_directus['urlft'], items_directus['urlr'], items_directus['urlc'], items_directus['urli'])
     
     # données statique de la page
     metadata = {"title":"Forum", "pagename": "Forum"}
