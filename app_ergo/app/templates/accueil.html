@@ -19,7 +19,7 @@
         <div class="row">
             <form method="GET" action="{{ url_for('research_accueil') }}">
                 <div class="form-group input-content-research">
-                    <label for="content_research">Mots clés</label>
+                    <label for="content_research">Mots-clés</label>
                     <input class="form-control" type="text" name="content_research" id="content_research">
                     <div class="col form-group select-content-type">
                         <label>Type de contenu à afficher</label>
@@ -59,11 +59,11 @@
         <img src="./static/Images/logo-cactus-transparent.png">
     </div>
     <div class="col">
-        <p>Aujourd'hui c'est plus de <span> {{ data['tot_impacts']["eau"]|int }} l d'eau économisée </span> grâce à la
+        <p>Aujourd'hui c'est plus de <span> {{ data['tot_impacts']["eau"]|int }} L d'eau économisée </span> grâce à la
             communauté Cactus !</p>
         <div class="row">
             <div class="col">
-                <p>Dont <span> {{ data['impact_per_month']['0']['eau']|int }} l</span> depuis le début du mois</p>
+                <p>Dont <span> {{ data['impact_per_month']['0']['eau']|int }} L </span> depuis le début du mois</p>
             </div>
             <div class="col">
                 <a role="button" href="communaute" class="icon icon-solid icon-chevron-right btn btn-primary">En savoir
