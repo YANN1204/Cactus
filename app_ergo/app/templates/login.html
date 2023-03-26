@@ -1,6 +1,14 @@
 {% extends 'layout.html' %} {% block content %}
 
 <div class="div-bg-login">
+
+    <nav style="--bs-breadcrumb-divider: '>';" aria-label="breadcrumb" class="breadcrumb">
+        <ol class="breadcrumb">
+          <li class="breadcrumb-item"><a href="accueil">Accueil</a></li>
+          <li class="breadcrumb-item active" aria-current="page">Connexion</li>
+        </ol>
+    </nav>
+
     <div class="div-form-login">
         <h1>Connexion</h1>
         <form action="/login" method="POST">

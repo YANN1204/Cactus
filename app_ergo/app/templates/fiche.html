@@ -1,4 +1,6 @@
-{% extends 'layout.html' %} {% block content %}
+{% extends 'layout.html' %} 
+
+{% block content %}
 
 <link rel="stylesheet" type="text/css" href="/static/fiches.css">
 <!-- Inclure jQuery et Bootstrap -->
@@ -6,6 +8,13 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.1/css/bootstrap.min.css" integrity="sha512-e+I5q3MP5WzzXd+nLJ/PFzgIlpUNr47avdRRDhxYv1c2QF0xfxLlCfZEDlKPTe5CpP9r8nLdEZDvYwON2QeBxw==" crossorigin="anonymous" referrerpolicy="no-referrer"
 />
 
+<nav style="--bs-breadcrumb-divider: '>';" aria-label="breadcrumb" class="breadcrumb">
+    <ol class="breadcrumb">
+      <li class="breadcrumb-item"><a href="accueil">Accueil</a></li>
+      <li class="breadcrumb-item"><a href="fiches">Fiches</a></li>
+      <li class="breadcrumb-item active" aria-current="page">{{ data['title'] }}</li>
+    </ol>
+</nav>
 
 <div class="section-h1">
     <h1>Fiches {% if data["type_of_card"] == "1" %} pratique {% elif data["type_of_card"] == "3" %} conseil {% else %} témoignage {% endif %}</h1>
@@ -13,7 +22,7 @@
 
 <div class="container-fluid">
 
-    <h2>{{ data['title'] }} </h2>
+    <h2> {{ data['title'] }} </h2>
 
     <div class="div-tags pratique">
         <span> {{ data['room_name'] }} </span> {% for tag in data['tags_name'] %}

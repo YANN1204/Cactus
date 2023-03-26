@@ -481,6 +481,7 @@ body {
     background: repeat url("Images/background-cacti.png");
     height: 90vh;
     display: flex;
+    flex-direction: column;
     justify-content: center;
     align-items: center;
 }
@@ -573,4 +574,15 @@ body {
 
 .hidden-div {
     display: none;
+}
+
+
+/*------------ FIL D'ARIANNE ------------*/
+.breadcrumb {
+    padding: 0.5em 0 0.5em 4em;
+    margin-bottom: 0;
+    align-self: start;
+}
+.breadcrumb a {
+    color: var(--dark-green)
 }
