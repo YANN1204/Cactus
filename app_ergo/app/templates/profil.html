@@ -2,6 +2,13 @@
 
 {% block content %}
 
+<nav style="--bs-breadcrumb-divider: '>';" aria-label="breadcrumb" class="breadcrumb">
+    <ol class="breadcrumb">
+      <li class="breadcrumb-item"><a href="accueil">Accueil</a></li>
+      <li class="breadcrumb-item active" aria-current="page">Profil</li>
+    </ol>
+</nav>
+
 <div class="section-h1 d-flex">
     <h1>
         <img id="avatar-profile" src=" {{ session['avatar'] }} " alt="votre avatar">

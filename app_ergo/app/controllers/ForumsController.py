@@ -57,6 +57,7 @@ def forum():
 
 
 @app.route(basepath + 'postForum', methods=['POST'])
+@reqlogged
 def com_forum():
     text_com = request.form.get("com")
     id_forum = request.form.get("id-forum")
@@ -66,7 +67,7 @@ def com_forum():
         id_com = None
     newData = {
         "text": text_com,
-        "user_id": session["id"],
+        "user_id": session["userId"],
         "text": text_com,
         "forum_id": id_forum,
         "comment_subject": id_com
@@ -77,7 +78,6 @@ def com_forum():
     list_item = ['alternative_cards', 'alternative_cards_tags', 'comments', 'forums', 'forums_tags', 'impacts',
              'rooms', 'tags', 'users', 'users_alternative_cards', 'users_tags']
     dd.save_all_items(list_item)
-    # ça marche pas de re afficher la page du forum ou la page forums.html --> à corriger
     data = gds.display_instance(id_forum, url_item, urlu, urlt, urlft, urlr, urlc, urli)
     images = {'logo-cactus':url_for('static', filename="/Images/logo-cactus.png")}
     return render_template('forum.html', metadata=metadata, data=data, images=images)
