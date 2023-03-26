@@ -1,26 +1,30 @@
-from flask import render_template, session, request, url_for
-import requests
-import os
+from flask import render_template, request, url_for
+import json
+
 from app import app
 from app.services.servicesPOSTData import PostDataServices
 from app.services.servicesGETData import GetDataServices
 from app.services.servicesSETData import SetDataServices
 from app.models.dataDAO import DataDAO
-from PIL import Image
+
 
 pds = PostDataServices()
 gds = GetDataServices()
 sds = SetDataServices()
 dd = DataDAO()
+
 app.config['UPLOAD_FOLDER'] = 'app_ergo/app/static'
-urlt = "tags"
+
+file_path = "app\static\items_directus.json"
+with open(file_path, 'r') as f:
+    items_directus = json.load(f)
 
 basepath = '/'
 
 
 @app.route(basepath + 'sign_up', methods = ['GET'])
 def sign_up():
-    data=dd.get_data(url=urlt)
+    data=dd.get_data(url=items_directus['urlt'])
     
     metadata = {"title":"Sign_up", "pagename": "sign_up"}
     images = {'logo-cactus':url_for('static', filename="/Images/logo-cactus.png")}
