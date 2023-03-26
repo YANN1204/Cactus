@@ -58,14 +58,14 @@
             <img src="./static/Images/logo-cactus-transparent.png">
         </div>
         <div class="col">
-            <p>Aujourd'hui c'est plus de <span> {{ data['impact'] }} tonnes de CO2 émises en moins </span> grâce à la
+            <p>Aujourd'hui c'est plus de <span> {{ data['tot_impacts']["eau"]|int }} l d'eau économisée </span> grâce à la
                 communauté Cactus !</p>
             <div class="row">
                 <div class="col">
-                    <p>Dont <span> {{ data['impact_now'] }} tonnes</span> depuis le <span>01/01/2023</span></p>
+                    <p>Dont <span> {{ data['impact_per_month']['0']['eau']|int }} l</span> depuis le début du mois</p>
                 </div>
                 <div class="col">
-                    <a role="button" href="" class="icon icon-solid icon-chevron-right btn btn-primary">S'inscrire</a>
+                    <a role="button" href="sign_up" class="icon icon-solid icon-chevron-right btn btn-primary">S'inscrire</a>
                 </div>
             </div>
         </div>
@@ -76,15 +76,15 @@
         <div class="row justify-content-around">
             <div class="col-3">
                 <img src="./static/Images/pousspousse1.png">
-                <a href=""><i class="fa-regular fa-circle-play"></i></a>
+                <a href="jeux"><i class="fa-regular fa-circle-play"></i></a>
             </div>
             <div class="col-3">
                 <img src="./static/Images/pousspousse2.png">
-                <a href=""><i class="fa-regular fa-circle-play"></i></a>
+                <a href="jeux"><i class="fa-regular fa-circle-play"></i></a>
             </div>
             <div class="col-3">
                 <img src="./static/Images/pousspousse3.png">
-                <a href=""><i class="fa-regular fa-circle-play"></i></a>
+                <a href="jeux"><i class="fa-regular fa-circle-play"></i></a>
             </div>
         </div>
     </div>

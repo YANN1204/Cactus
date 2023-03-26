@@ -78,10 +78,21 @@
 
 <div>
     <h2>L'impact de tes pratiques par thématique</h2>
-    {{ data['tot_impacts'] }}
-    <br>
-    {{ data['impact_per_month'] }}
-    <br>
+    <p> Au total tu as économisé :
+        <ul>
+            <li>{{ data['tot_impacts']['eau'] }} l d'eau</li>
+            <li>{{ data['tot_impacts']['plastique'] }} kg de plastique</li>
+            <li>{{ data['tot_impacts']['co2'] }} kg de CO2</li>
+        </ul>
+    </p>
+    <p>
+        {{ data['impact_per_month'] }}
+    </p>
+    <div>
+        <img src="/plot_plastique.png" alt="my plot">
+        <img src="/plot_eau.png" alt="my plot">
+    </div>
+    <a role="button" href="communaute" class="icon icon-solid icon-chevron-right btn btn-outline-secondary">Voir impact commu</a>
 </div>
 
 <div class="container-fluid div-bg green">

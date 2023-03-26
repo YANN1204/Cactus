@@ -26,8 +26,8 @@ def accueil():
 
     # requête données impact communauté
     data={}
-    data["impact"] = int(gds.display_impact(url=items_directus['urlimp'], impacttype="1"))
-    data["impact_now"] = gds.display_impact_now()
+    data['tot_impacts'] = gds.impact_total_sum(items_directus['urli'])
+    data['impact_per_month'] = gds.impact_per_month(items_directus['urli'])
 
     # données statique de la page
     images = {'logo-cactus':url_for('static', filename="/Images/logo-cactus.png")}
@@ -46,10 +46,11 @@ def accueil_connected():
     session["logged"] = logged
     session['username'] = username
 
-    # requête données impact communauté
+    # requête données impact communauté et user
     data={}
-    data["impact"] = int(gds.display_impact(url=items_directus['urlimp'], impacttype="1"))
-    data["impact_now"] = gds.display_impact_now()
+    data['tot_impacts'] = gds.impact_total_sum(items_directus['urli'])
+    data['impact_per_month'] = gds.impact_per_month(items_directus['urli'])
+    data["impact_user"] = gds.impact_total_sum(items_directus['urli'], id = session['userId'])
 
     # données statique de la page
     metadata = {"title": "Accueil", "pagename": "accueil"}

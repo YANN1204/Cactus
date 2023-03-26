@@ -17,38 +17,35 @@ gds = GetDataServices()
 
 basepath = '/'
 
-@app.route(basepath + 'profil', methods = ['GET'])
-@reqlogged
-def profil():
+@app.route(basepath + 'communaute', methods = ['GET'])
+def communaute():
     logged = session.get("logged", False)
     username = session.get("username", None)
     data = {}
-    data['cards_adopted'] = gds.cards_adopted(session['userId'])
-    data['cards_suggested'] = gds.cards_suggested(session['userId'])
-    data['tot_impacts'] = gds.impact_total_sum(items_directus['urli'], id = session['userId'])
-    data['impact_per_month'] = gds.impact_per_month(items_directus['urli'], id = session['userId'])
+    data['tot_impacts'] = gds.impact_total_sum(items_directus['urli'])
+    data['impact_per_month'] = gds.impact_per_month(items_directus['urli'])
 
-    metadata = {"title":"Profil", "pagename": "profil"}
+    metadata = {"title":"Impact communaute", "pagename": "Impact communaute"}
     images = {'logo-cactus':url_for('static', filename="/Images/logo-cactus.png")}
-    return render_template('profil.html', metadata=metadata, data=data, logged=logged, username=username, images=images)
+    return render_template('communaute.html', metadata=metadata, data=data, logged=logged, username=username, images=images)
 
-@app.route('/plot_plastique.png')
-def plot_plastique():
-    fig1 = gds.graph(items_directus['urli'], 'plastique', id=session['userId'])
+@app.route('/plot_plastique_com.png')
+def plot_plastique_com():
+    fig1 = gds.graph(items_directus['urli'], 'plastique')
     output = io.BytesIO()
     FigureCanvas(fig1).print_png(output)
     return Response(output.getvalue(), mimetype='image/png')
 
-@app.route('/plot_co2.png')
-def plot_co2():
-    fig2 = gds.graph(items_directus['urli'], 'co2', id=session['userId'])
+@app.route('/plot_co2_com.png')
+def plot_co2_com():
+    fig2 = gds.graph(items_directus['urli'], 'co2')
     output = io.BytesIO()
     FigureCanvas(fig2).print_png(output)
     return Response(output.getvalue(), mimetype='image/png')
 
-@app.route('/plot_eau.png')
-def plot_eau():
-    fig3 = gds.graph(items_directus['urli'], 'eau', id=session['userId'])
+@app.route('/plot_eau_com.png')
+def plot_eau_com():
+    fig3 = gds.graph(items_directus['urli'], 'eau')
     output = io.BytesIO()
     FigureCanvas(fig3).print_png(output)
     return Response(output.getvalue(), mimetype='image/png')

@@ -1,6 +1,11 @@
 import datetime
 from datetime import datetime, timedelta
 from calendar import monthrange
+import numpy as np
+import matplotlib.pyplot as plt
+import matplotlib
+matplotlib.use('agg')
+import pandas as pd
 
 from app.models.dataDAO import DataDAO
 
@@ -398,40 +403,6 @@ class GetDataServices():
         return data_item_filter
 
 
-
-    def display_impact(self, url: str,impacttype : str):
-        """Renvoi la somme des impacts selon un type 
-
-        Args:
-            url (str): url servant à afficher les données
-            que l'on veut afficher
-
-            impacttype (str): numero du type d'impact : 1=impact communauté, 2=impact fiche
-         
-
-        Returns:
-            int : sommes des impacts
-        """
-        
-        data = self.pdao.get_data(url)
-        qty=0
-        for i in data:
-            if i['impact_type'] == impacttype:
-                qty+=int(i['numerical_data'])
-        return qty
-    
-    def display_impact_now(self):
-        #affiche seulement le nombre de jour depuis le 01/01/23
-        #il manque à calculer l'impact de la communauté en cumulant les nombres d'user qui ont 
-        #adopté les fiches
-        #et stocker cette valeur dans directus (pour pas a la calculer tout le temps)
-        date_actuelle = datetime.now().date()
-        janvier2023 = datetime.strptime('2023-01-01', '%Y-%m-%d').date()
-        difference =  date_actuelle-janvier2023 
-        return difference.days
-    
-
-
     def cards_adopted(self, id: str):
         data = self.pdao.get_data2("users_alternative_cards" + "?fields=*.*")
         list_dic = []
@@ -464,8 +435,18 @@ class GetDataServices():
                 list_dic.append(item)
         return list_dic
     
-    def user_impacts(self, id: str):
-        data = self.pdao.get_data("impacts")
+
+    def user_impacts(self, id: str, urli):
+        """Renvoie la liste des impacts d'un utilisateur 
+
+        Args:
+            id (str) : id de l'utilisateur     
+            urli (str) : url de la collection impacts     
+
+        Returns:
+            list : liste des impacts de l'utilisateur
+        """
+        data = self.pdao.get_data(urli)
         impacts = []
         for d in data:
             if d['user_id'] == id :
@@ -476,8 +457,41 @@ class GetDataServices():
                 impacts.append(d)
         return impacts
     
-    def impact_total_sum(self, id:str):
-        impacts = self.user_impacts(id)
+    def all_impacts(self, urli):
+        """Renvoie la liste des impacts de tous les utilisateurs
+
+        Args:    
+            urli (str) : url de la collection impacts     
+
+        Returns:
+            list : liste des impacts de tous les utilisateurs
+        """
+        data = self.pdao.get_data(urli)
+        impacts = []
+        for d in data:
+            if d['impact_type'] == 'use':
+                if d['date_created'] :
+                    d['date_created'] = self.convert_date(d['date_created'])
+                if d['date_end'] :
+                    d['date_end'] = self.convert_date(d['date_end'])
+                impacts.append(d)
+        return impacts
+    
+
+    def impact_total_sum(self, urli: str, id=""):
+        """Renvoie un dictionnaire des impacts totaux d'un utilisateur pour chaque topic d'impact
+
+        Args:
+            id (str) : id de l'utilisateur     
+            urli (str) : url de la collection impacts    
+
+        Returns:
+            dic : dictionnaire des impacts totaux de l'utilisateur pour eau, co2 et plastique
+        """
+        if id != "":
+            impacts = self.user_impacts(id, urli)
+        else :
+            impacts = self.all_impacts(urli)
         today = datetime.now()
         tot_eau = 0
         tot_plastique = 0
@@ -498,8 +512,25 @@ class GetDataServices():
         tot_impacts = { 'eau': tot_eau, 'plastique': tot_plastique, 'co2': tot_co2}
         return tot_impacts
     
-    def impact_per_month(self, id:str):
-        impacts = self.user_impacts(id)
+    
+    def impact_per_month(self, urli: str, id=""):
+        """Renvoie un dictionnaire des dictionnaires des impacts d'un utilisateur pour chaque topic d'impact
+           pour les 5 derniers mois, on a donc '0' la key du mois actuel, 'eau' la key pour accéder dans '0'
+           à l'impact total de ce mois sur le topic eau
+
+        Args:
+            id (str) : id de l'utilisateur     
+            urli (str) : url de la collection impacts    
+
+        Returns:
+            dic : dictionnaire des dictionnaires des impacts totaux de l'utilisateur pour eau, co2 et plastique
+                  pour chacun des 5 derniers mois
+        """
+        if id != "" :
+            impacts = self.user_impacts(id, urli)
+        else :
+            impacts = self.all_impacts(urli)
+
         now = datetime.now()
         today = now.strftime("%d/%m/%Y")
         result = {'0': {'eau':0, 'plastique':0, 'co2':0},
@@ -555,10 +586,56 @@ class GetDataServices():
                     result[str(m)]['co2'] = result[str(m)]['co2'] + tot
 
         result['months'] = months
-
         return result
             
 
+    def graph(self, urli, topic, id="") :
+        data = self.impact_per_month(urli, id=id)
+        eau = []
+        plastique = []
+        co2 = []
+        months = data['months']
+        months.reverse()
+        for d in data.keys() :
+            if d != 'months':
+                eau.append(data[d]['eau'])
+                plastique.append(data[d]['plastique'])
+                co2.append(data[d]['co2'])
+        eau.reverse()
+        plastique.reverse()
+        co2.reverse()
+
+        if topic == "plastique" :
+            list_chiffres = plastique
+            title = "Le plastique que tu as évité d'acheter"
+            ylabel = "Quantité de plastique en kg"
+        elif topic == "eau" :
+            list_chiffres = eau
+            title = "L'eau que tu as économisée"
+            ylabel = "Quantité d'eau en l"
+        elif topic ==  "co2" :
+            list_chiffres = co2
+            title = "Le CO2 que tu as évité d'émettre"
+            ylabel = "Quantité de CO2 en kg"
+
+        y = list_chiffres
+        y = pd.Series(y)
+        x_labels = months
+        # Plot the figure.
+        fig, ax = plt.subplots(layout='constrained')
+        ax = y.plot(kind="bar", color="#BC4749")
+        ax.set_title(title)
+        ax.set_ylabel(ylabel)
+        ax.set_xticklabels(x_labels)
+        rects = ax.patches
+        # Make some labels.
+        labels = [f"{chiffre:.3f}" for chiffre in list_chiffres]
+        for rect, label in zip(rects, labels):
+            height = rect.get_height()
+            ax.text(
+                rect.get_x() + rect.get_width() / 2, height, label, ha="center", va="bottom"
+            )
+        return fig
 
 
             
