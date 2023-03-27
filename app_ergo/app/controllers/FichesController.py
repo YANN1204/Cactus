@@ -202,7 +202,7 @@ def com_card():
     com_radio = request.form.get("comRadio")
     newData = {
         "text": text_com,
-        "user_id": session["id"],
+        "user_id": session["userId"],
         "comment_type": com_radio,
         "alternative_card_id": id_card,
     }
