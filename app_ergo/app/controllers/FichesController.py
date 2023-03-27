@@ -195,7 +195,7 @@ def button_click_unadopt(idFiche):
 @app.route(basepath + 'postCard', methods=['POST'])
 @reqlogged
 def com_card():
-
+    logged = session.get("logged", False)
     # requête des données pour poster le commentaire
     text_com = request.form.get("com")
     id_card = request.form.get("id-card")
@@ -225,7 +225,7 @@ def com_card():
 
 @app.route('/fiches', methods=['GET', 'POST'])
 def handle_button_click():
-
+    logged = session.get("logged", False)
     # Fonctionnalité non généralisé
     data = {"status":"draft","title":"Test","room_id":"032160c4-caa2-451f-b3c8-72c53360345f"}
     collection = 'alternative_cards'
