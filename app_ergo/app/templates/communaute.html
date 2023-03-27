@@ -1,0 +1,41 @@
+{% extends 'layout.html' %}
+
+{% block content %}
+
+<nav style="--bs-breadcrumb-divider: '>';" aria-label="breadcrumb" class="breadcrumb">
+    <ol class="breadcrumb">
+      <li class="breadcrumb-item"><a href="accueil">Accueil</a></li>
+      <li class="breadcrumb-item active" aria-current="page">Impact de la communauté</li>
+    </ol>
+</nav>
+
+<div class="section-h1 d-flex">
+    <h1>Impact de la communauté</h1>
+</div>
+
+<div class="container-fluid div-bg beige">
+    <h2>Notre communauté à l’échelle nationale, c’est :</h2>
+    <div class="row div-impact-com d-flex justify-content-around">
+        <div class="col-3">
+            <span>{{ data['tot_impacts']['eau']|int }} l</span>
+            <p>d'eau économisée</p>
+        </div>
+        <div class="col-3">
+            <span>{{ data['tot_impacts']['plastique']|int }} kg</span>
+            <p>de plastique non jeté</p>
+        </div>
+        <div class="col-3">
+            <span>{{ data['tot_impacts']['co2']|int }} kg</span>
+            <p>de CO2 émis en moins</p>
+        </div>
+    </div>
+</div>
+    
+<div class="container-fluid d-flex flex-row justify-content-between my-5">
+    <img src="/plot_plastique_com.png" alt="graphique du plastique que tu n'as pas acheter pendant
+    les 5 mois derniers mois" class="graph">
+    <img src="/plot_eau_com.png" alt="graphique de l'eau que tu as économisée
+    les 5 mois derniers mois" class="graph">
+</div>
+
+{% endblock %}

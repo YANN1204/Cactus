@@ -44,7 +44,11 @@
         <div class="div-list forum">
             <h3 class="title-list-item">{{ forum['title'] }}</h3>
             <!-- Pour la date créer notre propre filtre sera plus efficace -->
-            <p>Publié par {{ forum['pseudo'] }} le {{ forum['date_created'] }} <i class="fa-regular fa-comment-lines"></i>{{ forum['comments']|length }} posts</p>
+            <div class="d-flex infos-forum">
+                <span>Publié par {{ forum['pseudo'] }} </span>
+                <span>le {{ forum['date_created'] }} </span>
+                <span><i class="fa-regular fa-comment-lines"></i>{{ forum['comments']|length }} posts</span>
+            </div>
 
             <div class="div-tags-button">
                 <div class="div-tags forum">

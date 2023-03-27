@@ -141,6 +141,7 @@ body {
     box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.10);
     position: sticky;
     top: 0;
+    z-index: 100;
 }
 .navbar ul {
     display: flex;
@@ -181,7 +182,6 @@ body {
 /* div */
 .div-list.forum {
     border-radius: 20px;
-    row-gap: 0.5em;
     border: solid 1px var(--burgundy);
 }
 
@@ -202,6 +202,14 @@ body {
     align-items: end;
 }
 
+.infos-forum {
+    margin-bottom: 1em;
+    column-gap: 2em;
+}
+.infos-forum svg{
+    padding-right: 0.5em;
+}
+
 /* titre et p */
 .div-list.forum p {
     font-style: italic;
@@ -218,6 +226,7 @@ body {
 .div-tags {
     display: flex;
     column-gap: 0.3em;
+    font-family: 'Open Sans';
 }
 
 .div-tags span {
@@ -565,8 +574,20 @@ body {
 #avatar-profile {
     border-radius: 50%;
 }
+
 .div-bg.green{
     background-color: var(--clear-green);
+}
+
+.div-bg .graph {
+    width: 47%;
+}
+
+.col-1.statut {
+    color: var(--dark-green)
+}
+.col-1.statut svg {
+    font-size: 3em;
 }
 
 
@@ -574,6 +595,59 @@ body {
 
 .hidden-div {
     display: none;
+}
+
+#subject {
+    margin: 2em 7em;
+    padding: 1.5em 2em;
+}
+#subject h2 {
+    font-weight: 600;
+    color: var(--dark-burgundy);
+    font-size: 2em;
+}
+#subject p {
+    font-size: 1.1em;
+    font-style: normal;
+}
+#subject > .div-tags.forum {
+    margin-bottom: 1.5em;
+}
+
+.div-list.forum.com {
+    margin: 1em 10em;
+}
+
+.avatar {
+    border-radius: 20px;
+    border: 1px solid var(--beige);;
+    width: 82px;
+    height: 82px;
+}
+
+.span-pseudo {
+    font-size: 1.5em;
+    font-weight: 1.4em;
+}
+
+.col.forum p {
+    font-size: 1.1em;
+    font-style: normal;
+}
+.col.forum span:last-child {
+    font-style: italic;
+}
+.col.forum div {
+    column-gap: 1em;
+    margin-bottom: 0.4em;
+}
+
+.form-com {
+    margin: 1em 10em;
+    background-color: rgba(0, 77, 0, 0.4);
+    border: 1px solid var(--dark-green);
+    border-radius: 20px;
+    padding: 1em 2em;
 }
 
 
@@ -585,4 +659,26 @@ body {
 }
 .breadcrumb a {
     color: var(--dark-green)
+}
+
+
+/*------------ PAGE COMMUNAUTE ------------*/
+.div-bg.beige {
+    background-color: rgba(243, 222, 170, 0.6);
+}
+
+.div-impact-com div {
+    background-color: var(--clearer-green);
+    border-radius: 20px;
+    min-height: 7em;
+    font-size: 1.4em;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.2);
+}
+.div-impact-com span {
+    font-size: 2em;
+    font-weight: 700;
 }
