@@ -1,14 +1,24 @@
 <nav class="navbar navbar-expand">
-    <img src="{{ images['logo-cactus'] }}">
+    {% if "logged" in session %}
+    <a href="{{ url_for('accueil_connected') }}">
+        <img class="btn-home" src="{{ images['logo-cactus'] }}" alt=Accueil>
+    </a> {% else %}
+    <a href="{{ url_for('accueil') }}">
+        <img class="btn-home" src="{{ images['logo-cactus'] }}" alt=Accueil>
+    </a>
+    {% endif %}
+
     <ul class="navbar-nav">
-        {% for menu_item in ["accueil", "cactus", "fiches", "forums", "articles_scientifiques", "jeux"] %}
-        <li class="nav-item">
-            <a class="nav-link {{ 'active' if menu_item==metadata.pagename else '' }}"
-                href="{{ url_for(menu_item) }}">{{ menu_item|capitalize }}</a>
-        </li>
-        {% endfor %}
 
         {% if "logged" in session %}
+        <li><a href="{{ url_for('accueil_connected') }}" class="btn">Accueil</a></li>
+        {% else %}
+        <li><a href="{{ url_for('accueil') }}" class="btn">Accueil</a></li>
+        {% endif %} {% set dict_nav = {"cactus":"Qui sommes nous ?", "fiches":"fiches", "forums":"forums", "articles_scientifiques":"Articles scientifiques", "jeux":"jeux"} %} {% for menu_item in dict_nav.keys() %}
+        <li class="nav-item">
+            <a class="nav-link {{ 'active' if menu_item==metadata.pagename else '' }}" href="{{ url_for(menu_item) }}">{{ dict_nav[menu_item]|capitalize }}</a>
+        </li>
+        {% endfor %} {% if "logged" in session %}
         <li><a href="{{ url_for('profil') }}" class="btn"><i class="fa-sharp fa-regular fa-circle-user"></i></a></li>
         <li><a href="{{ url_for('logout') }}" class="btn">Déconnexion</a></li>
         {% else %}

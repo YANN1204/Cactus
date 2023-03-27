@@ -2,6 +2,7 @@
 @import url('https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500;1,600;1,700&display=swap');
 
 /*------------ VARIABLES ------------*/
+
 body {
     --darker-green: #2F422F;
     --dark-green: #004D00;
@@ -18,6 +19,7 @@ body {
 
 
 /*------------ ICONES ------------*/
+
 .icon::after {
     display: none;
 }
@@ -61,7 +63,9 @@ body {
 
 /*------------ ELEMENTS GLOBAUX ------------*/
 
+
 /*------------ Containers et div ------------*/
+
 .container {
     margin: 2em 7em;
 }
@@ -78,13 +82,16 @@ body {
     background-color: white;
 }
 
+
 /*------------ Titres et textes ------------*/
+
 .section-h1 {
     background: repeat url("Images/background-cacti.png");
     width: 100%;
     color: var(--darker-green);
     padding: 1.5em 3em !important;
 }
+
 .section-h1 h1 {
     font-size: 4em;
     font-weight: 800;
@@ -96,7 +103,9 @@ body {
     margin: 0;
 }
 
+
 /*------------ Boutons ------------*/
+
 .btn-primary {
     --bs-btn-color: var(--darker-green);
     --bs-btn-border-color: var(--clearer-green);
@@ -127,12 +136,14 @@ body {
     --bs-btn-border-radius: 50px;
     width: fit-content;
 }
+
 .btn svg {
     margin-left: 0.5em;
 }
 
 
 /*------------ MENU NAVBAR ------------*/
+
 .navbar {
     padding: 0.7em 3em;
     display: flex;
@@ -143,11 +154,14 @@ body {
     top: 0;
     z-index: 100;
 }
+
 .navbar ul {
     display: flex;
     column-gap: 3em;
 }
-.navbar-nav .nav-link.active, .navbar-nav .show>.nav-link {
+
+.navbar-nav .nav-link.active,
+.navbar-nav .show>.nav-link {
     color: var(--darker-green);
     font-weight: 500;
 }
@@ -155,6 +169,16 @@ body {
 .nav-item {
     color: rgb(47, 66, 47, 0.8)
 }
+
+
+.btn-home {
+    --bs-btn-padding-x: 0.6em;
+    --bs-btn-padding-y: 0.3em;
+    --bs-btn-font-size: 1.1em;
+    --bs-btn-font-weight: 500;
+    width: fit-content;
+}
+
 
 /*------------ FOOTER ------------*/
 footer {
@@ -165,9 +189,12 @@ footer {
     color: #fff;
 }
 
+
 /*------------ ELEMENTS ESPACES FICHES ET FORUMS ------------*/
 
+
 /*------------ Poster forum/fiche ------------*/
+
 .cta-post {
     background: var(--dark-green);
     padding: 1em 2em 1em 6em;
@@ -181,13 +208,18 @@ footer {
     bottom: 2em;
     filter: drop-shadow(2px 4px 10px rgba(0, 0, 0, 0.3));
 }
+
 .cta-post p {
     font: 1.1em 500;
     margin: 0;
 }
 
+
 /*------------ Element des listes forum/fiche ------------*/
+
+
 /* div */
+
 .div-list.forum {
     border-radius: 20px;
     border: solid 1px var(--burgundy);
@@ -214,11 +246,14 @@ footer {
     margin-bottom: 1em;
     column-gap: 2em;
 }
-.infos-forum svg{
+
+.infos-forum svg {
     padding-right: 0.5em;
 }
 
+
 /* titre et p */
+
 .div-list.forum p {
     font-style: italic;
     font-size: 16px;
@@ -230,7 +265,9 @@ footer {
     color: var(--darker-green);
 }
 
+
 /* tags */
+
 .div-tags {
     display: flex;
     column-gap: 0.3em;
@@ -259,7 +296,9 @@ footer {
     background-color: rgba(188, 71, 73, 0.6);
 }
 
+
 /* type des fiches (conseil/témoignage/pratique) */
+
 .type-card {
     border-radius: 50px;
     padding: 0.2em 0.7em;
@@ -288,7 +327,9 @@ footer {
 
 /*------------ ELEMENTS FORM DE RECHERCHE ESPACE FICHES ------------*/
 
+
 /*------------ Div ------------*/
+
 .div-form-cards {
     background-color: rgba(0, 77, 0, 0.9);
 }
@@ -299,8 +340,12 @@ footer {
     margin-top: 1em;
 }
 
+
 /*------------ Checkboxes avec image ------------*/
+
+
 /* div et img */
+
 .div-room-checkbox {
     display: flex;
     flex-direction: column;
@@ -313,9 +358,11 @@ footer {
     font-size: 1em;
     margin: 1.5em 1.5em;
 }
+
 .div-room-checkbox img {
     width: 63%;
 }
+
 .div-room-checkbox div {
     margin-top: 0.3em;
 }
@@ -331,27 +378,35 @@ footer {
     width: 15%;
 }
 
+
 /* case à cocher */
+
 .form-check .form-check-input {
     margin-left: 0;
     margin-right: 0.3em;
 }
+
 .form-check-input:checked {
     background-color: var(--darker-green);
     border-color: var(--darker-green);
 }
+
 .form-check-input:focus {
     box-shadow: 0 1px 1px rgba(0, 0, 0, 0.075) inset, 0 0 8px rgba(0, 77, 0, 0.6);
     border-color: var(--dark-green);
 }
 
+
 /*------------ Champs type de contenu et recherche ------------*/
+
 .form-group {
     display: flex;
     flex-direction: column;
 }
 
+
 /* select type de contenu */
+
 .form-select {
     border-radius: 50px;
     border-color: var(--darker-green);
@@ -361,21 +416,26 @@ footer {
     width: 25%;
     color: white;
 }
-.select-content-type select:focus{
+
+.select-content-type select:focus {
     box-shadow: 0 1px 1px rgba(0, 0, 0, 0.075) inset, 0 0 8px rgba(167, 201, 87, 0.6);
     border-color: var(--dark-green);
 }
 
+
 /* input recherche */
+
 .input-content-research input {
     border-radius: 50px;
     border: 1px solid var(--darker-green);
     padding: .375rem 2.25rem .375rem .75rem;
 }
+
 .input-content-research input:focus {
     box-shadow: 0 1px 1px rgba(0, 0, 0, 0.075) inset, 0 0 8px rgba(167, 201, 87, 0.6);
     border: 1px solid var(--dark-green);
 }
+
 .input-content-research label {
     color: white;
 }
@@ -391,7 +451,8 @@ footer {
     border-radius: 20px;
     margin-bottom: 2em;
 }
-.div-form-forums .form-control{
+
+.div-form-forums .form-control {
     width: 100%;
 }
 
@@ -408,9 +469,11 @@ footer {
     justify-content: space-between;
     align-items: center;
 }
+
 .header-home p {
     font-size: 1.7em;
 }
+
 .header-home .col {
     display: flex;
     justify-content: end;
@@ -422,16 +485,19 @@ footer {
     color: white;
     padding: 2em 3em;
 }
+
 .div-research-home h2 {
     font-size: 1.2em;
     font-weight: 400;
     margin-bottom: 0.7em;
 }
+
 .div-research-home .row {
     display: flex;
     align-items: end;
     margin-top: 1em;
 }
+
 .div-research-home .row .col {
     display: flex;
     justify-content: end;
@@ -441,9 +507,11 @@ footer {
     align-items: center;
     margin: 4em 0 2em 0;
 }
+
 .div-impact-home p {
     font-size: 1.2em;
 }
+
 .div-impact-home span {
     font-size: 1.5em;
     font-weight: 600;
@@ -453,6 +521,7 @@ footer {
 .div-forums-articles-home .col-5 {
     padding: 2em;
 }
+
 .div-forums-articles-home h2 {
     font-size: 1.4em;
     font-weight: 500;
@@ -460,39 +529,47 @@ footer {
     column-gap: 1em;
     align-items: center;
 }
+
 .div-forums-articles-home p {
     font-size: 1.2em;
 }
+
 .div-forums-articles-home a {
     align-self: flex-end;
 }
+
 .div-forums-articles-home h2 svg {
     color: var(--dark-green);
     font-size: 1.5em;
 }
 
 .div-bg {
-    color:#000000;
+    color: #000000;
     margin: 2em 0;
 }
-.div-bg.orange{
+
+.div-bg.orange {
     background-color: rgba(242, 120, 31, 0.8);
 }
+
 .div-bg h2 {
     font-size: 1.4em;
     font-weight: 500;
     margin-bottom: 2em;
 }
+
 .div-bg img {
     width: 100%;
     border-radius: 20px;
 }
+
 .div-bg .col-3 {
     position: relative;
 }
+
 .div-bg .col-3 .fa-circle-play {
-    position: absolute; 
-    bottom: 45%; 
+    position: absolute;
+    bottom: 45%;
     left: 45%;
     font-size: 2em;
     color: #000000;
@@ -500,6 +577,7 @@ footer {
 
 
 /*------------ CONNEXION ------------*/
+
 .div-bg-login {
     background: repeat url("Images/background-cacti.png");
     height: 90vh;
@@ -521,23 +599,28 @@ footer {
     align-items: center;
     justify-content: center;
 }
+
 .div-form-login form {
     width: 80%;
 }
+
 .div-form-login .form-control {
     margin-bottom: 2em;
     border-radius: 20px;
 }
+
 .div-form-login .form-control:focus {
     margin-bottom: 2em;
     box-shadow: 0 1px 1px rgba(0, 0, 0, 0.075) inset, 0 0 8px rgba(167, 201, 87, 0.6);
     border: 1px solid rgba(167, 201, 87, 0.6);
 }
+
 .div-form-login h1 {
     font-size: 2.5em;
     font-weight: 800;
     margin-bottom: 2em;
 }
+
 .div-form-login .div-form-button {
     justify-content: space-between;
     margin-top: 3em;
@@ -545,15 +628,18 @@ footer {
 
 
 /*------------ PAGES EN CONSTRUCTION ------------*/
+
 .div-wip {
     display: flex;
     flex-direction: column;
     align-items: center;
     row-gap: 1em;
 }
+
 .div-wip img {
     width: 20%;
 }
+
 .div-wip p {
     font-size: 1.5em;
     font-weight: 600;
@@ -561,13 +647,16 @@ footer {
 
 
 /*------------ INSCRIPTION ------------*/
+
 .sign-up {
     margin-bottom: 1.5em;
 }
+
 .sign-up .form-control {
     border-radius: 50px;
     border: 1px solid var(--clearer-green);
 }
+
 .sign-up .form-control:focus {
     box-shadow: 0 1px 1px rgba(0, 0, 0, 0.075) inset, 0 0 8px rgba(167, 201, 87, 0.6);
     border: 1px solid var(--clear-green);
@@ -577,6 +666,7 @@ footer {
     flex-direction: row;
     width: 24%;
 }
+
 .div-room-checkbox.sign-up label {
     display: flex;
     align-items: baseline;
@@ -585,11 +675,12 @@ footer {
 
 
 /*------------ PROFIL ------------*/
+
 #avatar-profile {
     border-radius: 50%;
 }
 
-.div-bg.green{
+.div-bg.green {
     background-color: var(--clear-green);
 }
 
@@ -600,6 +691,7 @@ footer {
 .col-1.statut {
     color: var(--dark-green)
 }
+
 .col-1.statut svg {
     font-size: 3em;
 }
@@ -615,16 +707,19 @@ footer {
     margin: 2em 7em;
     padding: 1.5em 2em;
 }
+
 #subject h2 {
     font-weight: 600;
     color: var(--dark-burgundy);
     font-size: 2em;
 }
+
 #subject p {
     font-size: 1.1em;
     font-style: normal;
 }
-#subject > .div-tags.forum {
+
+#subject>.div-tags.forum {
     margin-bottom: 1.5em;
 }
 
@@ -634,7 +729,8 @@ footer {
 
 .avatar {
     border-radius: 20px;
-    border: 1px solid var(--beige);;
+    border: 1px solid var(--beige);
+    ;
     width: 82px;
     height: 82px;
 }
@@ -648,9 +744,11 @@ footer {
     font-size: 1.1em;
     font-style: normal;
 }
+
 .col.forum span:last-child {
     font-style: italic;
 }
+
 .col.forum div {
     column-gap: 1em;
     margin-bottom: 0.4em;
@@ -666,17 +764,20 @@ footer {
 
 
 /*------------ FIL D'ARIANNE ------------*/
+
 .breadcrumb {
     padding: 0.5em 0 0.5em 4em;
     margin-bottom: 0;
     align-self: start;
 }
+
 .breadcrumb a {
     color: var(--dark-green)
 }
 
 
 /*------------ PAGE COMMUNAUTE ------------*/
+
 .div-bg.beige {
     background-color: rgba(243, 222, 170, 0.6);
 }
@@ -692,6 +793,7 @@ footer {
     align-items: center;
     box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.2);
 }
+
 .div-impact-com span {
     font-size: 2em;
     font-weight: 700;

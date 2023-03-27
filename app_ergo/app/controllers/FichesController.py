@@ -195,14 +195,14 @@ def button_click_unadopt(idFiche):
 @app.route(basepath + 'postCard', methods=['POST'])
 @reqlogged
 def com_card():
-
+    logged = session.get("logged", False)
     # requête des données pour poster le commentaire
     text_com = request.form.get("com")
     id_card = request.form.get("id-card")
     com_radio = request.form.get("comRadio")
     newData = {
         "text": text_com,
-        "user_id": session["id"],
+        "user_id": session["userId"],
         "comment_type": com_radio,
         "alternative_card_id": id_card,
     }
@@ -220,16 +220,16 @@ def com_card():
     metadata = {"title":"Fiche", "pagename": "Fiche"}
     images = {'logo-cactus':url_for('static', filename="/Images/logo-cactus.png")}
 
-    return render_template('fiche.html', metadata=metadata, data=data, images=images)
+    return render_template('fiche.html', metadata=metadata, data=data, logged=logged, images=images)
 
 
 @app.route('/fiches', methods=['GET', 'POST'])
 def handle_button_click():
-
+    logged = session.get("logged", False)
     # Fonctionnalité non généralisé
     data = {"status":"draft","title":"Test","room_id":"032160c4-caa2-451f-b3c8-72c53360345f"}
     collection = 'alternative_cards'
     pds.post_data(collection, data)
     metadata = {"title":"Fiches", "pagename": "fiches"}
 
-    return render_template('fiches.html', metadata=metadata)
+    return render_template('fiches.html', logged=logged, metadata=metadata)

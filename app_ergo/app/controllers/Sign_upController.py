@@ -1,4 +1,4 @@
-from flask import render_template, request, url_for
+from flask import render_template, request, url_for, session
 import json
 
 from app import app
@@ -25,6 +25,8 @@ basepath = '/'
 @app.route(basepath + 'sign_up', methods = ['GET'])
 def sign_up():
 
+    logged = session.get("logged", False)
+
     # requête des différents tags de la base de données
     data=dd.get_data(url=items_directus['urlt'])
     
@@ -32,12 +34,14 @@ def sign_up():
     metadata = {"title":"Sign_up", "pagename": "sign_up"}
     images = {'logo-cactus':url_for('static', filename="/Images/logo-cactus.png")}
 
-    return render_template('sign_up.html',data=data, metadata=metadata, images=images)
+    return render_template('sign_up.html',data=data, metadata=metadata, logged=logged, images=images)
 
 
 @app.route(basepath + 'register', methods=['POST'])
 def register():
 
+    logged = session.get("logged", False)
+    
     # requête données de connexion et utilisateur
     email = request.form.get("email")
     password = request.form.get("password")  
@@ -74,5 +78,5 @@ def register():
     metadata = {"title": "Sign_up", "pagename": "sign_up"}
     images = {'logo-cactus':url_for('static', filename="/Images/logo-cactus.png")}
 
-    return render_template('login.html', metadata=metadata, data=data, images=images)
+    return render_template('login.html', metadata=metadata, data=data, logged=logged, images=images)
 

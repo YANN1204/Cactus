@@ -15,4 +15,4 @@ def articles_scientifiques():
     metadata = {"title":"Articles scientifiques", "pagename": "articles scientifiques"}
     images = {'logo-cactus':url_for('static', filename="/Images/logo-cactus.png")}
 
-    return render_template('articles_scientifiques.html', metadata=metadata, is_connected=is_connected, id_user=id_user, images=images)
+    return render_template('articles_scientifiques.html', metadata=metadata, is_connected=is_connected, logged=logged, id_user=id_user, images=images)
