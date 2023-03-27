@@ -1,5 +1,13 @@
 <nav class="navbar navbar-expand">
-    <img src="{{ images['logo-cactus'] }}" href="{{ url_for('accueil') }}" class="btn">
+    {% if "logged" in session %}
+    <a href="{{ url_for('accueil_connected') }}">
+        <img class="btn-home" src="{{ images['logo-cactus'] }}" alt=Accueil>
+    </a> {% else %}
+    <a href="{{ url_for('accueil') }}">
+        <img class="btn-home" src="{{ images['logo-cactus'] }}" alt=Accueil>
+    </a>
+    {% endif %}
+
     <ul class="navbar-nav">
 
         {% if "logged" in session %}
