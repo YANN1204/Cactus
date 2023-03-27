@@ -1,10 +1,20 @@
 <nav class="navbar navbar-expand">
     <img src="{{ images['logo-cactus'] }}">
     <ul class="navbar-nav">
-        {% for menu_item in ["accueil", "cactus", "fiches", "forums", "articles_scientifiques", "jeux"] %}
+
+        {% if "logged" in session %}
+        <li><a href="{{ url_for('accueil_connected') }}" class="btn">Accueil</a></li>
+        {% else %}
+        <li><a href="{{ url_for('acceuil') }}" class="btn">Accueil</a></li>
+        {% endif %}
+
+        {% set dict_nav = {"cactus":"Qui sommes nous ?", "fiches":"fiches", "forums":"forums",
+        "articles_scientifiques":"Articles
+        scientifiques", "jeux":"jeux"} %}
+        {% for menu_item in dict_nav.keys() %}
         <li class="nav-item">
             <a class="nav-link {{ 'active' if menu_item==metadata.pagename else '' }}"
-                href="{{ url_for(menu_item) }}">{{ menu_item|capitalize }}</a>
+                href="{{ url_for(menu_item) }}">{{ dict_nav[menu_item]|capitalize }}</a>
         </li>
         {% endfor %}
 

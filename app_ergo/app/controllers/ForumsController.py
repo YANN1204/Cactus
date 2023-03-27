@@ -109,4 +109,4 @@ def com_forum():
     metadata = {"title":"Forum", "pagename": "Forum"}
     images = {'logo-cactus':url_for('static', filename="/Images/logo-cactus.png")}
 
-    return render_template('forum.html', metadata=metadata, data=data, images=images)
+    return render_template('forum.html', metadata=metadata, data=data, logged=logged, images=images)
