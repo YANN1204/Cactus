@@ -183,10 +183,11 @@ body {
 /*------------ FOOTER ------------*/
 footer {
     display: flex;
+    column-gap: 2em;
     justify-content: center;
-    height: 5em;
-    background-color: #45a1ff;
-    color: #fff;
+    background-color: var(--darker-green);
+    color: white;
+    padding: 2em;
 }
 
 
@@ -285,11 +286,11 @@ footer {
 }
 
 .div-tags.temoignage span {
-    background-color: rgba(99, 184, 49, 0.6);
+    background-color: rgba(106, 153, 78, 0.6);
 }
 
 .div-tags.pratique span {
-    background-color: rgba(106, 153, 78, 0.6);
+    background-color: rgba(99, 184, 49, 0.6);
 }
 
 .div-tags.forum span {
@@ -444,8 +445,8 @@ footer {
 /*------------ ELEMENTS FORM DE RECHERCHE ESPACE FORUMS ------------*/
 
 .div-form-forums {
-    width: 30%;
-    padding: 2em;
+    width: 40%;
+    padding: 1em 2em;
     align-self: center;
     background-color: var(--dark-green);
     border-radius: 20px;
@@ -634,6 +635,7 @@ footer {
     flex-direction: column;
     align-items: center;
     row-gap: 1em;
+    margin-bottom: 5em;
 }
 
 .div-wip img {

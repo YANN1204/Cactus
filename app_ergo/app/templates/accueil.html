@@ -1,57 +1,55 @@
 {% extends 'layout.html' %}
 {% block content %}
 
-<div>
 
-    <div class="container-fluid row header-home">
-        <div class="col-8">
-            <h1 class="h1-home">Cactus</h1>
-            <p>Prends part à une communauté active et engagée à créer un monde plus vert en commençant par notre foyer !
-            </p>
-        </div>
-        <div class="col">
-            <img src="./static/Images/maison-cactus.png" alt="illustration maison avec cactus à la fenêtre">
-        </div>
+<div class="container-fluid row header-home">
+    <div class="col-8">
+        <h1 class="h1-home">Cactus</h1>
+        <p>Prends part à une communauté active et engagée à créer un monde plus vert en commençant par notre foyer !
+        </p>
     </div>
+    <div class="col">
+        <img src="./static/Images/maison-cactus.png" alt="illustration maison avec cactus à la fenêtre">
+    </div>
+</div>
 
-    <div class="container div-research-home">
-        <h2>Sur Cactus, recherche astuces, forum et articles, mais aussi bien plus autour de l'écologie !</h2>
-        <form method="GET" action="{{ url_for('research_accueil') }}">
-            <div class="form-group input-content-research">
-                <label for="content_research">Mots-clés</label>
-                <input class="form-control" type="text" name="content_research" id="content_research">
-                <div class="row">
-                    <div class="col form-group select-content-type">
-                        <label>Type de contenu à afficher</label>
-                        <select class="form-select" aria-label="Type de contenu à afficher" name="type_of_data">
-                            <option value="Tous" selected>Tous</option>
-                            <option value="1">Fiche pratique</option>
-                            <option value="2">Fiche témoignage</option>
-                            <option value="3">Fiche conseil</option>
-                            <option value="4">Forum</option>
-                            <option value="5">Article scientifique</option>
-                        </select>
-                    </div>
-                    <div class="col form-group select-content-type">
-                        <label>Pièce de la maison</label>
-                        <select class="form-select" aria-label="Pièce de la maison" name="room">
-                            <option value="maison entiere" selected>Toutes</option>
-                            <option value="cuisine">Cuisine</option>
-                            <option value="salle de bain">Salle de bain</option>
-                            <option value="chambre">Chambre</option>
-                            <option value="salon">Salon</option>
-                            <option value="garage">Garage</option>
-                            <option value="jardin">Jardin</option>
-                        </select>
-                    </div>
-                    <div class="col">
-                        <button type="submit" role="button" href=""
-                            class="icon icon-solid icon-chevron-right btn btn-primary">Rechercher</button>
-                    </div>
+<div class="container div-research-home">
+    <h2>Sur Cactus, recherche astuces, forum et articles, mais aussi bien plus autour de l'écologie !</h2>
+    <form method="GET" action="{{ url_for('research_accueil') }}">
+        <div class="form-group input-content-research">
+            <label for="content_research">Mots-clés</label>
+            <input class="form-control" type="text" name="content_research" id="content_research">
+            <div class="row">
+                <div class="col form-group select-content-type">
+                    <label>Type de contenu à afficher</label>
+                    <select class="form-select" aria-label="Type de contenu à afficher" name="type_of_data">
+                        <option value="Tous" selected>Tous</option>
+                        <option value="1">Fiche pratique</option>
+                        <option value="2">Fiche témoignage</option>
+                        <option value="3">Fiche conseil</option>
+                        <option value="4">Forum</option>
+                        <option value="5">Article scientifique</option>
+                    </select>
+                </div>
+                <div class="col form-group select-content-type">
+                    <label>Pièce de la maison</label>
+                    <select class="form-select" aria-label="Pièce de la maison" name="room">
+                        <option value="maison entiere" selected>Toutes</option>
+                        <option value="cuisine">Cuisine</option>
+                        <option value="salle de bain">Salle de bain</option>
+                        <option value="chambre">Chambre</option>
+                        <option value="salon">Salon</option>
+                        <option value="garage">Garage</option>
+                        <option value="jardin">Jardin</option>
+                    </select>
+                </div>
+                <div class="col">
+                    <button type="submit" role="button" href=""
+                        class="icon icon-solid icon-chevron-right btn btn-primary">Rechercher</button>
                 </div>
             </div>
-        </form>
-    </div>
+        </div>
+    </form>
 </div>
 
 <div class="container-fluid row div-impact-home">

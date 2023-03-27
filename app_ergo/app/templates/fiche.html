@@ -63,7 +63,7 @@
                             <p><i class="fa-regular fa-clock"></i>{{ data["duration_exact"]}}minutes</p>
                             <p>{% for i in range(data["cost"]|int) %} <i class="fa-solid fa-euro-sign"></i> {% endfor %}
                             </p>
-                            <p>Ce qu'il faut savoir : {{ data["what_we_need_to_know"]}}</p>
+                            {% if data["what_we_need_to_know"] %}<p>Ce qu'il faut savoir : {{ data["what_we_need_to_know"] }}</p>{% endif %}
                         </div>
                         <div class="div-pin clear">
                             <img src="{{ images['left-dark-clip'] }}" alt="trombone">
@@ -72,7 +72,7 @@
                                     <img src="{{ images['love-earth'] }}" alt="planete terre avec coeur">
                                 </div>
                                 <div class="col">
-                                    <p>{{ data["impact_details"]["numerical_data"] }} {{ data["impact_details"]["unit"] }}
+                                    <p class="fw-bold">{{ data["impact_details"]["numerical_data"] }} {{ data["impact_details"]["unit"] }}
                                     </p>
                                     <p>{{ data["impact_details"]["sentence_on_data"] }}</p>
                                 </div>
@@ -96,8 +96,7 @@
                         </div>
                     </div>
 
-
-                    <div class="col">
+                    <div class="col div-description align-items-end">
                         <p>{{ data["description"]}}</p>
                         {% if adopted == false%}
                         <form method="GET" data-bs-toggle="modal" data-bs-target="#mod" action="{{ url_for('button_click_adopt',idFiche=idFiche) }}">
@@ -173,51 +172,81 @@
             </div>
 
             <div class="tab-pane fade" id="impact-pratique" role="tabpanel" aria-labelledby="impact-tab">
-                <div>
-                    {% set impact = data["impact_details"]['numerical_data'] * 12 * 100 %} {% if data["impact_details"]['impact_topic'] == '1' %} {% set type_phrase = "d'eau seront économisés en 1 an." %} {% elif data["impact_details"]['impact_topic'] == '2' %} {% set type_phrase
-                    = "de plastique ne seront pas jetés en 1 an." %} {% elif data["impact_details"]['impact_topic'] == '3' %} {% set type_phrase = "de CO2 ne seront pas émis en 1 an." %} {% endif %}
-                    <p> Si 100 personnes suivent cette alternative, {{ impact }} {{ data["impact_details"]['unit'] }} {{ type_phrase }}</p>
+                {% set impact = data["impact_details"]['numerical_data'] * 12 * 100 %} 
+                {% if data["impact_details"]['impact_topic'] == '1' %} 
+                {% set type_phrase = "d'eau seront économisés en 1 an." %} 
+                {% set extract = "Qu’est-ce que l’empreinte-eau? “Elle correspond
+                au volume d’eau nécessaire à la production de produits alimentaires et industriels et de services, y compris l’eau utilisée dans les chaînes d’approvisionnement.” Nous consommons de l’eau sans toujours nous en rendre compte. En effet,
+                selon notre alimentation (quantité de viande, céréales, légumes, fruits…) et notre consommation domestique d’eau (nombre de douches, lavages de dents et de mains par jour, durée moyenne d’une douche, nombre de lessives et de bains par
+                semaine, etc.), nous consommons plus ou moins d’eau. Il peut être difficile de se réaliser notre consommation effective, ainsi l’empreinte eau peut nous y aider!" %} 
+                {% elif data["impact_details"]['impact_topic'] == '2' %} 
+                {% set type_phrase = "de plastique ne seront pas jetés en 1 an." %} 
+                {% set extract = "Le Principe des 5R Cette pratique peut être appréhendée par le principe des 5R de Béa Johnson (refuser, réduire, réutiliser, recycler, rendre à la Terre). Le gel d’Aloe
+                Vera est utile à plusieurs fins (refuser et réduire) et sa fabrication maison permet de réutiliser un même récipient. L’écorce de la feuille étant le seul déchet, il peut être facilement recyclé/ composté (les deux derniers R)." %} 
+                {% elif data["impact_details"]['impact_topic'] == '3' %} 
+                {% set type_phrase = "de CO2 ne seront pas émis en 1 an." %} 
+                {% endif %}
+                <div class="d-flex flex-column align-items-center">
+                    <div class="div-impact mb-4">
+                        <span> Si 100 personnes suivent cette alternative,</span>
+                        <span class="fs-3 fw-bold"> {{ impact }} {{ data["impact_details"]['unit'] }} </span> 
+                        <span>{{ type_phrase }}</span>
+                    </div>
+                    <p class="mx-4"> {{ extract }} </p>
                 </div>
             </div>
 
             <div class="tab-pane fade" id="avis" role="tabpanel" aria-labelledby="avis-tab">
-                <div>
-                    <img src="{{ session['avatar'] }}" alt="votre avatar">
-                    <p>{{ session["pseudo"] }}</p>
-                    <form id="com-form" enctype="multipart/form-data" method="POST" action="{{ url_for('com_card') }}">
-                        <textarea id="com" name="com" class="form-control">Ecris ta réponse ici...</textarea>
-                        <p>Mon avis est :</p>
-                        <div class="form-check form-check-inline">
-                            <input class="form-check-input" type="radio" name="comRadio" id="comRadio1" value="1" checked>
-                            <label class="form-check-label" for="comRadio1">Commentaire</label>
+                <div class="form-com mx-5">
+                    <div class="d-flex flex-row">
+                        <div class="col-1">
+                            <img src="{{ session['avatar'] }}" alt="votre avatar" class="avatar">
                         </div>
-                        <div class="form-check form-check-inline">
-                            <input class="form-check-input" type="radio" name="comRadio" id="comRadio2" value="2">
-                            <label class="form-check-label" for="comRadio2">Suggestion</label>
+                        <div class="col"><div class="d-flex  align-items-baseline">
+                            <span class="span-pseudo">{{ session["pseudo"] }}</span>
+                            <span>- {{ today }}</span>
                         </div>
-                        <input id="id-card" name="id-card" type="hidden" value="{{ data['id'] }}">
-                        <button type="submit" class="btn btn-primary btn-adopt">Publier</button>
-                    </form>
+                        <form id="com-form" enctype="multipart/form-data" method="POST" action="{{ url_for('com_card') }}">
+                            <textarea id="com" name="com" class="form-control">Ecris ta réponse ici...</textarea>
+                            <p>Mon avis est :</p>
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="radio" name="comRadio" id="comRadio1" value="1" checked>
+                                <label class="form-check-label" for="comRadio1">Commentaire</label>
+                            </div>
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="radio" name="comRadio" id="comRadio2" value="2">
+                                <label class="form-check-label" for="comRadio2">Suggestion</label>
+                            </div>
+                            <input id="id-card" name="id-card" type="hidden" value="{{ data['id'] }}">
+                            <button type="submit" class="btn btn-primary btn-adopt">Publier</button>
+                        </form>
+                        </div>
+                    </div>
                 </div>
 
-                <p>Les avis de la communauté</p>
+                <p class="mx-5">Les avis de la communauté</p>
                 {% for c in range(data["comments"]|length) %}
-                <div class="row comment mx-3">
-                    <div class="col-1">
-                        <img src=' {{ data["comments"][c]["avatar"] }} ' alt="avatar">
-                    </div>
+                <div class="row comment mx-5">
                     <div class="col">
                         <div class="d-flex justify-content-between">
-                            <div>
-                                {{ data["comments"][c]["pseudo"] }} {{ data["comments"][c]["date_created"] }}
-                            </div>
-                            <div class="d-flex">
-                                {% if data["comments"][c]["comment_type"] == "Commentaire" %}
-                                <i class="fa-regular fa-thought-bubble"></i> {% else %}
-                                <i class="fa-regular fa-gears"></i> {% endif %} {{ data["comments"][c]["comment_type"] }}
+                            <div class="d-flex flex-row">
+                                <div class="col-1">
+                                    <img class="avatar" src=' {{ data["comments"][c]["avatar"] }} ' alt="avatar">
+                                </div>
+                                <div class="col forum">
+                                    <div class="d-flex  align-items-baseline">
+                                        <span class="span-pseudo"> {{ data["comments"][c]["pseudo"] }} </span>
+                                        <span>- {{ data["comments"][c]["date_created"] }}</span>
+                                        <div class="d-flex com-type">
+                                            {% if data["comments"][c]["comment_type"] == "Commentaire" %}
+                                            <i class="fa-regular fa-thought-bubble"></i> {% else %}
+                                            <i class="fa-regular fa-gears"></i> {% endif %} {{ data["comments"][c]["comment_type"] }}
+                                        </div>
+                                    </div>
+                                    <p class="mb-0">{{ data["comments"][c]["text"] }}</p>
+                                </div>
                             </div>
                         </div>
-                        {{ data["comments"][c]["text"] }}
                     </div>
                 </div>
                 {% endfor %}
@@ -244,10 +273,12 @@
             <div class="tab-pane fade show active" id="description-conseil" role="tabpanel" aria-labelledby="description-tab">
                 <div class="row">
                     <div class="col-5">
-                        <div class="div-pin dark">
-                            <img src="{{ images['left-clear-clip'] }}" alt="trombone">
-                            <p>Ce qu'il faut savoir : {{ data["what_we_need_to_know"]}}</p>
-                        </div>
+                        {% if data["what_we_need_to_know"] %}
+                            <div class="div-pin dark">
+                                <img src="{{ images['left-clear-clip'] }}" alt="trombone">
+                                <p>Ce qu'il faut savoir : {{ data["what_we_need_to_know"] }}</p>
+                            </div>
+                        {% endif %}
                         <div class="div-pin clear">
                             <img src="{{ images['left-dark-clip'] }}" alt="trombone">
                             <div class="row">
@@ -255,14 +286,29 @@
                                     <img src="{{ images['love-earth'] }}" alt="planete terre avec coeur">
                                 </div>
                                 <div class="col">
-                                    <p>{{ data["impact_details"]["numerical_data"] }} {{ data["impact_details"]["unit"] }}</p>
+                                    <p class="fw-bold"> {{ data["impact_details"]["numerical_data"] }} {{ data["impact_details"]["unit"] }}</p>
                                     <p>{{ data["impact_details"]["sentence_on_data"] }}</p>
                                 </div>
                             </div>
                         </div>
                     </div>
-                    <div class="col div-description justify-content-center">
+                    <div class="col div-description justify-content-end">
                         <p>{{ data["description"]}}</p>
+                        <div class="d-flex justify-content-end mt-5">
+                            {% if adopted == false %}
+                            <form method="GET" data-bs-toggle="modal" data-bs-target="#mod" action="{{ url_for('button_click_adopt',idFiche=idFiche) }}">
+                                <button type="submit" class="btn btn-primary btn-adopt">J'adopte ce conseil
+                                    !</button>
+                                <input type="hidden" name="idFiche" value="{{ idFiche }}">
+                            </form>
+                            {% endif %} {% if adopted == true %}
+                            <form method="GET" data-bs-toggle="modal" data-bs-target="#mod" action="{{ url_for('button_click_unadopt',idFiche=idFiche) }}">
+                                <button type="submit" class="btn btn-primary btn-adopt">Je n'adopte plus ce conseil
+                                </button>
+                                <input type="hidden" name="idFiche" value="{{ idFiche }}">
+                            </form>
+                            {% endif %}
+                        </div>
                     </div>
                     <div class="modal fade" id="mod" tabindex="-1">
                         <div class="modal-dialog">
@@ -279,21 +325,6 @@
                                 </div>
                             </div>
                         </div>
-                    </div>
-                    <div class="d-flex justify-content-center mt-5">
-                        {% if adopted == false%}
-                        <form method="GET" data-bs-toggle="modal" data-bs-target="#mod" action="{{ url_for('button_click_adopt',idFiche=idFiche) }}">
-                            <button type="submit" class="btn btn-primary btn-adopt">J'adopte ce conseil
-                                !</button>
-                            <input type="hidden" name="idFiche" value="{{ idFiche }}">
-                        </form>
-                        {% endif %} {% if adopted == true %}
-                        <form method="GET" data-bs-toggle="modal" data-bs-target="#mod" action="{{ url_for('button_click_unadopt',idFiche=idFiche) }}">
-                            <button type="submit" class="btn btn-primary btn-adopt">Je n'adopte plus ce conseil
-                            </button>
-                            <input type="hidden" name="idFiche" value="{{ idFiche }}">
-                        </form>
-                        {% endif %}
                     </div>
                 </div>
             </div>
@@ -330,18 +361,27 @@
                 </div>
             </div>
             <div class="tab-pane fade" id="impact-conseil" role="tabpanel" aria-labelledby="impact-tab">
-                {% set impact = data["impact_details"]['numerical_data'] * 12 * 100 %} {% if data["impact_details"]['impact_topic'] == '1' %} {% set type_phrase = "d'eau seront économisés en 1 an." %} {% set extract = "Qu’est-ce que l’empreinte-eau? “Elle correspond
+                {% set impact = data["impact_details"]['numerical_data'] * 12 * 100 %} 
+                {% if data["impact_details"]['impact_topic'] == '1' %} 
+                {% set type_phrase = "d'eau seront économisés en 1 an." %} 
+                {% set extract = "Qu’est-ce que l’empreinte-eau? “Elle correspond
                 au volume d’eau nécessaire à la production de produits alimentaires et industriels et de services, y compris l’eau utilisée dans les chaînes d’approvisionnement.” Nous consommons de l’eau sans toujours nous en rendre compte. En effet,
                 selon notre alimentation (quantité de viande, céréales, légumes, fruits…) et notre consommation domestique d’eau (nombre de douches, lavages de dents et de mains par jour, durée moyenne d’une douche, nombre de lessives et de bains par
-                semaine, etc.), nous consommons plus ou moins d’eau. Il peut être difficile de se réaliser notre consommation effective, ainsi l’empreinte eau peut nous y aider!" %} {% elif data["impact_details"]['impact_topic'] == '2' %} {% set type_phrase
-                = "de plastique ne seront pas jetés en 1 an." %} {% set extract = "Le Principe des 5R Cette pratique peut être appréhendée par le principe des 5R de Béa Johnson (refuser, réduire, réutiliser, recycler, rendre à la Terre). Le gel d’Aloe
-                Vera est utile à plusieurs fins (refuser et réduire) et sa fabrication maison permet de réutiliser un même récipient. L’écorce de la feuille étant le seul déchet, il peut être facilement recyclé/ composté (les deux derniers R)." %} {%
-                elif data["impact_details"]['impact_topic'] == '3' %} {% set type_phrase = "de CO2 ne seront pas émis en 1 an." %} {% endif %}
-                <div>
-                    <p> Si 100 personnes suivent cette alternative, {{ impact }} {{ data["impact_details"]['unit'] }} {{ type_phrase }}</p>
-                </div>
-                <div>
-                    <p> {{ extract }} </p>
+                semaine, etc.), nous consommons plus ou moins d’eau. Il peut être difficile de se réaliser notre consommation effective, ainsi l’empreinte eau peut nous y aider!" %} 
+                {% elif data["impact_details"]['impact_topic'] == '2' %} 
+                {% set type_phrase = "de plastique ne seront pas jetés en 1 an." %} 
+                {% set extract = "Le Principe des 5R Cette pratique peut être appréhendée par le principe des 5R de Béa Johnson (refuser, réduire, réutiliser, recycler, rendre à la Terre). Le gel d’Aloe
+                Vera est utile à plusieurs fins (refuser et réduire) et sa fabrication maison permet de réutiliser un même récipient. L’écorce de la feuille étant le seul déchet, il peut être facilement recyclé/ composté (les deux derniers R)." %} 
+                {% elif data["impact_details"]['impact_topic'] == '3' %} 
+                {% set type_phrase = "de CO2 ne seront pas émis en 1 an." %} 
+                {% endif %}
+                <div class="d-flex flex-column align-items-center">
+                    <div class="div-impact mb-4">
+                        <span> Si 100 personnes suivent cette alternative,</span>
+                        <span class="fs-3 fw-bold"> {{ impact }} {{ data["impact_details"]['unit'] }} </span> 
+                        <span>{{ type_phrase }}</span>
+                    </div>
+                    <p class="mx-4"> {{ extract }} </p>
                 </div>
             </div>
         </div>
@@ -357,53 +397,30 @@
             <li class="nav-item">
                 <a class="nav-link" id="temoignage-tab" data-toggle="tab" href="#temoignage" role="tab" aria-controls="temoignage" aria-selected="false">Témoignage</a>
             </li>
-            <!-- On a pas gérer les données contenues dans cet onglet, peut-être l'enlever pour l'instant
-                <li class="nav-item">
-                <a class="nav-link" id="impact-tab" data-toggle="tab" href="#impact-temoignage" role="tab"
-                    aria-controls="impact-temoignage" aria-selected="false">Impact</a>
-            </li> -->
         </ul>
         <div class="tab-content" id="tabContent-temoignage">
             <div class="tab-pane fade show active" id="description-temoignage" role="tabpanel" aria-labelledby="description-tab">
                 <div class="row">
-                    <div class="col-2">
-                        <div class="">
-                            <img src="{{ data['avatar'] }}" alt="avatar">
-                            <p>Pseudo</p>
-                        </div>
+                    <div class="col-1 ms-5 d-flex flex-column align-items-center">
+                        <img class="avatar acard" src="{{ data['avatar'] }}" alt="avatar">
+                        <p class="p-pseudo">{{ data['pseudo'] }}</p>
                     </div>
                     <div class="col div-description justify-content-center">
-                        <p>{{ data["description"] }}</p>
+                        <p> {{ data["description"] }}</p>
                     </div>
                 </div>
             </div>
             <div class="tab-pane fade" id="temoignage" role="tabpanel" aria-labelledby="temoignage-tab">
                 <div class="row">
-                    <div class="col-2">
-                        <div class="">
-                            <img src=" {{ data['avatar'] }} " alt="avatar">
-                            <p>{{ data["pseudo"] }}</p>
-                        </div>
+                    <div class="col-1 ms-5 d-flex flex-column align-items-center">
+                        <img class="avatar acard" src="{{ data['avatar'] }}" alt="avatar">
+                        <p class="p-pseudo">{{ data['pseudo'] }}</p>
                     </div>
                     <div class="col div-description justify-content-center">
                         <p><i class="fa-solid fa-quote-left"></i> {{ data["shared_experience"] }} <br> <i class="fa-solid fa-quote-right"></i></p>
                     </div>
                 </div>
             </div>
-            <!-- Peut-être retirer cet onglet pour l'instant ?
-                <div class="tab-pane fade" id="impact-temoignage" role="tabpanel" aria-labelledby="impact-tab">
-                {% if data["impact_details"]['impact_topic'] == '1' %}
-                    {% set type = "d'eau." %}
-                    {% set verb = "économisé " %}
-                {% elif data["impact_details"]['impact_topic'] == '2' %}
-                    {% set type = "de plastique." %}
-                    {% set verb = "évité de jeter " %}
-                {% elif data["impact_details"]['impact_topic'] == '3' %}
-                    {% set type = "de CO2." %}
-                    {% set verb = "éviter l'émission de " %}
-                {% endif %}
-                <p>{{ data["pseudo"] }} indique avoir {{ verb }}{{ data["impact_details"]['numerical_data'] }} {{ data["impact_details"]['unit'] }} {{ type }}</p>
-            </div> -->
         </div>
     </div>
     {% endif %}

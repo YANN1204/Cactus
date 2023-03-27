@@ -83,6 +83,9 @@ def forum():
 @reqlogged
 def com_forum():
 
+    # requête données de connexion et utilisateur
+    logged = session.get("logged", False)
+
     # requête des données pour poster le commentaire
     text_com = request.form.get("com")
     id_forum = request.form.get("id-forum")

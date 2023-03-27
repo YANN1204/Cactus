@@ -67,7 +67,7 @@
                 <img class="avatar" src=' {{ data["comments"][c]["avatar"] }} ' alt="avatar">
             </div>
             <div class="col forum">
-                <div class="d-flex  align-items-baseline">
+                <div class="d-flex align-items-baseline">
                     <span class="span-pseudo"> {{ data["comments"][c]["pseudo"] }} </span>
                     <span>- {{ data["comments"][c]["date_created"] }}</span>
                 </div>
@@ -76,6 +76,7 @@
         </div>
         <button class="btn btn-outline-secondary align-self-end" onclick="toggle_visibility('{{i.value}}');">Répondre</button>
     </div>
+
     <div class="hidden-div" id="{{i.value}}" >
         <div class="d-flex flex-row">
             <div class="col-1">

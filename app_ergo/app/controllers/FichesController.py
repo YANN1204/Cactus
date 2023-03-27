@@ -226,7 +226,7 @@ def com_card():
 @app.route('/fiches', methods=['GET', 'POST'])
 def handle_button_click():
     logged = session.get("logged", False)
-    # Fonctionnalité non généralisé
+    # Fonctionnalité non généralisée
     data = {"status":"draft","title":"Test","room_id":"032160c4-caa2-451f-b3c8-72c53360345f"}
     collection = 'alternative_cards'
     pds.post_data(collection, data)

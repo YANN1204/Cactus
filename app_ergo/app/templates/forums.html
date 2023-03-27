@@ -25,8 +25,10 @@
         <form method="GET" action="{{ url_for('research_in_forums') }}">
             <div class="input-content-research">
                 <label for="content_research">Rechercher un sujet de forum</label>
-                <input class="form-control" type="text" placeholder="Quel compost choisir ?..." name="content_research" id="content_research">
-                <button type="submit" class="btn btn-primary">Rechercher</button>
+                <div class="d-flex">
+                    <input class="form-control" type="text" placeholder="Quel compost choisir ?..." name="content_research" id="content_research">
+                    <button type="submit" class="btn btn-primary">Rechercher</button>
+                </div>
             </div>
         </form>
     </div>
