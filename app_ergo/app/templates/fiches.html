@@ -24,10 +24,9 @@
 
     <div class="container-fluid div-form-cards">
         <form method="GET" action="{{ url_for('research_in_cards') }}">
-            <div class="form-group">
+            <div class="form-group input-content-research">
                 <label for="content_research">Mots-clés</label>
                 <input class="form-control" type="text" name="content_research" id="content_research">
-
                 <label>Type de contenu à afficher</label>
                 <select class="form-control form-select" aria-label="Type de contenu à afficher" name="type_of_cards"
                     id="type_of_cards">
@@ -36,7 +35,6 @@
                     <option value="2">Fiche témoignage</option>
                     <option value="3">Fiche conseil</option>
                 </select>
-
                 <div class="row justify-content-center">
                     <div class="form-check div-room-checkbox col-2">
                         <img src="./static/Images/cutting-board.png" alt="illustration pelle et rateau dans un jardin">

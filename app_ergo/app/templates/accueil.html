@@ -6,7 +6,7 @@
     <div class="container-fluid row header-home">
         <div class="col-8">
             <h1 class="h1-home">Cactus</h1>
-            <p>Prends part à une communauté active et engagée à créer un monde plus vert en commençant par son foyer !
+            <p>Prends part à une communauté active et engagée à créer un monde plus vert en commençant par notre foyer !
             </p>
         </div>
         <div class="col">
@@ -15,7 +15,7 @@
     </div>
 
     <div class="container div-research-home">
-        <h2>Sur Cactus, recherche tuto, forum, article et bien plus autour de l'écologie !</h2>
+        <h2>Sur Cactus, recherche astuces, forum et articles, mais aussi bien plus autour de l'écologie !</h2>
         <div class="row">
             <form method="GET" action="{{ url_for('research_accueil') }}">
                 <div class="form-group input-content-research">
@@ -70,7 +70,7 @@
                     plus</a>
             </div>
         </div>
-        <p>Par tes nouvelles pratiques, c’est plus de <span>{{ data["impact_user"]["eau"]|int }} l</span> d'eau que tu as économisé depuis ton
+        <p>Par tes nouvelles pratiques, c’est environ <span>{{ data["impact_user"]["eau"]|int }} L</span> d'eau que tu as économisé depuis ton
             inscription !</p>
     </div>
 </div>
