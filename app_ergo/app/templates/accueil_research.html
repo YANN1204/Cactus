@@ -4,77 +4,46 @@
     <h1>Research</h1>
 </div>
 
-<div class="container">
-
-    <div>
-        <p>
-            Tu peux accéder ici à des fiches, des forums où des articles
-            scientifique sur le sujet de ton choix autour de l'écologie.
-        </p>
-    </div>
-
-    <div>
-        <form method="GET" action="{{ url_for('research_accueil') }}">
+<div class="container div-research-home">
+    <h2>Sur Cactus, recherche astuces, forum et articles, mais aussi bien plus autour de l'écologie !</h2>
+    <form method="GET" action="{{ url_for('research_accueil') }}">
+        <div class="form-group input-content-research">
             <label for="content_research">Mots-clés</label>
-            <input type="text" name="content_research" id="content_research">
-            <button type="submit">Rechercher</button>
-        </form>
-
-
-        <select class="form-select" aria-label="Type de contenu à afficher">
-            <option selected>Tous</option>
-            <option value="1">Fiche témoignage</option>
-            <option value="2">Fiche pratique</option>
-            <option value="3">Fiche conseil</option>
-        </select>
-    </div>
-    <div class="mb-3">
-        <div class="form-check">
-            <input class="form-check-input" type="checkbox" value="" id="checkKitchen">
-            <label class="form-check-label" for="checkKitchen">
-                Cuisine
-            </label>
+            <input class="form-control" type="text" name="content_research" id="content_research">
+            <div class="row">
+                <div class="col form-group select-content-type">
+                    <label>Type de contenu à afficher</label>
+                    <select class="form-select" aria-label="Type de contenu à afficher" name="type_of_data">
+                        <option value="Tous" selected>Tous</option>
+                        <option value="1">Fiche pratique</option>
+                        <option value="2">Fiche témoignage</option>
+                        <option value="3">Fiche conseil</option>
+                        <option value="4">Forum</option>
+                        <option value="5">Article scientifique</option>
+                    </select>
+                </div>
+                <div class="col form-group select-content-type">
+                    <label>Pièce de la maison</label>
+                    <select class="form-select" aria-label="Pièce de la maison" name="room">
+                        <option value="maison entiere" selected>Toutes</option>
+                        <option value="cuisine">Cuisine</option>
+                        <option value="salle de bain">Salle de bain</option>
+                        <option value="chambre">Chambre</option>
+                        <option value="salon">Salon</option>
+                        <option value="garage">Garage</option>
+                        <option value="jardin">Jardin</option>
+                    </select>
+                </div>
+                <div class="col">
+                    <button type="submit" role="button" href=""
+                        class="icon icon-solid icon-chevron-right btn btn-primary">Rechercher</button>
+                </div>
+            </div>
         </div>
-        <div class="form-check">
-            <input class="form-check-input" type="checkbox" value="" id="checkBathroom">
-            <label class="form-check-label" for="checkBathroom">
-                Salle de bain
-            </label>
-        </div>
-        <div class="form-check">
-            <input class="form-check-input" type="checkbox" value="" id="checkGarage">
-            <label class="form-check-label" for="checkGarage">
-                Garage
-            </label>
-        </div>
-        <div class="form-check">
-            <input class="form-check-input" type="checkbox" value="" id="checkLivingRoom">
-            <label class="form-check-label" for="checkLivingRoom">
-                Salon
-            </label>
-        </div>
-        <div class="form-check">
-            <input class="form-check-input" type="checkbox" value="" id="checkBedroom">
-            <label class="form-check-label" for="checkBedroom">
-                Chambre
-            </label>
-        </div>
-        <div class="form-check">
-            <input class="form-check-input" type="checkbox" value="" id="checkGarden">
-            <label class="form-check-label" for="checkGarden">
-                Jardin
-            </label>
-        </div>
-        <div class="form-check">
-            <input class="form-check-input" type="checkbox" value="" id="checkAllRooms">
-            <label class="form-check-label" for="checkAllRooms">
-                Maison entière
-            </label>
-        </div>
-    </div>
+    </form>
 </div>
 
-<div>
+<div class="container-fluid">
     <!-- on parcourt la liste d qui contient autant de dict que de fiches, de forums et d'articles
         scientifiques dans directus -->
     {% for items in data.keys() %}
@@ -111,8 +80,8 @@
                 {% endfor %}
             </div>
             {% set idFiche = cards['id']|string %}
-            <a href="{{ url_for('fiche', idFiche=cards['id']|string) }}"
-                class="icon icon-solid icon-chevron-right button-secondary">Voir plus</a>
+            <a role="button" href="{{ url_for('fiche', idFiche=card['id']|string) }}"
+                class="icon icon-solid icon-chevron-right btn btn-outline-secondary">Voir plus</a>
         </div>
 
         {% else %}
