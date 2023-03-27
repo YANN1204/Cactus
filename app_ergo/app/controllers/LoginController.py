@@ -23,6 +23,7 @@ def reqlogged(f):
 def login():
 
     msg_error = None   
+    logged = session.get("logged", False)
 
     # import des données utilisateurs 
     data = dd.get_data('users')
@@ -50,7 +51,7 @@ def login():
     metadata = {"title":"Login", "pagename": "login"}
     images = {'logo-cactus':url_for('static', filename="/Images/logo-cactus.png")}
 
-    return render_template('login.html', metadata=metadata, msg_error=msg_error, provide=False, images=images)
+    return render_template('login.html', metadata=metadata, msg_error=msg_error, logged=logged, provide=False, images=images)
 
 
 @app.route('/logout')

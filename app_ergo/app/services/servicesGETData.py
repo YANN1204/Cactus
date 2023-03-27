@@ -185,6 +185,7 @@ class GetDataServices():
 
                 # requête des informations supplémentaire sur le commentaire sur la fiche
                 user = self.instance_by_id(urlu, c['user_id'])
+                print(user)
                 c['pseudo'] = user['pseudo']
                 c['avatar'] = "https://d10b6z4v.directus.app/assets/" + user['avatar']
                 c['date_created'] = self.convert_date(c['date_created'])

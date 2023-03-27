@@ -220,7 +220,7 @@ def com_card():
     metadata = {"title":"Fiche", "pagename": "Fiche"}
     images = {'logo-cactus':url_for('static', filename="/Images/logo-cactus.png")}
 
-    return render_template('fiche.html', metadata=metadata, data=data, images=images)
+    return render_template('fiche.html', metadata=metadata, data=data, logged=logged, images=images)
 
 
 @app.route('/fiches', methods=['GET', 'POST'])
@@ -232,4 +232,4 @@ def handle_button_click():
     pds.post_data(collection, data)
     metadata = {"title":"Fiches", "pagename": "fiches"}
 
-    return render_template('fiches.html', metadata=metadata)
+    return render_template('fiches.html', logged=logged, metadata=metadata)
