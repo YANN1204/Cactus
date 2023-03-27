@@ -92,7 +92,7 @@ body {
 }
 
 .p-intro {
-    font-size: 0.8em;
+    font-size: 1.3em;
     margin: 0;
 }
 
@@ -319,6 +319,13 @@ footer {
 .div-room-checkbox div {
     margin-top: 0.3em;
 }
+.div-room-checkbox label {
+    color: var(--darker-green) !important;
+}
+.div-room-checkbox input {
+    padding: 0 !important;
+    width: 1em !important;
+}
 
 .col-2 {
     width: 15%;
@@ -361,7 +368,6 @@ footer {
 
 /* input recherche */
 .input-content-research input {
-    width: 65%;
     border-radius: 50px;
     border: 1px solid var(--darker-green);
     padding: .375rem 2.25rem .375rem .75rem;
@@ -422,9 +428,9 @@ footer {
     margin-bottom: 0.7em;
 }
 .div-research-home .row {
-    padding-left: 3em;
     display: flex;
     align-items: end;
+    margin-top: 1em;
 }
 .div-research-home .row .col {
     display: flex;

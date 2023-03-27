@@ -24,17 +24,23 @@
 
     <div class="container-fluid div-form-cards">
         <form method="GET" action="{{ url_for('research_in_cards') }}">
-            <div class="form-group">
-                <label for="content_research">Mots-clés</label>
-                <input class="form-control" type="text" name="content_research" id="content_research">
-                <label>Type de contenu à afficher</label>
-                <select class="form-control form-select" aria-label="Type de contenu à afficher" name="type_of_cards"
-                    id="type_of_cards">
-                    <option value="Tous" selected>Tous</option>
-                    <option value="1">Fiche pratique</option>
-                    <option value="2">Fiche témoignage</option>
-                    <option value="3">Fiche conseil</option>
-                </select>
+            <div class="form-group input-content-research">
+                <div class="d-flex flex-row row">
+                    <div class="col-8">
+                        <label for="content_research">Mots-clés</label>
+                        <input class="form-control" type="text" name="content_research" id="content_research">
+                    </div>
+                    <div class="col">
+                        <label>Type de contenu à afficher</label>
+                        <select class="form-control form-select" aria-label="Type de contenu à afficher" name="type_of_cards"
+                            id="type_of_cards">
+                            <option value="Tous" selected>Tous</option>
+                            <option value="1">Fiche pratique</option>
+                            <option value="2">Fiche témoignage</option>
+                            <option value="3">Fiche conseil</option>
+                        </select>
+                    </div>
+                </div>
                 <div class="row justify-content-center">
                     <div class="form-check div-room-checkbox col-2">
                         <img src="./static/Images/cutting-board.png" alt="illustration pelle et rateau dans un jardin">
